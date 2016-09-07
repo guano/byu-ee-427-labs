@@ -1,0 +1,21 @@
+	• What does XGpio_WriteReg() do? What functions call it? Is it a function or a macro?
+		○ Write a value to a GPIO register
+		○ Functions 
+			§ XGpio_SetDataDirection(XGpio * InstancePtr, unsigned Channel,
+			    u32 DirectionMask)
+			§ XGpio_DiscreteWrite(XGpio * InstancePtr, unsigned Channel, u32 Data)
+		○ Macro 
+	• XIntc_EnableIntr() accepts two parameters: BaseAddress and EnableMask. What are these
+	parameters? Is it a function or a macro?
+		○ BaseAddress - the base address of the device 32-bit value
+		○ EnableMask - 32-bit value to write to the enable register. Each bit of the mask corresponds to an interrupt input signal. that is connected to the interrupt controller (INT0 = LSB).Only the bits which are set in the mask will enable interrupts.
+		○ Macro 
+	• What is the purpose of XIN_IAR_OFFSET?
+		○ Interrupt Acknowledge Register
+	• What service do you think that the macro Xil_Out32 performs? Can you find where this function is defined?
+		○ appropriate I/O access method to memory mapped I/O or DCR.
+	• What does the xparameters.h file contain? Why is this file significant?
+		○ static config table functions and macros
+		○ Initiate 
+	• What is the significance of XPAR_PUSH_BUTTONS_5BITS_BASEADDR (contained in the xparameters.h file)?
+	

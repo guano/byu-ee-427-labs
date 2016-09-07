@@ -1,0 +1,17 @@
+
+	• What C functions do you use to enable/disable interrupts for the Microblaze?
+		○ Include header file mb_interface.h  
+		○ Void miroblaze_enable_interrupts(void) 
+		○ Void microblaze_disable_interrupts(void) 
+	• What C function do you invoke to register an interrupt routine with the Microblaze?
+		○ Void microblaze_register_handler(XInterruptHandler Handler, void *DataPtr) 
+	• Name one of the registers used to enable interrupts on the GPIO block.
+		○ Global Interrupt Enable Register (GIE) – Provides the master enable/disable for the interrupt output to the processor or Interrupt Controller. 
+		○ IP Interrupt Enable Register (IP IER) – Implements the independent interrupt enable bit for each channel. 
+		○ IP Interrupt Status Register (IP ISR) – Implements the independent interrupt status bit for each channel. The IP ISR provides Read and Toggle-On-Write access. The Toggle-On-Write mechanism allows interrupt service routines to clear one or more ISR bits using a single write transaction. The IP ISR can also be manually set to generate an interrupt for testing purposes
+	
+	• Name one of the registers used to enable interrupts on the Interrupt Controller.
+		○ C_INTERRUPT_PRESENT generic is set to 1.
+		○ Global Interrupt Enable Register (GIE) – Provides the master enable/disable for the interrupt output to the processor or Interrupt Controller
+	• How do you configure the Fixed-Interval Timer (FIT) so that it generates interrupts at the frequency that you desire?
+		○ C_NO_CLOCKS

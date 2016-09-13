@@ -52,6 +52,7 @@ void timer_interrupt_handler() {
 	if(currentButtonState & BUTTON_MIN){
 		debounce_timer_min++;
 		if(debounce_timer_min == BUTTON_DEBOUNCE_TIME)
+			//print("M");
 			pushedButtonState |= BUTTON_MIN;	// turns on
 	} else {
 		debounce_timer_min = 0;
@@ -60,6 +61,7 @@ void timer_interrupt_handler() {
 	if(currentButtonState & BUTTON_SEC){
 		debounce_timer_sec++;
 		if(debounce_timer_sec == BUTTON_DEBOUNCE_TIME)
+			//print("S");
 			pushedButtonState |= BUTTON_SEC;
 	} else {
 		debounce_timer_sec = 0;
@@ -68,6 +70,7 @@ void timer_interrupt_handler() {
 	if(currentButtonState & BUTTON_DOWN){
 		debounce_timer_down++;
 		if(debounce_timer_down == BUTTON_DEBOUNCE_TIME)
+			//print("d");
 			pushedButtonState |= BUTTON_DOWN;
 	} else {
 		debounce_timer_down = 0;
@@ -76,6 +79,7 @@ void timer_interrupt_handler() {
 	if(currentButtonState & BUTTON_HOUR){
 		debounce_timer_hour++;
 		if(debounce_timer_hour == BUTTON_DEBOUNCE_TIME)
+			//print("H");
 			pushedButtonState |= BUTTON_HOUR;
 	} else {
 		debounce_timer_hour = 0;
@@ -84,6 +88,7 @@ void timer_interrupt_handler() {
 	if(currentButtonState & BUTTON_UP){
 		debounce_timer_up++;
 		if(debounce_timer_up == BUTTON_DEBOUNCE_TIME)
+			//print("u");
 			pushedButtonState |= BUTTON_UP;
 	} else {
 		debounce_timer_up = 0;

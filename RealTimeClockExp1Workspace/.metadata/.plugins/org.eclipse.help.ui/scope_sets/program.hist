@@ -1,0 +1,4 @@
+#Wed Sep 14 09:00:17 MDT 2016
+__DEFAULT__=false
+org.eclipse.help.ui.localSearch.master=true
+expression=program

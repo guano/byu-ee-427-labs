@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="C:\EE427\Atlys_BSB_Support_v_3_4\RealTimeClockExp1Workspace\RealTimeClockExp2_hw_platform\system.bit" key="RealTimeClockExp2_hw_platform-bitFile"/>
-	<item value="C:\EE427\Atlys_BSB_Support_v_3_4\RealTimeClockExp1Workspace\RealTimeClockExp2_hw_platform\system_bd.bmm" key="RealTimeClockExp2_hw_platform-bmmFile"/>
-	<item value="C:\EE427\Atlys_BSB_Support_v_3_4\RealTimeClockExp1Workspace\hello_world_0\Debug\hello_world_0.elf" key="RealTimeClockExp2_hw_platform-microblaze_0-initElf"/>
+	<item value="C:\Users\superman\Desktop\RealTimeClockExp1Workspace\RealTimeClockExp2_hw_platform\system.bit" key="RealTimeClockExp2_hw_platform-bitFile"/>
+	<item value="C:\Users\superman\Desktop\RealTimeClockExp1Workspace\RealTimeClockExp2_hw_platform\system_bd.bmm" key="RealTimeClockExp2_hw_platform-bmmFile"/>
+	<item value="C:\Users\superman\Desktop\RealTimeClockExp1Workspace\hello_world_0\Debug\hello_world_0.elf" key="RealTimeClockExp2_hw_platform-microblaze_0-initElf"/>
 </section>

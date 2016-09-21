@@ -1,5 +1,16 @@
-#Tue Sep 20 12:07:36 MDT 2016
-spelling_locale_initialized=true
-useAnnotationsPrefPage=true
-eclipse.preferences.version=1
+#Wed Sep 21 14:59:57 MDT 2016
 useQuickDiffPrefPage=true
+useAnnotationsPrefPage=true
+sourceHoverBackgroundColor=255,255,225
+org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+formatter_settings_version=1
+editor_folding_preprocessor_enabled=true
+formatter_profile=org.eclipse.cdt.ui.default.kandr_profile
+editor_folding_enabled=true
+spelling_locale_initialized=true
+eclipse.preferences.version=1
+org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+hoverModifierMasks=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;0;org.eclipse.cdt.ui.ProblemHover;0;org.eclipse.cdt.ui.CDocHover;0;org.eclipse.cdt.ui.CMacroExpansionHover;0;org.eclipse.cdt.ui.CSourceHover;131072;org.eclipse.cdt.ui.AnnotationHover;0;
+editor_folding_statements=true
+hoverModifiers=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;\!0;org.eclipse.cdt.ui.ProblemHover;\!0;org.eclipse.cdt.ui.CDocHover;\!0;org.eclipse.cdt.ui.CMacroExpansionHover;\!0;org.eclipse.cdt.ui.CSourceHover;Shift;org.eclipse.cdt.ui.AnnotationHover;\!0;
+spelling_user_dictionary_encoding=

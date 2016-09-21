@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;SpaceInvadersHW_hw_platform/reading&apos; to &apos;reading.c&apos;" description="Rename resource &apos;reading&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="reading" name="reading.c" stamp="1474480978090" updateReferences="true"/>
+</session>

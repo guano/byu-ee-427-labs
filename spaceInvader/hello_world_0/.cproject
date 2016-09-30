@@ -91,11 +91,8 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="xilinx.gnu.mb.exe.debug.1185267468.1121036907" name="helloworld.c" rcbsApplicability="disable" resourcePath="src/helloworld.c" toolsToInvoke="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028.1800363385">
-						<tool id="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028.1800363385" name="MicroBlaze gcc compiler" superClass="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028"/>
-					</fileInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/taylorsmain.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

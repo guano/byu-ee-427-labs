@@ -11,6 +11,8 @@
 
 #endif /* BUNKERS_H_ */
 
-void init_bunker(unsigned int * framePointer);
-void hit_bunker(int bunker);
+void init_bunkers(unsigned int * framePointer);
+void hit_bunkers(int bunker);
+void build_bunkers(unsigned int * framePointer);
 void draw_data();
+void rand_bunker(unsigned int * framePointer);

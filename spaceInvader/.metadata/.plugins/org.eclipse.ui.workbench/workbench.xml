@@ -37,43 +37,33 @@
 <part id="3"/>
 <part id="4"/>
 <part id="5"/>
-<part id="6"/>
-<part id="7"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="helloworld.c" partName="helloworld.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/helloworld.c" title="helloworld.c" tooltip="hello_world_0/src/helloworld.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="helloworld.c" partName="helloworld.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/helloworld.c" title="helloworld.c" tooltip="hello_world_0/src/helloworld.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/helloworld.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6076" selectionTopPixel="1930"/>
+<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="5259" selectionTopPixel="1071"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="bunkers.c" partName="bunkers.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/bunkers.c" title="bunkers.c" tooltip="hello_world_0/src/bunkers.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/bunkers.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="9" selectionOffset="5568" selectionTopPixel="2210"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" partName="tank.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/tank.c" title="tank.c" tooltip="hello_world_0/src/tank.c" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" partName="tank.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/tank.c" title="tank.c" tooltip="hello_world_0/src/tank.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/tank.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="13648" selectionTopPixel="4590"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="aliens.c" partName="aliens.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/aliens.c" title="aliens.c" tooltip="hello_world_0/src/aliens.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/aliens.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5991" selectionTopPixel="1955"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1254" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" partName="interface.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/interface.c" title="interface.c" tooltip="hello_world_0/src/interface.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/interface.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1362" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="bunkers.h" partName="bunkers.h" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/bunkers.h" title="bunkers.h" tooltip="hello_world_0/src/bunkers.h" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="bunkers.h" partName="bunkers.h" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/bunkers.h" title="bunkers.h" tooltip="hello_world_0/src/bunkers.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/bunkers.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="349" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="tank.h" partName="tank.h" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/tank.h" title="tank.h" tooltip="hello_world_0/src/tank.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/tank.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="666" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="aliens.h" partName="aliens.h" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/aliens.h" title="aliens.h" tooltip="hello_world_0/src/aliens.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/aliens.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="47" selectionOffset="366" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -89,9 +79,9 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>&#x0A;<category IMemento.internal.id="Warnings (10 items)"/>
-<category IMemento.internal.id="Warnings"/>
+<expanded>
 <category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -199,7 +189,7 @@
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="250" ratioRight="750" relationship="2" relative="topLeft"/>
-<info folder="true" part="bottom" ratio="0.7785171" ratioLeft="819" ratioRight="233" relationship="4" relative="org.eclipse.ui.editorss">
+<info folder="true" part="bottom" ratio="0.8336502" ratioLeft="877" ratioRight="175" relationship="4" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
@@ -216,7 +206,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="topRight" ratio="0.8575269" ratioLeft="638" ratioRight="106" relationship="2" relative="org.eclipse.ui.editorss">
+<info folder="true" part="topRight" ratio="0.69263285" ratioLeft="1147" ratioRight="509" relationship="2" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.cdt.make.ui.views.MakeView" label="Make Target"/>
@@ -234,160 +224,160 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/aliens.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/aliens.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/helloworld.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/bunkers.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/bunkers.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank.c"/>
 </editors>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="4990" y="0"/>
+<position info="not_deleted" x="5149" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="4184" y="0"/>
-</item>
-<item historyLabel="tank.c" index="1">
-<position info="not_deleted" x="13648" y="0"/>
+<position info="not_deleted" x="26958" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="4184" y="0"/>
+<position info="not_deleted" x="20681" y="11"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42254" y="0"/>
+<position info="not_deleted" x="9013" y="43"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="463" y="43"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="253" y="0"/>
+<position/>
 </item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42279" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42349" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42400" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42393" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="43084" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="15916" y="0"/>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="463" y="43"/>
 </item>
 <item historyLabel="aliens.c" index="0">
 <position/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position/>
+<position info="not_deleted" x="21030" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="373" y="0"/>
-</item>
-<item historyLabel="aliens.h" index="2">
-<position info="not_deleted" x="366" y="47"/>
+<position info="not_deleted" x="21430" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="373" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="274" y="0"/>
+<position info="not_deleted" x="23253" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
 <position/>
 </item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="1265" y="0"/>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="463" y="43"/>
 </item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17033" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17032" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17353" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17665" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17738" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17759" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17838" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17886" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17954" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="16649" y="0"/>
-</item>
-<item historyLabel="helloworld.c" index="3">
-<position info="not_deleted" x="5918" y="38"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17119" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
+<item historyLabel="helloworld.c" index="2">
 <position/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="17805" y="0"/>
+<position info="not_deleted" x="25853" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="helloworld.c" index="2">
+<position info="not_deleted" x="1729" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="helloworld.c" index="2">
+<position info="not_deleted" x="6542" y="21"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="18306" y="0"/>
+<position info="not_deleted" x="25801" y="52"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="18293" y="0"/>
+<position info="not_deleted" x="25836" y="0"/>
 </item>
-<item historyLabel="aliens.c" index="0">
-<position/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42508" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42485" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42168" y="13"/>
-</item>
-<item historyLabel="helloworld.c" index="3">
-<position info="not_deleted" x="5918" y="38"/>
-</item>
-<item historyLabel="helloworld.c" index="3">
+<item historyLabel="helloworld.c" index="2">
 <position info="not_deleted" x="6275" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42168" y="13"/>
+<position info="not_deleted" x="25836" y="0"/>
 </item>
 <item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="41843" y="0"/>
+<position info="not_deleted" x="10574" y="0"/>
 </item>
-<item historyLabel="helloworld.c" index="3">
-<position info="not_deleted" x="5918" y="38"/>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="5646" y="5"/>
 </item>
-<item historyLabel="tank.c" index="1">
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="12921" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="13989" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="14992" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="15533" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="16699" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="15990" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="19482" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="14461" y="44"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="14623" y="4"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="14461" y="44"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="976" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="7621" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="124" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="7311" y="0"/>
+</item>
+<item historyLabel="helloworld.c" index="2">
+<position info="not_deleted" x="5259" y="13"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="25836" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="569" y="0"/>
+</item>
+<item historyLabel="aliens.c" index="0">
+<position info="not_deleted" x="18581" y="0"/>
+</item>
+<item historyLabel="aliens.h" index="1">
+<position info="not_deleted" x="609" y="0"/>
+</item>
+<item historyLabel="helloworld.c" index="2">
+<position info="not_deleted" x="5259" y="13"/>
+</item>
+<item historyLabel="bunkers.h" index="3">
+<position info="not_deleted" x="349" y="0"/>
+</item>
+<item active="true" historyLabel="tank.c" index="4">
 <position info="not_deleted" x="13648" y="0"/>
-</item>
-<item historyLabel="bunkers.c" index="4">
-<position info="not_deleted" x="5568" y="9"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="41887" y="0"/>
-</item>
-<item historyLabel="helloworld.c" index="3">
-<position info="not_deleted" x="6076" y="0"/>
-</item>
-<item active="true" historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="42290" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>

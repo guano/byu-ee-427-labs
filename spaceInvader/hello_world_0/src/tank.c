@@ -317,19 +317,3 @@ void update_shell(unsigned int * framePointer){
 		framePointer[(tank_shell.row)*1280 + 640 + (7 + tank_shell.col)*2] = BLACK;
 	}
 }
-
-
-
-
-
-/*
- * Here are my thoughts.
- * If any move function (or explode funtion)
- * is called on the tank, it knows it has changed.
- * Then when the renderer goes to render the tank,
- * it understands that instead of not drawing anything
- * (or drawing the entire tank, as it does at the beginning)
- * it knows to draw "updated tank," which consists of a black rectangle
- * to delete old tank data, and color rectangles to make new tank data.
- */
-

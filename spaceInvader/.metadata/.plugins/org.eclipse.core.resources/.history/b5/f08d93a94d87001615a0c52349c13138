@@ -1,0 +1,21 @@
+/*
+ * aliens.h
+ *
+ *  Created on: Sep 21, 2016
+ *      Author: superman
+ */
+
+#include <stdbool.h>
+#include <stdint.h>
+#ifndef ALIENS_H_
+#define ALIENS_H_
+
+
+#endif /* ALIENS_H_ */
+
+void alien_init(uint32_t * framePointer);
+void aliens_left(uint32_t * framePointer);
+void aliens_right(uint32_t * framePointer);
+void aliens_kill(uint32_t * framePointer);
+void alien_missle(uint32_t * framePointer);
+void aliens_update_bullets(uint32_t * framePointer);

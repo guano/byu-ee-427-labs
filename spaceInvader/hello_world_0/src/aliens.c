@@ -14,947 +14,591 @@
 #include "unistd.h"
 #include <stdbool.h>
 #include <stdint.h>
-#define ALIEN_HEIGHT 8
-#define TOP_TOTAL 11
-#define ALIEN_COLUMNS 11
-#define LOC_ALIEN_ONE 50
-#define MIDDLE_TOTAL 22
-#define ALIEN_NUM_BULLETS 4
+#define ALIEN_HEIGHT 8		// Aliens are 8 pixels tall
+#define ALIEN_COLUMNS 11	// 11 columns of aliens
+#define TOP_TOTAL 11		// 11 aliens in top group
+#define LOC_ALIEN_ONE 50	// Pixel where the first alien is
+#define MIDDLE_TOTAL 22		// There are 22 total middle aliens
+#define BOTTOM_TOTAL 22		// There are 22 total bottom aliens
+#define ALIEN_NUM_BULLETS 4	// Aliens can have up to 4 bullets at a time
+#define ALIEN_NUM_BULLET_TYPES 2// Aliens have 2 types of bullets to choose from
+#define BAD_ADDRESS -1		// Nothing exists at screen address -1
+#define MOVE_DOWN_PIXELS 15	// When the aliens move down, they do so 15 pixels
+#define LEFT_BOUNDRY	11	// Aliens cannot go more left than this
+#define RIGHT_BOUNDRY	307	// Aliens cannot go more right than this
+#define BULLET_COL_OFFSET 6	// Bullets appear 11 more right than their alien
+#define BULLET_ROW_OFFSET 11// Bullets appear more down than their alien
 
-#define SCREEN_HEIGHT 320
+#define SCREEN_LENGTH 	320	// Our screen is 320 pixels wide
+#define SCREEN_HEIGHT	240	// Our screen is 240 pixels tall
+#define SCREEN_RES_X	640	// Our screen RESOLUTION is 640 pixels wide
+#define SCREEN_RES_Y	480 // Our screen RESOLUTION is 480 pixels tall
 
-#define WHITE 0xFFFFFFF
-#define BLACK 0x0000000
-#define BLUE  0xFFFFFFF
-#define R  0xFFFF00F
+#define WHITE 0xFFFFFFF		// These
+#define BLACK 0x0000000		// are colors
+
+#define WORD_WIDTH 12
+
 // Packs each horizontal line of the figures into a single 32 bit word.
 #define packword12(b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \
 		((b11 << 11) | (b10 << 10) | (b9  << 9 ) | (b8  << 8 ) | (b7  << 7 ) | (b6  << 6 ) \
 				| (b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
-void build_tops(unsigned int * framePointer, int alien_top[]);
-void build_middle(unsigned int * framePointer, int alien_middle[]);
-void build_bottom(unsigned int * framePointer, int alien_bottom[]);
-int32_t fire_bottom(unsigned int * framePointer, int r);
-int32_t fire_middle(unsigned int * framePointer, int r);
-int32_t fire_top(unsigned int * framePointer, int r);
+
+
+// -------------------------------------------------
+// The following static const ints define the aliens
+// We have 3 types of aliens with 2 poses each
+static const int32_t alien_top_in_12x8[ALIEN_HEIGHT] = {
+	packword12(0,0,0,0,0,1,1,0,0,0,0,0),packword12(0,0,0,0,1,1,1,1,0,0,0,0),
+	packword12(0,0,0,1,1,1,1,1,1,0,0,0),packword12(0,0,1,1,0,1,1,0,1,1,0,0),
+	packword12(0,0,1,1,1,1,1,1,1,1,0,0),packword12(0,0,0,1,0,1,1,0,1,0,0,0),
+	packword12(0,0,1,0,0,0,0,0,0,1,0,0),packword12(0,0,0,1,0,0,0,0,1,0,0,0)};
+static const int32_t alien_top_out_12x8[ALIEN_HEIGHT] ={
+	packword12(0,0,0,0,0,1,1,0,0,0,0,0),packword12(0,0,0,0,1,1,1,1,0,0,0,0),
+	packword12(0,0,0,1,1,1,1,1,1,0,0,0),packword12(0,0,1,1,0,1,1,0,1,1,0,0),
+	packword12(0,0,1,1,1,1,1,1,1,1,0,0),packword12(0,0,0,0,1,0,0,1,0,0,0,0),
+	packword12(0,0,0,1,0,1,1,0,1,0,0,0),packword12(0,0,1,0,1,0,0,1,0,1,0,0)};
+static const int32_t alien_middle_in_12x8[ALIEN_HEIGHT] ={
+	packword12(0,0,0,1,0,0,0,0,0,1,0,0),packword12(0,0,0,0,1,0,0,0,1,0,0,0),
+	packword12(0,0,0,1,1,1,1,1,1,1,0,0),packword12(0,0,1,1,0,1,1,1,0,1,1,0),
+	packword12(0,1,1,1,1,1,1,1,1,1,1,1),packword12(0,1,1,1,1,1,1,1,1,1,1,1),
+	packword12(0,1,0,1,0,0,0,0,0,1,0,1),packword12(0,0,0,0,1,1,0,1,1,0,0,0)};
+static const int32_t alien_middle_out_12x8[] ={
+	packword12(0,0,0,1,0,0,0,0,0,1,0,0),packword12(0,1,0,0,1,0,0,0,1,0,0,1),
+	packword12(0,1,0,1,1,1,1,1,1,1,0,1),packword12(0,1,1,1,0,1,1,1,0,1,1,1),
+	packword12(0,1,1,1,1,1,1,1,1,1,1,1),packword12(0,0,1,1,1,1,1,1,1,1,1,0),
+	packword12(0,0,0,1,0,0,0,0,0,1,0,0),packword12(0,0,1,0,0,0,0,0,0,0,1,0)};
+static const int32_t alien_bottom_in_12x8[ALIEN_HEIGHT] ={
+	packword12(0,0,0,0,1,1,1,1,0,0,0,0),packword12(0,1,1,1,1,1,1,1,1,1,1,0),
+	packword12(1,1,1,1,1,1,1,1,1,1,1,1),packword12(1,1,1,0,0,1,1,0,0,1,1,1),
+	packword12(1,1,1,1,1,1,1,1,1,1,1,1),packword12(0,0,1,1,1,0,0,1,1,1,0,0),
+	packword12(0,1,1,0,0,1,1,0,0,1,1,0),packword12(0,0,1,1,0,0,0,0,1,1,0,0)};
+static const int32_t alien_bottom_out_12x8[] ={
+	packword12(0,0,0,0,1,1,1,1,0,0,0,0),packword12(0,1,1,1,1,1,1,1,1,1,1,0),
+	packword12(1,1,1,1,1,1,1,1,1,1,1,1),packword12(1,1,1,0,0,1,1,0,0,1,1,1),
+	packword12(1,1,1,1,1,1,1,1,1,1,1,1),packword12(0,0,0,1,1,0,0,1,1,0,0,0),
+	packword12(0,0,1,1,0,1,1,0,1,1,0,0),packword12(1,1,0,0,0,0,0,0,0,0,1,1)};
+// End of the const ints that define the alien pixels
+// --------------------------------------------------
+
+// -----------------------------------------------------------
+// These are our internal methods, used only by ourselves
+		// Draws the aliens on the screen - top, middle, and bottom aliens
+void build_tops(uint32_t * framePointer, const int32_t alien_top[]);
+void build_middle(uint32_t * framePointer, const int32_t alien_middle[]);
+void build_bottom(uint32_t * framePointer, const int32_t alien_bottom[]);
+		// Fire a bullet from either a top, middle, or bottom alien
+int32_t fire_bottom(uint32_t * framePointer, int32_t r);
+int32_t fire_middle(uint32_t * framePointer, int32_t r);
+int32_t fire_top(uint32_t * framePointer, int32_t r);
+		// Checks to see whether our aliens are currently capable of shooting
 bool can_aliens_shoot();
-void draw_bullet(unsigned int * framePointer, int32_t bullet, uint32_t color);
+		// Draws a bullet on the screen
+void draw_bullet(uint32_t * framePointer, int32_t bullet, uint32_t color);
+		// Draws a pixel on the screen.
+void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
+// End internal method declarations
+// -----------------------------------------------------------
 
-
-static const int alien_top_in_12x8[ALIEN_HEIGHT] =
-{
-		packword12(0,0,0,0,0,1,1,0,0,0,0,0),
-		packword12(0,0,0,0,1,1,1,1,0,0,0,0),
-		packword12(0,0,0,1,1,1,1,1,1,0,0,0),
-		packword12(0,0,1,1,0,1,1,0,1,1,0,0),
-		packword12(0,0,1,1,1,1,1,1,1,1,0,0),
-		packword12(0,0,0,1,0,1,1,0,1,0,0,0),
-		packword12(0,0,1,0,0,0,0,0,0,1,0,0),
-		packword12(0,0,0,1,0,0,0,0,1,0,0,0)
-};
-#define WORD_WIDTH 12
-static const int alien_top_out_12x8[ALIEN_HEIGHT] =
-{
-		packword12(0,0,0,0,0,1,1,0,0,0,0,0),
-		packword12(0,0,0,0,1,1,1,1,0,0,0,0),
-		packword12(0,0,0,1,1,1,1,1,1,0,0,0),
-		packword12(0,0,1,1,0,1,1,0,1,1,0,0),
-		packword12(0,0,1,1,1,1,1,1,1,1,0,0),
-		packword12(0,0,0,0,1,0,0,1,0,0,0,0),
-		packword12(0,0,0,1,0,1,1,0,1,0,0,0),
-		packword12(0,0,1,0,1,0,0,1,0,1,0,0)
-};
-
-static const int alien_middle_in_12x8[ALIEN_HEIGHT] =
-{
-		packword12(0,0,0,1,0,0,0,0,0,1,0,0),
-		packword12(0,0,0,0,1,0,0,0,1,0,0,0),
-		packword12(0,0,0,1,1,1,1,1,1,1,0,0),
-		packword12(0,0,1,1,0,1,1,1,0,1,1,0),
-		packword12(0,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(0,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(0,1,0,1,0,0,0,0,0,1,0,1),
-		packword12(0,0,0,0,1,1,0,1,1,0,0,0)
-};
-static const int alien_middle_out_12x8[] =
-{
-		packword12(0,0,0,1,0,0,0,0,0,1,0,0),
-		packword12(0,1,0,0,1,0,0,0,1,0,0,1),
-		packword12(0,1,0,1,1,1,1,1,1,1,0,1),
-		packword12(0,1,1,1,0,1,1,1,0,1,1,1),
-		packword12(0,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(0,0,1,1,1,1,1,1,1,1,1,0),
-		packword12(0,0,0,1,0,0,0,0,0,1,0,0),
-		packword12(0,0,1,0,0,0,0,0,0,0,1,0)
-};
-static const int alien_bottom_in_12x8[ALIEN_HEIGHT] =
-{
-		packword12(0,0,0,0,1,1,1,1,0,0,0,0),
-		packword12(0,1,1,1,1,1,1,1,1,1,1,0),
-		packword12(1,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(1,1,1,0,0,1,1,0,0,1,1,1),
-		packword12(1,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(0,0,1,1,1,0,0,1,1,1,0,0),
-		packword12(0,1,1,0,0,1,1,0,0,1,1,0),
-		packword12(0,0,1,1,0,0,0,0,1,1,0,0)
-};
-static const int alien_bottom_out_12x8[] =
-{
-		packword12(0,0,0,0,1,1,1,1,0,0,0,0),
-		packword12(0,1,1,1,1,1,1,1,1,1,1,0),
-		packword12(1,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(1,1,1,0,0,1,1,0,0,1,1,1),
-		packword12(1,1,1,1,1,1,1,1,1,1,1,1),
-		packword12(0,0,0,1,1,0,0,1,1,0,0,0),
-		packword12(0,0,1,1,0,1,1,0,1,1,0,0),
-		packword12(1,1,0,0,0,0,0,0,0,0,1,1)
-};
-
-struct top{
-	int row;
-	int col;
-	int alive;
+// These structs hold all of our aliens.
+struct top{								// Struct for our top aliens
+	int32_t row;	int32_t col;	bool alive;	// alien has row, column, and alive?
 }top[TOP_TOTAL];
 
-struct middleAlien{
-	int row;
-	int col;
-	int alive;
+struct middleAlien{						// Struct for our middle aliens
+	int32_t row;	int32_t col;	bool alive;	// alien has row, column, and alive?
 }middleAlien[MIDDLE_TOTAL];
 
-struct bottomAlien{
-	int row;
-	int col;
-	int alive;
+struct bottomAlien{						// Struct for our bottom aliens
+	int32_t row;	int32_t col;	bool alive;	// alien has row, column, and alive?
 }bottomAlien[MIDDLE_TOTAL];
 
 // aliens can have two types of bullet: cross and lightning
 // cross 0 and 3 are identical
-typedef enum {cross0, cross1, cross2, cross3, lightning0, lightning1} bullet_type;
-
-struct alien_bullet{
-	int row;
-	int col;
-	bool alive;
-	bullet_type bullet_type;
-
+typedef enum {cross0,cross1,cross2,cross3,lightning0,lightning1} bullet_type;
+struct alien_bullet{				// Struct that holds our aliens' bullets
+	int32_t row;	int32_t col;	bool alive;	// Bullets have coordinates and alive?
+	bullet_type bullet_type;			// Bullets also have a type.
 }alien_bullet[ALIEN_NUM_BULLETS];
 
+int32_t alien_count;						// a count of how many aliens are alive
 
-int alien_count;
+/*
+ * Draws a pixel on the screen. To compensate for our double-resolution screen,
+ * it must draw 4 real pixels for every in-came pixel.
+ */
+void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color){
+	#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
+	#define DRAW_PIXEL_ROW 640				// one row offset
+	#define DRAW_PIXEL_DOUBLE 2				// for doubling
+
+	// We draw 4 pixels for every 1 small-screen pixel
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
+
+}
 
 //initialize all of the aliens by setting values contained in struct's and printing aliens to the screen
-void alien_init(unsigned int * framePointer){
-
+void alien_init(uint32_t * framePointer){
+	#define ALIEN_TOP_ROW_INIT 30				// Where
+	#define ALIEN_MIDDLE_ROW_INIT 45			// the
+	#define ALIEN_MIDDLE2_ROW_INIT 60			// aliens
+	#define ALIEN_BOTTOM_ROW_INIT 75			// are
+	#define ALIEN_BOTTOM2_ROW_INIT 90			// initialized to
+	#define ALIEN_SPACING 15					// Spacing between aliens
 	//local variables, loc is the starting location of alien one on the screen
-	int i, loc = LOC_ALIEN_ONE;
+	int32_t i, loc = LOC_ALIEN_ONE;
 
 	//loops through one row of aliens
 	for( i=0; i < ALIEN_COLUMNS ; i++){
-		top[i].row = 30; //set the row of alien tops to 30
+		top[i].row = ALIEN_TOP_ROW_INIT; //set the row of alien tops to 30
 		top[i].col = loc;//sets the column of alien tops
-		top[i].alive = 1;//sets the alien is alive flag
+		top[i].alive = true;//sets the alien is alive flag
 
-		middleAlien[i].row = 45; //sets the first row of the middle aliens
-		middleAlien[i].col = loc;//sets the column of first row of middle aliens
-		middleAlien[i].alive = 1;//sets the first row of middle aliens to alive state
-		middleAlien[i+11].row = 60;//sets the second row of the middle aliens
-		middleAlien[i+11].col = loc;//sets the column of second row of middle aliens
-		middleAlien[i+11].alive = 1;//sets the second row of middle aliens to alive state
+		middleAlien[i].row = ALIEN_MIDDLE_ROW_INIT; //middle aliens
+		middleAlien[i].col = loc;//sets column of first row of middle aliens
+		middleAlien[i].alive = true;//sets first row of middle aliens to alive
+		middleAlien[i+ALIEN_COLUMNS].row = ALIEN_MIDDLE2_ROW_INIT;//sets middle
+		middleAlien[i+ALIEN_COLUMNS].col = loc;//sets column second row middle
+		middleAlien[i+ALIEN_COLUMNS].alive = true;//sets second row middle alive
 
-		bottomAlien[i].row = 75;//sets the first row of the bottom aliens
-		bottomAlien[i].col = loc;//sets the column of first row of bottom aliens
-		bottomAlien[i].alive = 1;//sets the first row of bottom aliens to alive state
-		bottomAlien[i+11].row = 90;//sets the second row of the bottom aliens
-		bottomAlien[i+11].col = loc;//sets the column of second row of bottom aliens
-		bottomAlien[i+11].alive = 1;//sets the second row of bottom aliens to alive state
-		loc += 15; //controls the column spacing in-between aliens
+		bottomAlien[i].row = ALIEN_BOTTOM_ROW_INIT;//sets bottom aliens
+		bottomAlien[i].col = loc;//sets column of first row of bottom aliens
+		bottomAlien[i].alive = true;//sets first row of bottom aliens to alive
+		bottomAlien[i+ALIEN_COLUMNS].row = ALIEN_BOTTOM2_ROW_INIT;//bottom
+		bottomAlien[i+ALIEN_COLUMNS].col = loc;//sets column second row bottom
+		bottomAlien[i+ALIEN_COLUMNS].alive = true;//sets second row bottom alive
+		loc += ALIEN_SPACING; //controls the column spacing in-between alien
 	}
-	//now that the struct's have been built draw the top aliens to screen
-	build_tops(framePointer,alien_top_in_12x8);
 
-	//now that the struct's have been built draw the middle aliens to screen
-	build_middle(framePointer,alien_middle_in_12x8 );
-
-	//now that the struct's have been built draw the bottom aliens to screen
-	build_bottom(framePointer, alien_bottom_in_12x8);
+	//now that structs are built draw top, middle, and bottom aliens to screen
+	build_tops(framePointer,alien_top_in_12x8);			// Top
+	build_middle(framePointer,alien_middle_in_12x8 );	// Middle
+	build_bottom(framePointer,alien_bottom_in_12x8);	// Bottom
 }
 
-//draw top aliens to the screen
-void build_tops(unsigned int * framePointer, int alien_top[]){
-
-	int row, col, i; // initialize variables
-
-	for(i = 0; i < TOP_TOTAL; i++){//loop through top column of alien's
-		for(row = 0;row < ALIEN_HEIGHT; row++){ //loop through top alien sprite's row
-			for(col = 0;col < WORD_WIDTH; col++){//loop through top alien sprite's column
-				if ((alien_top[row] & (1<<(WORD_WIDTH-col-1)))&& top[i].alive == 1) {
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2] = WHITE;
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2+1] = WHITE;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2] = WHITE;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2 + 1] = WHITE;
-				}
-				else{
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2+1] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2 + 1] = BLACK;
+// Draws the top aliens on the screen
+void build_tops(uint32_t * framePointer, const int32_t alien_top[]){
+	int32_t row, col, i; // initialize variables
+	for(i = 0; i < TOP_TOTAL; i++){	//loop through top column of aliens
+		for(row = 0;row < ALIEN_HEIGHT; row++){ //loop top aliens' pixels row
+			int32_t currentRow = row+top[i].row;// current pixel row of alien
+			for(col = 0;col < WORD_WIDTH; col++){		//loop alien's pixel col
+				int32_t currentCol = col + top[i].col;	//current col of alien
+				if ((alien_top[row] & (1<<(WORD_WIDTH-col-1)))&& top[i].alive) {
+					// If our alien is alive and has a pixel there, draw it
+					draw_pixel(framePointer, currentRow, currentCol, WHITE);
+				} else{	// If not, erase it.
+					draw_pixel(framePointer, currentRow, currentCol, BLACK);
 				}
 			}
 		}
 	}
 }
 
-void build_middle(unsigned int * framePointer, int alien_middle[]){
-	int row, col, i;
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(col=0;col<WORD_WIDTH;col++){
-			for(i = 0; i < MIDDLE_TOTAL;i++){
-				if ((alien_middle[row] & (1<<(WORD_WIDTH-col-1))) && middleAlien[i].alive == 1) {
-					framePointer[(row+middleAlien[i].row)*1280 + (col + middleAlien[i].col)*2] = WHITE;
-					framePointer[(row+middleAlien[i].row)*1280 + (col + middleAlien[i].col)*2+1] = WHITE;
-					framePointer[(row+middleAlien[i].row)*1280 + 640 + (col + middleAlien[i].col)*2] = WHITE;
-					framePointer[(row+middleAlien[i].row)*1280 + 640 + (col + middleAlien[i].col)*2+1] = WHITE;
-				}else{
-					framePointer[(row+middleAlien[i].row)*1280 + (col + middleAlien[i].col)*2] = BLACK;
-					framePointer[(row+middleAlien[i].row)*1280 + (col + middleAlien[i].col)*2+1] = BLACK;
-					framePointer[(row+middleAlien[i].row)*1280 + 640 + (col + middleAlien[i].col)*2] = BLACK;
-					framePointer[(row+middleAlien[i].row)*1280 + 640 + (col + middleAlien[i].col)*2+1] = BLACK;
+// Draws the middle aliens to the screen
+void build_middle(uint32_t * framePointer, const int32_t alien_middle[]){
+	int32_t row, col, i;	// declare our variables
+	for(i = 0; i < MIDDLE_TOTAL;i++){	// Looping through all the middle aliens
+		for(row=0;row<ALIEN_HEIGHT;row++){	// Pixel y
+			int32_t currentRow = row+middleAlien[i].row;//current pixel row
+			for(col=0;col<WORD_WIDTH;col++){// Pixel x
+				int32_t currentCol=col+middleAlien[i].col;// current col alien
+				if ((alien_middle[row] & (1<<(WORD_WIDTH-col-1)))
+						&& middleAlien[i].alive) {
+					// If our alien is alive and has a pixel there, draw it
+					draw_pixel(framePointer, currentRow, currentCol, WHITE);
+				}else{	// Otherwise, erase it.
+					draw_pixel(framePointer, currentRow, currentCol, BLACK);
 				}
 			}
 		}
 	}
 }
 
-void build_bottom(unsigned int * framePointer, int alien_bottom[]){
-	int row, col, i;
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(col=0;col<WORD_WIDTH;col++){
-			for(i = 0; i < MIDDLE_TOTAL;i++){
-				if ((alien_bottom[row] & (1<<(WORD_WIDTH-col-1))) && bottomAlien[i].alive == 1) {
-					framePointer[(row+bottomAlien[i].row)*1280 + (col + bottomAlien[i].col)*2] = WHITE;
-					framePointer[(row+bottomAlien[i].row)*1280 + (col + bottomAlien[i].col)*2+1] = WHITE;
-					framePointer[(row+bottomAlien[i].row)*1280 + 640 + (col + bottomAlien[i].col)*2] = WHITE;
-					framePointer[(row+bottomAlien[i].row)*1280 + 640 + (col + bottomAlien[i].col)*2+1] = WHITE;
-				}else{
-					framePointer[(row+bottomAlien[i].row)*1280 + (col + bottomAlien[i].col)*2] = BLACK;
-					framePointer[(row+bottomAlien[i].row)*1280 + (col + bottomAlien[i].col)*2+1] = BLACK;
-					framePointer[(row+bottomAlien[i].row)*1280 + 640 + (col + bottomAlien[i].col)*2] = BLACK;
-					framePointer[(row+bottomAlien[i].row)*1280 + 640 + (col + bottomAlien[i].col)*2+1] = BLACK;
+// Draws the bottom aliens to the screen
+void build_bottom(uint32_t * framePointer, const int32_t alien_bottom[]){
+	int32_t row, col, i;	// Declare vars
+	for(i = 0; i < BOTTOM_TOTAL;i++){	// Looping through all the bottom aliens
+		for(row=0;row<ALIEN_HEIGHT;row++){		// looping through y pixels
+			int32_t currentRow = row+bottomAlien[i].row; // current row
+			for(col=0;col<WORD_WIDTH;col++){	// looping through x pixels
+				int32_t currentCol = col + bottomAlien[i].col;	// current col
+				if ((alien_bottom[row] & (1<<(WORD_WIDTH-col-1)))
+						&& bottomAlien[i].alive) {
+					// If our alien is alive and has a pixel here, draw it
+					draw_pixel(framePointer, currentRow, currentCol, WHITE);
+				}else{	// otherwise, erase it.
+					draw_pixel(framePointer, currentRow, currentCol, BLACK);
 				}
 			}
 		}
 	}
 }
 
-void aliens_left(unsigned int * framePointer){
-	int i, row;
-
-	for(i = 0; i < MIDDLE_TOTAL; i++){
-		if(i < 11 ){top[i].col -= 1;}
-		middleAlien[i].col -= 1;
-		bottomAlien[i].col -= 1;
+// Does the needful to move the aliens left
+void aliens_left(uint32_t * framePointer){
+	int32_t i, row;								// Declare loop vars
+	for(i = 0; i < MIDDLE_TOTAL; i++){		// Move every single alien LEFT
+		if(i < TOP_TOTAL ){top[i].col--;}	// Move the top aliens LEFT
+		middleAlien[i].col--;				// Move the middle aliens LEFT
+		bottomAlien[i].col--;				// Move the bottom aliens LEFT
 	}
-	if(alien_count == 0){
+	if(alien_count == 0){		// If aliens are out, make them in
 		alien_count = 1;
-		build_tops(framePointer,alien_top_in_12x8);
-		build_middle(framePointer,alien_middle_in_12x8 );
-		build_bottom(framePointer, alien_bottom_in_12x8);
-	}else{
+		build_tops(framePointer,alien_top_in_12x8);		// Draw top aliens
+		build_middle(framePointer,alien_middle_in_12x8 );	// Draw mid aliens
+		build_bottom(framePointer, alien_bottom_in_12x8);	// Draw bot aliens
+	}else{						// And vice versa
 		alien_count = 0;
-		build_tops(framePointer,alien_top_out_12x8);
-		build_middle(framePointer,alien_middle_out_12x8 );
-		build_bottom(framePointer, alien_bottom_out_12x8);
+		build_tops(framePointer,alien_top_out_12x8);		// Draw top aliens
+		build_middle(framePointer,alien_middle_out_12x8 );	// Draw mid aliens
+		build_bottom(framePointer, alien_bottom_out_12x8);	// Draw bot aliens
 	}
 
-	for(row = 0;row < ALIEN_HEIGHT; row++){
-		for(i = 0; i < MIDDLE_TOTAL;i++){
-			framePointer[(row+bottomAlien[i].row)*1280 + (WORD_WIDTH + bottomAlien[i].col)*2] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + (WORD_WIDTH + bottomAlien[i].col)*2+1] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + 640 + (WORD_WIDTH + bottomAlien[i].col)*2] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + 640 + (WORD_WIDTH + bottomAlien[i].col)*2+1] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + (WORD_WIDTH + middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + (WORD_WIDTH + middleAlien[i].col)*2+1] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (WORD_WIDTH + middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (WORD_WIDTH + middleAlien[i].col)*2+1] = BLACK;
+
+
+	for(row = 0;row < ALIEN_HEIGHT; row++){		// For all the alien Y pixels
+		for(i = 0; i < MIDDLE_TOTAL;i++){		// For every alien
+			// Erase them for the middle and bottom aliens - top is skinnier
+			draw_pixel(framePointer, row+bottomAlien[i].row,
+					WORD_WIDTH + bottomAlien[i].col, BLACK);
+			draw_pixel(framePointer, row+middleAlien[i].row,
+					WORD_WIDTH + middleAlien[i].col, BLACK);
 		}
 
 	}
 }
 
-void aliens_right(unsigned int * framePointer){
-	int i, row;
-	//increment column to create a move to the right
-	for(i = 0; i < MIDDLE_TOTAL; i++){
-		if(i < 11 ){top[i].col += 1;}
-		middleAlien[i].col += 1;
-		bottomAlien[i].col += 1;
-	}
-	//build alien's
-	if(alien_count == 0){ //if flag is 0 draw the "in" version of alien
-		alien_count = 1;  // set flag to 1 so that it cycles in-between "in" and "out" versions of the aliens
-		build_tops(framePointer,alien_top_in_12x8);
-		build_middle(framePointer,alien_middle_in_12x8 );
-		build_bottom(framePointer, alien_bottom_in_12x8);
-	}else{             // if flag is 1 draw the "out" version of alien
-		alien_count = 0;// set flag to 0 so that it cycles in-between "in" and "out" versions of the aliens
-		build_tops(framePointer,alien_top_out_12x8);
-		build_middle(framePointer,alien_middle_out_12x8 );
-		build_bottom(framePointer, alien_bottom_out_12x8);
+// Does the needful to move the aliens right
+void aliens_right(uint32_t * framePointer){
+	int32_t i, row;								// Declare loop vars
+	for(i = 0; i < MIDDLE_TOTAL; i++){		// Move every single alien RIGHT
+		if(i < 11 ){top[i].col += 1;}		// Move top aliens RIGHT
+		middleAlien[i].col += 1;			// Move middle aliens RIGHT
+		bottomAlien[i].col += 1;			// Move bottom aliens RIGHT
 	}
 
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(i = 0; i < MIDDLE_TOTAL;i++){
-			framePointer[(row+middleAlien[i].row)*1280 + (middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + (middleAlien[i].col)*2+1] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (middleAlien[i].col)*2+1] = BLACK;
+	if(alien_count == 0){		// If aliens are out, make them in
+		alien_count = 1;
+		build_tops(framePointer,alien_top_in_12x8);		// Draw top aliens
+		build_middle(framePointer,alien_middle_in_12x8 );	// Draw mid aliens
+		build_bottom(framePointer, alien_bottom_in_12x8);	// Draw bot aliens
+	}else{						// And vice versa
+		alien_count = 0;
+		build_tops(framePointer,alien_top_out_12x8);		// Draw top aliens
+		build_middle(framePointer,alien_middle_out_12x8 );	// Draw mid aliens
+		build_bottom(framePointer, alien_bottom_out_12x8);	// Draw bot aliens
+	}
 
-			framePointer[(row+bottomAlien[i].row)*1280 + (bottomAlien[i].col-1)*2] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + (bottomAlien[i].col-1)*2+1] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + 640 + (bottomAlien[i].col-1)*2] = BLACK;
-			framePointer[(row+bottomAlien[i].row)*1280 + 640 + (bottomAlien[i].col-1)*2+1] = BLACK;
+	for(row=0;row<ALIEN_HEIGHT;row++){			// For all the alien Y pixels
+		for(i = 0; i < MIDDLE_TOTAL;i++){		// For every alien
+			// Erase that column of pixels for mid and bottom. Top not necessary
+			draw_pixel(framePointer, row+bottomAlien[i].row,
+					bottomAlien[i].col-1, BLACK);	// Notice it's col-1 bottom
+			draw_pixel(framePointer, row+middleAlien[i].row,
+					middleAlien[i].col, BLACK);
 		}
-
 	}
 }
 
-void hit_left_rail(unsigned int * framePointer){
-	int col,row, i;
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(col=0;col<WORD_WIDTH;col++){
-			if ((alien_top_out_12x8[row] & (1<<(WORD_WIDTH-col-1)))) {
-				for(i = 0; i < TOP_TOTAL;i++){
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2+1] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2 + 1] = BLACK;
+// Does the needful when aliens hit the left rail
+void hit_left_rail(uint32_t * framePointer){
+	// First we erase the entire top row of alien pixels for moving down.
+	int32_t col,row, i;								// declare loop vars
+	for(row=0;row<ALIEN_HEIGHT;row++){			// Go through alien pixels Y
+		for(col=0;col<WORD_WIDTH;col++){		// Go through alien pixels X
+			if (((alien_top_out_12x8[row]|alien_top_in_12x8[row])
+					& (1<<(WORD_WIDTH-col-1)))){// if pixel exists here
+				for(i = 0; i < TOP_TOTAL;i++){	// ERASE IT!
+					draw_pixel(framePointer,row+top[i].row,col+top[i].col,BLACK);
 				}
 			}
 		}
 	}
-	for(i = 0; i < MIDDLE_TOTAL; i++){
-		if(i < 11 ){
-			top[i].row += 15;
-		}
-		middleAlien[i].row += 15;
-		bottomAlien[i].row += 15;
+	for(i = 0; i < MIDDLE_TOTAL; i++){	// For all the aliens, move them down
+		if(i<TOP_TOTAL){top[i].row+= MOVE_DOWN_PIXELS;}	// Move top aliens down
+		middleAlien[i].row += MOVE_DOWN_PIXELS;			// Move mid aliens down
+		bottomAlien[i].row += MOVE_DOWN_PIXELS;			// Move bot aliens down
 	}
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(i = 0; i < MIDDLE_TOTAL;i++){
-			framePointer[(row+middleAlien[i].row)*1280 + (middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + (middleAlien[i].col)*2+1] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (middleAlien[i].col)*2] = BLACK;
-			framePointer[(row+middleAlien[i].row)*1280 + 640 + (middleAlien[i].col)*2+1] = BLACK;
+	for(row=0;row<ALIEN_HEIGHT;row++){	// Now to erase pixels on left side
+		for(i = 0; i < MIDDLE_TOTAL;i++){		// For all the middle aliens
+			draw_pixel(framePointer, row+middleAlien[i].row,
+					middleAlien[i].col, BLACK);// Erase the pixels on the left
 		}
 	}
 }
 
-void hit_right_rail(unsigned int * framePointer){
-	int col,row, i;
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(col=0;col<WORD_WIDTH;col++){
-			if ((alien_top_out_12x8[row] & (1<<(WORD_WIDTH-col-1)))) {
-				for(i = 0; i < TOP_TOTAL;i++){
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2+1] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2 + 1] = BLACK;
+// Does the needful when aliens hit the right rail
+void hit_right_rail(uint32_t * framePointer){
+	// First we erase the entire top row of alien pixels for moving down
+	int32_t col,row, i;								// Declare loop vars
+	for(row=0;row<ALIEN_HEIGHT;row++){			// Go through alien pixels Y
+		for(col=0;col<WORD_WIDTH;col++){		// Go through alien pixels X
+			if (((alien_top_out_12x8[row]|alien_top_in_12x8[row])
+					& (1<<(WORD_WIDTH-col-1)))){// if pixel exists here
+				for(i = 0; i < TOP_TOTAL;i++){	// Erase it!
+					draw_pixel(framePointer,row+top[i].row,col+top[i].col,BLACK);
 				}
 			}
-			if ((alien_top_in_12x8[row] & (1<<(WORD_WIDTH-col-1)))) {
-				for(i = 0; i < TOP_TOTAL;i++){
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + (col + top[i].col)*2+1] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2] = BLACK;
-					framePointer[(row+top[i].row)*1280 + 640 + (col + top[i].col)*2 + 1] = BLACK;
-				}
-			}
-
 		}
 	}
-	for(i = 0; i < MIDDLE_TOTAL; i++){
-		if(i < 11 ){
-			top[i].row += 15;
-		}
-		middleAlien[i].row += 15;
-		bottomAlien[i].row += 15;
+	for(i = 0; i < MIDDLE_TOTAL; i++){	// For all the aliens, move them down
+		if(i<TOP_TOTAL){top[i].row += MOVE_DOWN_PIXELS;}// Move top aliens down
+		middleAlien[i].row += MOVE_DOWN_PIXELS;			// Move mid aliens down
+		bottomAlien[i].row += MOVE_DOWN_PIXELS;			// Move bot aliens down
 	}
-	for(row=0;row<ALIEN_HEIGHT;row++){
-		for(i = 0; i < TOP_TOTAL;i++){
-			framePointer[(row+top[i].row)*1280 + (WORD_WIDTH-1 + top[i].col)*2] = BLACK;
-			framePointer[(row+top[i].row)*1280 + (WORD_WIDTH-1 + top[i].col)*2+1] = BLACK;
-			framePointer[(row+top[i].row)*1280 + 640 + (WORD_WIDTH-1 + top[i].col)*2] = BLACK;
-			framePointer[(row+top[i].row)*1280 + 640 + (WORD_WIDTH-1 + top[i].col)*2+1] = BLACK;
+	for(row=0;row<ALIEN_HEIGHT;row++){	// Now to erase pixels on the right side
+		for(i = 0; i < TOP_TOTAL;i++){	// Erase the pixels on the right
+			draw_pixel(framePointer,row+top[i].row,WORD_WIDTH-1+top[i].col,BLACK);
 		}
 	}
 }
 
-int flag;
-void aliens_move(unsigned int * framePointer){
-
-	int i,j;
-	for( i=0; i < TOP_TOTAL ; i++){
-		if(top[i].alive == 1 || middleAlien[i].alive == 1 || middleAlien[i+11].alive == 1 || bottomAlien[i].alive == 1 || bottomAlien[i+11].alive == 1){
-			if(top[i].col == 10){
-				flag = 1;
-				hit_left_rail(framePointer);
+// moves the aliens and detects wall boundries and direction changes too!
+void aliens_move(uint32_t * framePointer){
+	static int32_t flag;
+	int32_t i,j;
+	for( i=0; i < ALIEN_COLUMNS ; i++){	// Go through every alien column
+		// And see if any alien in that column is alive and has hit left
+		if(top[i].alive ||
+				middleAlien[i].alive ||	middleAlien[i+ALIEN_COLUMNS].alive ||
+				bottomAlien[i].alive || bottomAlien[i+ALIEN_COLUMNS].alive){
+			if(top[i].col == LEFT_BOUNDRY){	// If an alien has hit side
+				flag = 1;			// Set the flag that we've hit the side
+				hit_left_rail(framePointer);	// Call hit_rail.
 			}
 		}
 	}
-
-	for(j = 10; j >= 0 ; j--){
-		if(top[j].alive == 1 || middleAlien[j].alive == 1 || middleAlien[j+11].alive == 1 || bottomAlien[j].alive == 1 || bottomAlien[j+11].alive == 1){
-			if(top[j].col == 307){
-				flag = 0;
-				hit_right_rail(framePointer);
+	for(j = ALIEN_COLUMNS-1; j >= 0 ; j--){ // Now to check to see
+		if(top[j].alive||
+				middleAlien[j].alive|| middleAlien[j+ALIEN_COLUMNS].alive||
+				bottomAlien[j].alive|| bottomAlien[j+ALIEN_COLUMNS].alive){
+			if(top[j].col == RIGHT_BOUNDRY){// if an alien has hit right.
+				flag = 0;				// false
+				hit_right_rail(framePointer);	// we have hit the right rail
 			}
 		}
 	}
-
-	if(flag == 1){
-		aliens_right(framePointer);
-	}else{
-		aliens_left(framePointer);
+	if(flag == 1){	// if we are moving right
+		aliens_right(framePointer);	// go right
+	}else{			// we are actually going left
+		aliens_left(framePointer);	// so go left
 	}
 }
 
+// Kills a random alien
+// Currently has a bug that if the last alien dies, infinite loop
+void aliens_kill(uint32_t * framePointer){
+	int32_t r = rand()%55;	// Get a random number
 
-void aliens_kill(unsigned int * framePointer){
-	int r;
-	r = rand()%55;
-
-	if(r < 11){
-		if(top[r].alive == 0){
-			aliens_kill(framePointer);
+	if(r < TOP_TOTAL){							// If we have killed a top
+		if(!top[r].alive){									// Already dead!
+			aliens_kill(framePointer);						// Try again
 		}else{
-			top[r].alive = 0;
-			build_tops(framePointer,  alien_top_in_12x8);
+			top[r].alive = false;							// kill the alien
+			build_tops(framePointer,  alien_top_in_12x8);	// redraw aliens
 		}
-	}else if(r < 33 ){
-		if(middleAlien[r-11].alive == 0){
-			aliens_kill(framePointer);
+	}else if(r < (TOP_TOTAL + MIDDLE_TOTAL)){	// if we have killed a mid
+		if(!middleAlien[r-TOP_TOTAL].alive){				// Already dead!
+			aliens_kill(framePointer);						// try again
 		}else{
-			middleAlien[r-11].alive = 0;
-			build_middle(framePointer,  alien_middle_in_12x8);
+			middleAlien[r-TOP_TOTAL].alive = false;			// kill alien
+			build_middle(framePointer,alien_middle_in_12x8);// redraw aliens
 		}
-	}else{
-		if(bottomAlien[r-33].alive == 0){
-			aliens_kill(framePointer);
+	}else{										// we have killed a bot
+		if(!bottomAlien[r-(TOP_TOTAL+MIDDLE_TOTAL)].alive){	// Already dead!
+			aliens_kill(framePointer);						// Try again
 		}else{
-			bottomAlien[r-33].alive = 0;
-			build_bottom(framePointer,  alien_bottom_in_12x8);
+			bottomAlien[r-(TOP_TOTAL+MIDDLE_TOTAL)].alive=false;// Kill alien
+			build_bottom(framePointer,alien_bottom_in_12x8);// redraw aliens
 		}
 	}
 }
-
 
 // Returns true if aliens can shoot- that is, if there exists a top alive alien
 bool can_aliens_shoot(){
-
-	// This code checks to see if a top alien is alive
-	int i;
-	for(i = 0; i<TOP_TOTAL; i++){
+	int32_t i;					// Declare loop variable
+	for(i = 0; i<TOP_TOTAL; i++){	// Look at all the top aliense
 		if(top[i].alive){	// If there exists a single alive top alien
-			return true;
+			return true;		// We have an alive alien!
 		}
 	}
-
 	return false;			// All the top aliens are dead; we cannot shoot
 }
 
-void alien_missle(unsigned int * framePointer){
+// Fires a bullet from a random alien
+void alien_missle(uint32_t * framePointer){
 	if(!can_aliens_shoot()){	// The aliens can't even shoot! Don't even try.
-		xil_printf("FAIL TO SHOOT\n\r");
 		return;
 	}
 
-	int r = rand()%ALIEN_COLUMNS;
-	// Keep trying to fire a bullet until we get a real address for one!
-	int bullet_address = -1;
-	do{
+	int32_t r = rand()%ALIEN_COLUMNS;		// Get a random column
+	int32_t bullet_address = BAD_ADDRESS;	// Initialize the address
+	do{									// Keep trying to shoot
 		bullet_address = fire_bottom(framePointer, r);
-	} while(bullet_address == -1);
-
+	} while(bullet_address == BAD_ADDRESS);	// until we get a good address
 
 	// We have a bullet address! now to make it alive and draw it.
-	int i;
+	int32_t i;
 	for(i=0;i<ALIEN_NUM_BULLETS; i++){
 		if(alien_bullet[i].alive){	// If we already have a living bullet
 			continue;	// Go on to the next one
 		} else{	// We have a dead bullet spot- let's alive a bullet here!
 			alien_bullet[i].alive = true;
-
 			// Randomly choose a bullet type
-			alien_bullet[i].bullet_type = rand()%2 ? cross0 : lightning0;
-
-			// # might be 640 instead??
-			alien_bullet[i].col = bullet_address % 640;
-			alien_bullet[i].row = bullet_address / 640;
-			draw_bullet(framePointer, i, WHITE);
+			alien_bullet[i].bullet_type =
+					rand()%ALIEN_NUM_BULLET_TYPES ? cross0 : lightning0;
+			// TODO: This math can be simplified
+			alien_bullet[i].col = bullet_address % SCREEN_RES_X;// Set address
+			alien_bullet[i].row = bullet_address / SCREEN_RES_X;// of bullet
+			draw_bullet(framePointer, i, WHITE);				// And draw it!
 			return;
 		}
 	}
-	return;
-
-	/*
-	//int r;
-	r = rand()%55;
-	if(r < 11){
-		fire_top( framePointer, r);
-	}else if(r < 33 ){
-		fire_middle( framePointer,  r);
-	}else{
-		fire_bottom( framePointer,  r);
-	}
-	 */
 }
 
-void draw_bullet(unsigned int * framePointer, int32_t bullet, uint32_t color){
+// Draws the selected bullet to the screen
+void draw_bullet(uint32_t * framePointer, int32_t bullet, uint32_t color){
+	#define PIXEL_LINE_1 1		// These
+	#define PIXEL_LINE_2 2		// defines
+	#define PIXEL_LINE_3 3		// only
+	#define PIXEL_LINE_4 4		// have
+	#define PIXEL_LEFT -1		// meaning
+	#define PIXEL_RIGHT 1		// in this function, so I put them here
 
+	uint32_t row = alien_bullet[bullet].row;	// Current row
+	uint32_t col = alien_bullet[bullet].col;	// and column where to draw
 	switch(alien_bullet[bullet].bullet_type){
-	case cross0:
-	case cross3:
+	case cross0:	// Cross0 and cross 3 are identically drawn
+	case cross3:	// The only difference is in the state machine where they go
 		// 5 pixels down in a line
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2] = color;
+		draw_pixel(framePointer,row,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_4,col, color);
 
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-
-
-		// Side bars on cross
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
+		// Crossbar on the cross - right in the middle
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col+PIXEL_RIGHT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col+PIXEL_LEFT, color);
 		break;
 	case cross1:
 		// 5 pixels down in a line
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2] = color;
+		draw_pixel(framePointer,row,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_4,col, color);
 
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-
-
-		// Side bars on cross
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
+		// Crossbar on the cross- on the lower one
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col+PIXEL_RIGHT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col+PIXEL_LEFT, color);
 		break;
 	case cross2:
 		// 5 pixels down in a line
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2] = color;
+		draw_pixel(framePointer,row,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_4,col, color);
 
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-
-
-		// Side bars on cross
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
+		// Crossbar on the cross- on the upper one
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col+PIXEL_RIGHT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col+PIXEL_LEFT, color);
 		break;
 	case lightning0:
-		// 5 pixels down in a NOT line
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
+		// 5 pixels down - starting left then right, then going back left
+		draw_pixel(framePointer,row,col+PIXEL_LEFT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col+PIXEL_RIGHT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_4,col+PIXEL_LEFT, color);
 		break;
 	case lightning1:
-		// 5 pixels down in a line
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col+1)*2] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + (alien_bullet[bullet].col+1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col-1)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col+1)*2+1] = color;
-
-		framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col-1)*2] = color;
-		framePointer[(alien_bullet[bullet].row+3)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-		framePointer[(alien_bullet[bullet].row+4)*1280 + 640 + (alien_bullet[bullet].col+1)*2] = color;
+		// 5 pixels down - starting right then left, then back right
+		draw_pixel(framePointer,row,col+PIXEL_RIGHT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_1,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_2,col+PIXEL_LEFT, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_3,col, color);
+		draw_pixel(framePointer,row+PIXEL_LINE_4,col+PIXEL_RIGHT, color);
 		break;
 	}
-	/*
-	framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2] = color;
-	framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2] = color;
-	framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2] = color;
 
-	framePointer[(alien_bullet[bullet].row)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-	framePointer[(alien_bullet[bullet].row+1)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-	framePointer[(alien_bullet[bullet].row+2)*1280 + (alien_bullet[bullet].col)*2+1] = color;
-
-	framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-	framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-	framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2+1] = color;
-
-	framePointer[(alien_bullet[bullet].row)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-	framePointer[(alien_bullet[bullet].row+1)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-	framePointer[(alien_bullet[bullet].row+2)*1280 + 640 + (alien_bullet[bullet].col)*2] = color;
-	 */
 }
 
-// We are trying to fire a bullet from a bottom-tier alien.
-// Returns the coordinate of the bullet (if any)
-int32_t fire_bottom(unsigned int * framePointer, int r){
-	if(!bottomAlien[r+11].alive){ // If the very bottom alien is dead
+// This sees if our bottom alien at index r is alive to shoot
+int32_t fire_bottom(uint32_t * framePointer, int32_t r){
+	if(!bottomAlien[r+ALIEN_COLUMNS].alive){ // If the very bottom alien is dead
 		if(!bottomAlien[r].alive){// AND the second row alien is also dead
 			return fire_middle(framePointer, r);	// Try to make a higher alien shoot it
 		} else{	// the bottom alien is dead, but the second-row one is alive
-
 			// This is the starting coordinate of the bullet.
-			return (bottomAlien[r].row+7)*640 + (6 + bottomAlien[r].col);
-
-			/*
-			framePointer[(bottomAlien[r].row+7)*1280 + (6 + bottomAlien[r].col)*2] = BLUE;
-			framePointer[(bottomAlien[r].row+8)*1280 + (6 + bottomAlien[r].col)*2] = BLUE;
-			framePointer[(bottomAlien[r].row+9)*1280 + (6 + bottomAlien[r].col)*2] = BLUE;
-
-			framePointer[(bottomAlien[r].row+7)*1280 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[r].row+8)*1280 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[r].row+9)*1280 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-
-			framePointer[(bottomAlien[r].row+7)*1280 + 640 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[r].row+8)*1280 + 640 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[r].row+9)*1280 + 640 + (6 + bottomAlien[r].col)*2+1] = BLUE;
-
-			framePointer[(bottomAlien[r].row+7)*1280 + 640 + (6 + bottomAlien[r].col)*2] = BLUE;
-			framePointer[(bottomAlien[r].row+8)*1280 + 640 + (6 + bottomAlien[r].col)*2] = BLUE;
-			framePointer[(bottomAlien[r].row+9)*1280 + 640 + (6 + bottomAlien[r].col)*2] = BLUE;
-			 */
+			return (bottomAlien[r].row+BULLET_COL_OFFSET+1)*SCREEN_RES_X + (BULLET_COL_OFFSET+bottomAlien[r].col);
 		}
 	} else {	// The very bottom alien is alive and needs to shoot
-
 		// Time to return the starting position of the bullet!
-		return (bottomAlien[r+11].row+7)*640 + (6 + bottomAlien[r+11].col);
-
-		/*
-		framePointer[(bottomAlien[r+11].row+7)*1280 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-		framePointer[(bottomAlien[r+11].row+8)*1280 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-		framePointer[(bottomAlien[r+11].row+9)*1280 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-
-		framePointer[(bottomAlien[r+11].row+7)*1280 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(bottomAlien[r+11].row+8)*1280 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(bottomAlien[r+11].row+9)*1280 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-
-		framePointer[(bottomAlien[r+11].row+7)*1280 + 640 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(bottomAlien[r+11].row+8)*1280 + 640 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(bottomAlien[r+11].row+9)*1280 + 640 + (6 + bottomAlien[r+11].col)*2+1] = BLUE;
-
-		framePointer[(bottomAlien[r+11].row+7)*1280 + 640 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-		framePointer[(bottomAlien[r+11].row+8)*1280 + 640 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-		framePointer[(bottomAlien[r+11].row+9)*1280 + 640 + (6 + bottomAlien[r+11].col)*2] = BLUE;
-		 */
+		return (bottomAlien[r+ALIEN_COLUMNS].row+BULLET_COL_OFFSET+1)*SCREEN_RES_X + (BULLET_COL_OFFSET+bottomAlien[r+ALIEN_COLUMNS].col);
 	}
-	return 0;
-
-	/*
-	int b = r-33;
-		if(bottomAlien[r-33].alive == 0){
-			alien_missle(framePointer);
-		}else{
-			framePointer[(bottomAlien[b].row+7)*1280 + (6 + bottomAlien[b].col)*2] = BLUE;
-			framePointer[(bottomAlien[b].row+8)*1280 + (6 + bottomAlien[b].col)*2] = BLUE;
-			framePointer[(bottomAlien[b].row+9)*1280 + (6 + bottomAlien[b].col)*2] = BLUE;
-
-			framePointer[(bottomAlien[b].row+7)*1280 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[b].row+8)*1280 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[b].row+9)*1280 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-
-			framePointer[(bottomAlien[b].row+7)*1280 + 640 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[b].row+8)*1280 + 640 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-			framePointer[(bottomAlien[b].row+9)*1280 + 640 + (6 + bottomAlien[b].col)*2+1] = BLUE;
-
-			framePointer[(bottomAlien[b].row+7)*1280 + 640 + (6 + bottomAlien[b].col)*2] = BLUE;
-			framePointer[(bottomAlien[b].row+8)*1280 + 640 + (6 + bottomAlien[b].col)*2] = BLUE;
-			framePointer[(bottomAlien[b].row+9)*1280 + 640 + (6 + bottomAlien[b].col)*2] = BLUE;
-		}
-	 */
 }
 
-
-int32_t fire_middle(unsigned int * framePointer, int r){
-	if(!middleAlien[r+11].alive){ // If the very bottom (middle) alien is dead
+// This sees if either middle alien at index r is alive to shoot
+int32_t fire_middle(uint32_t * framePointer, int32_t r){
+	if(!middleAlien[r+ALIEN_COLUMNS].alive){ // If the very bottom (middle) alien is dead
 		if(!middleAlien[r].alive){// AND the second row (middle) alien is dead
 			return fire_top(framePointer, r);	// Top row alien has to fire
 		} else{	// the bottom alien is dead, but the second-row one is alive
 			// This is the starting coordinate of the bullet
-			return (middleAlien[r].row+6)*640 + (6 + middleAlien[r].col);
-
-			/*
-			framePointer[(middleAlien[r].row+6)*1280 + (6 + middleAlien[r].col)*2] = BLUE;
-			framePointer[(middleAlien[r].row+7)*1280 + (6 + middleAlien[r].col)*2] = BLUE;
-			framePointer[(middleAlien[r].row+8)*1280 + (6 + middleAlien[r].col)*2] = BLUE;
-
-			framePointer[(middleAlien[r].row+6)*1280 + (6 + middleAlien[r].col)*2+1] = BLUE;
-			framePointer[(middleAlien[r].row+7)*1280 + (6 + middleAlien[r].col)*2+1] = BLUE;
-			framePointer[(middleAlien[r].row+8)*1280 + (6 + middleAlien[r].col)*2+1] = BLUE;
-
-			framePointer[(middleAlien[r].row+6)*1280 + 640 + (6 + middleAlien[r].col)*2+1] = BLUE;
-			framePointer[(middleAlien[r].row+7)*1280 + 640 + (6 + middleAlien[r].col)*2+1] = BLUE;
-			framePointer[(middleAlien[r].row+8)*1280 + 640 + (6 + middleAlien[r].col)*2+1] = BLUE;
-
-			framePointer[(middleAlien[r].row+6)*1280 + 640 + (6 + middleAlien[r].col)*2] = BLUE;
-			framePointer[(middleAlien[r].row+7)*1280 + 640 + (6 + middleAlien[r].col)*2] = BLUE;
-			framePointer[(middleAlien[r].row+8)*1280 + 640 + (6 + middleAlien[r].col)*2] = BLUE;
-			 */
+			return (middleAlien[r].row+BULLET_COL_OFFSET)*SCREEN_RES_X + (BULLET_COL_OFFSET+middleAlien[r].col);
 		}
 	} else{	// The bottom alien is alive and needs to fire
 		// This is the starting coordinate of the bullet
-		return (middleAlien[r+11].row+6)*640 + (6 + middleAlien[r+11].col);
-		/*
-		framePointer[(middleAlien[r+11].row+6)*1280 + (6 + middleAlien[r+11].col)*2] = BLUE;
-		framePointer[(middleAlien[r+11].row+7)*1280 + (6 + middleAlien[r+11].col)*2] = BLUE;
-		framePointer[(middleAlien[r+11].row+8)*1280 + (6 + middleAlien[r+11].col)*2] = BLUE;
-
-		framePointer[(middleAlien[r+11].row+6)*1280 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(middleAlien[r+11].row+7)*1280 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(middleAlien[r+11].row+8)*1280 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-
-		framePointer[(middleAlien[r+11].row+6)*1280 + 640 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(middleAlien[r+11].row+7)*1280 + 640 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-		framePointer[(middleAlien[r+11].row+8)*1280 + 640 + (6 + middleAlien[r+11].col)*2+1] = BLUE;
-
-		framePointer[(middleAlien[r+11].row+6)*1280 + 640 + (6 + middleAlien[r+11].col)*2] = BLUE;
-		framePointer[(middleAlien[r+11].row+7)*1280 + 640 + (6 + middleAlien[r+11].col)*2] = BLUE;
-		framePointer[(middleAlien[r+11].row+8)*1280 + 640 + (6 + middleAlien[r+11].col)*2] = BLUE;
-		 */
-	}
-	return 0;
-
-
-	/*
-	int m = r-11;
-		if(middleAlien[m].alive == 0){
-			alien_missle(framePointer);
-		}else{
-			framePointer[(middleAlien[m].row+6)*1280 + (6 + middleAlien[m].col)*2] = BLUE;
-			framePointer[(middleAlien[m].row+7)*1280 + (6 + middleAlien[m].col)*2] = BLUE;
-			framePointer[(middleAlien[m].row+8)*1280 + (6 + middleAlien[m].col)*2] = BLUE;
-
-			framePointer[(middleAlien[m].row+6)*1280 + (6 + middleAlien[m].col)*2+1] = BLUE;
-			framePointer[(middleAlien[m].row+7)*1280 + (6 + middleAlien[m].col)*2+1] = BLUE;
-			framePointer[(middleAlien[m].row+8)*1280 + (6 + middleAlien[m].col)*2+1] = BLUE;
-
-			framePointer[(middleAlien[m].row+6)*1280 + 640 + (6 + middleAlien[m].col)*2+1] = BLUE;
-			framePointer[(middleAlien[m].row+7)*1280 + 640 + (6 + middleAlien[m].col)*2+1] = BLUE;
-			framePointer[(middleAlien[m].row+8)*1280 + 640 + (6 + middleAlien[m].col)*2+1] = BLUE;
-
-			framePointer[(middleAlien[m].row+6)*1280 + 640 + (6 + middleAlien[m].col)*2] = BLUE;
-			framePointer[(middleAlien[m].row+7)*1280 + 640 + (6 + middleAlien[m].col)*2] = BLUE;
-			framePointer[(middleAlien[m].row+8)*1280 + 640 + (6 + middleAlien[m].col)*2] = BLUE;
-		}
-	 */
-}
-
-
-int32_t fire_top(unsigned int * framePointer, int r){
-	if(top[r].alive == 0){// Our top alien is dead. Check to see if all top aliens are dead
-		// We failed to fire a missle! return -1
-		return -1;
-	}else{
-		return (top[r].row+6)*640 + (6 + top[r].col);
-		/*
-		framePointer[(top[r].row+6)*1280 + (6 + top[r].col)*2] = BLUE;
-		framePointer[(top[r].row+7)*1280 + (6 + top[r].col)*2] = BLUE;
-		framePointer[(top[r].row+8)*1280 + (6 + top[r].col)*2] = BLUE;
-
-		framePointer[(top[r].row+6)*1280 + (6 + top[r].col)*2+1] = BLUE;
-		framePointer[(top[r].row+7)*1280 + (6 + top[r].col)*2+1] = BLUE;
-		framePointer[(top[r].row+8)*1280 + (6 + top[r].col)*2+1] = BLUE;
-
-		framePointer[(top[r].row+6)*1280 + 640 + (6 + top[r].col)*2+1] = BLUE;
-		framePointer[(top[r].row+7)*1280 + 640 + (6 + top[r].col)*2+1] = BLUE;
-		framePointer[(top[r].row+8)*1280 + 640 + (6 + top[r].col)*2+1] = BLUE;
-
-		framePointer[(top[r].row+6)*1280 + 640 + (6 + top[r].col)*2] = BLUE;
-		framePointer[(top[r].row+7)*1280 + 640 + (6 + top[r].col)*2] = BLUE;
-		framePointer[(top[r].row+8)*1280 + 640 + (6 + top[r].col)*2] = BLUE;
-		 */
+		return (middleAlien[r+ALIEN_COLUMNS].row+BULLET_COL_OFFSET)*SCREEN_RES_X + (BULLET_COL_OFFSET+middleAlien[r+ALIEN_COLUMNS].col);
 	}
 }
 
-/*
-void fire_tank(unsigned int * framePointer){
-	if(!tank_shell.alive){
-		tank_shell.col = tank.col;
-		tank_shell.row = tank.row;
-		tank_shell.alive = true;
-		framePointer[(tank_shell.row-1)*1280 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row-2)*1280 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row-3)*1280 + (7 + tank_shell.col)*2] = WHITE;
-
-		framePointer[(tank_shell.row-1)*1280 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row-2)*1280 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row-3)*1280 + (7 + tank_shell.col)*2+1] = WHITE;
-
-		framePointer[(tank_shell.row-1)*1280 + 640 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row-2)*1280 + 640 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row-3)*1280 + 640 + (7 + tank_shell.col)*2+1] = WHITE;
-
-		framePointer[(tank_shell.row-1)*1280 + 640 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row-2)*1280 + 640 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row-3)*1280 + 640 + (7 + tank_shell.col)*2] = WHITE;
+// This sees to see if our top alien at index r is alive to shoot
+int32_t fire_top(uint32_t * framePointer, int32_t r){
+	if(!top[r].alive){	// Our top alien is dead.
+		return BAD_ADDRESS;		// We failed to fire a missle! return -1
+	}else{				// Our alien is alive!
+		return (top[r].row+BULLET_COL_OFFSET)*SCREEN_RES_X + (BULLET_COL_OFFSET+top[r].col);	// Return good address
 	}
 }
- */
 
-void update_shells(unsigned int * framePointer){
-	int i;
-	for(i=0;i<ALIEN_NUM_BULLETS;i++){
+// Updates alien bullets. erases previous one, increments type, and redraws.
+void aliens_update_bullets(uint32_t * framePointer){
+	int32_t i;								// Declare loop var
+	for(i=0;i<ALIEN_NUM_BULLETS;i++){	// Cycle through all bullets
+		if(alien_bullet[i].row > SCREEN_HEIGHT){	// If bullet off screen
+			alien_bullet[i].alive = false;				// kill it
+		} else if(alien_bullet[i].alive){			// If bullet is alive
+			draw_bullet(framePointer, i, BLACK);		// erase to prep redraw
 
-		if(alien_bullet[i].row > 240){		// If alien bullet is off the screen
-			alien_bullet[i].alive = false;
-		} else if(alien_bullet[i].alive){
-			//	erase bullet
-			draw_bullet(framePointer, i, BLACK);
-			if(alien_bullet[i].bullet_type == cross0){
-				alien_bullet[i].bullet_type = cross1;
-			} else if (alien_bullet[i].bullet_type == cross1){
-				alien_bullet[i].bullet_type = cross3;
-			} else if (alien_bullet[i].bullet_type == cross3){
-				alien_bullet[i].bullet_type = cross2;
-			} else if (alien_bullet[i].bullet_type == cross2){
-				alien_bullet[i].bullet_type = cross0;
-			}else if (alien_bullet[i].bullet_type == lightning0){
-				alien_bullet[i].bullet_type = lightning1;
-			}else if (alien_bullet[i].bullet_type == lightning1){
-				alien_bullet[i].bullet_type = lightning0;
+			switch (alien_bullet[i].bullet_type){	// Increment bullet type
+			case cross0:	// mid, going down
+				alien_bullet[i].bullet_type = cross1;		// bar go down
+				break;
+			case cross1:	// down
+				alien_bullet[i].bullet_type = cross3;		// bar go mid
+				break;
+			case cross2:	// up
+				alien_bullet[i].bullet_type = cross0;		// bar go down
+				break;
+			case cross3:	// mid, going up
+				alien_bullet[i].bullet_type = cross2;		// bar go up
+				break;
+			case lightning0:// left lightning
+				alien_bullet[i].bullet_type = lightning1;			// go right
+				break;
+			case lightning1:// right lightning
+				alien_bullet[i].bullet_type = lightning0;			// go left
+				break;
 			}
-
-			alien_bullet[i].row++;
-			draw_bullet(framePointer, i, BLUE);
-			// redraw the alien bullet now.
+			alien_bullet[i].row++;					// Move bullet down
+			draw_bullet(framePointer, i, WHITE);	// redraw bullet
 		}
 	}
-
-	/*
-	else if(tank_shell.alive){
-		tank_shell.row -= 1;
-
-		framePointer[(tank_shell.row-3)*1280 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row)*1280 + (7 + tank_shell.col)*2] = BLACK;
-
-		framePointer[(tank_shell.row-3)*1280 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row)*1280 + (7 + tank_shell.col)*2+1] = BLACK;
-
-		framePointer[(tank_shell.row-3)*1280 + 640 + (7 + tank_shell.col)*2+1] = WHITE;
-		framePointer[(tank_shell.row)*1280 + 640 + (7 + tank_shell.col)*2+1] = BLACK;
-
-		framePointer[(tank_shell.row-3)*1280 + 640 + (7 + tank_shell.col)*2] = WHITE;
-		framePointer[(tank_shell.row)*1280 + 640 + (7 + tank_shell.col)*2] = BLACK;
-	}
-	 */
 }
-
-
-
-
-
-

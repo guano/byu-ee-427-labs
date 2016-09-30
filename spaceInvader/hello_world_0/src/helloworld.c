@@ -164,7 +164,7 @@ int main()
 	 case'9':
 		 // update all bullets
 		 update_shell(framePointer0);
-		 update_shells(framePointer0);
+		 aliens_update_bullets(framePointer0);
 		 break;
 	 case '7':
 		 //Erode bunker

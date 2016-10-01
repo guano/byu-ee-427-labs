@@ -12,17 +12,20 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void init_tank();
+// Initializes our tank
+void init_tank()
 // moves our tank left by a certain number of pixels
-void move_left(unsigned int * framePointer);
+void move_left(uint32_t * framePointer);
 // moves our tank right by a certain number of pixels
-void move_right(unsigned int * framePointer);
+void move_right(uint32_t * framePointer);
 
 // This simply draws the tank on the screen, where it is at now.
-void draw_tank(unsigned int * framePointer, bool erase);
+void draw_tank(uint32_t * framePointer, bool erase);
 
-void fire_tank(unsigned int * framePointer);
+// This causes the tank to fire a bullet at its present position
+void fire_tank(uint32_t * framePointer);
 
-void update_shell(unsigned int * framePointer);
+// This updates the bullet's position and redraws it to the screen
+void update_shell(uint32_t * framePointer);
 
 #endif /* TANK_H_ */

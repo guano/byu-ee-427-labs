@@ -26,9 +26,12 @@
  (b9  << 9 ) | (b8  << 8 ) | (b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | \
  (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
-static const int tank_15x8[TANK_HEIGHT] = {		// This is how we
-	packword15(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),	// Store the tank 
-	packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),	// drawing data
+ // This seems like a *very bad* way to store the tank data, but this is what
+ // we are doing for the moment.
+static const int tank_15x8[TANK_HEIGHT] =
+{
+	packword15(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),
+	packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),
 	packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),
 	packword15(0,1,1,1,1,1,1,1,1,1,1,1,1,1,0),
 	packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
@@ -38,63 +41,36 @@ static const int tank_15x8[TANK_HEIGHT] = {		// This is how we
 };
 
 #define WORD_WIDTH 15
-
-struct tank{			// The struct for our tank
+struct tank{
 	int row;
 	int col;
 }tank;
 
-struct tank_shell{		// The struct that stores the tank's bullet data
+struct tank_shell{
 	int row;
 	int col;
 	bool alive;
 }tank_shell;
 
 
-// --------------------------------------------
-// Our declaration of functions to be used
-void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
-//
-// --------------------------------------------
-
-
-
-// This is 100% copied from aliens.c. Eventually it needs to move to its own global file
-void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color){
-	#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
-	#define DRAW_PIXEL_ROW 640				// one row offset
-	#define DRAW_PIXEL_DOUBLE 2				// for doubling
-
-	// We draw 4 pixels for every 1 small-screen pixel
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
-
-}
-
-// This initializes our tank at its proper location
 void init_tank(){
-	tank.row = 210;		// Tank starts at this row
-	tank.col = 160;		// and column
+	tank.row = 210;
+	tank.col = 160;
 }
 
 // This draws (or erases, via the erase bool) an entire tank.
-void draw_tank(uint32_t * framePointer, bool erase){
+void draw_tank(unsigned int * framePointer, bool erase){
 	// Color is either green or black depending on whether erase happens.
 	int color = erase ? BLACK : GREEN ;
 	int row, col;
 	for(row=0;row<TANK_HEIGHT;row++){
 		for(col=0;col<WORD_WIDTH;col++){
 			if ((tank_15x8[row] & (1<<(WORD_WIDTH-col-1)))) {
-				draw_pixel(framePointer, row+tank.row,col+tank.col,color);
-				/*
 				framePointer[(row+tank.row)*640*2 + (col + tank.col)*2] = color;
 				framePointer[(row+tank.row)*640*2 + (col + tank.col)*2 + 1] = color;
 
 				framePointer[(row+tank.row)*640*2 + 640 + (col + tank.col)*2] = color;
 				framePointer[(row+tank.row)*640*2 + 640 + (col + tank.col)*2+1] = color;
-				*/
 			}
 		}
 	}
@@ -102,16 +78,13 @@ void draw_tank(uint32_t * framePointer, bool erase){
 
 
 // moves our tank left by a certain number of pixels
-void move_left(uint32_t * framePointer){
-	tank.col --;
+void move_left(unsigned int * framePointer){
+	tank.col -= 1;
 	int row;
 	for(row = 0; row < TANK_HEIGHT; row++){
 		switch (row){
 		case 0:
-
-			draw_pixel(framePointer, row+tank.row, 7 + tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 8 + tank.col, BLACK);
-/*			framePointer[(row+tank.row)*640*2 + 640 + (7 + tank.col)*2] = GREEN;
+			framePointer[(row+tank.row)*640*2 + 640 + (7 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (8 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (7 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (8 + tank.col)*2+1] = BLACK;
@@ -120,12 +93,8 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (8 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (7 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (8 + tank.col)*2+1] = BLACK;
-*/
 			break;
 		case 1:
-			draw_pixel(framePointer, row+tank.row, 6+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 9+tank.col, BLACK);
-/*
 			framePointer[(row+tank.row)*640*2 + 640 + (6 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (9 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (6 + tank.col)*2+1] = GREEN;
@@ -135,12 +104,9 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (9 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (6 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (9 + tank.col)*2+1] = BLACK;
-*/
+
 			break;
 		case 2:
-			draw_pixel(framePointer, row+tank.row, 6+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 9+tank.col, BLACK);
-/*
 			framePointer[(row+tank.row)*640*2 + 640 + (6 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (9 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (6 + tank.col)*2+1] = GREEN;
@@ -150,12 +116,9 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (9 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (6 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (9 + tank.col)*2+1] = BLACK;
-*/
+
 			break;
 		case 3:
-			draw_pixel(framePointer, row+tank.row, 1+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 14+tank.col, BLACK)
-/*
 			framePointer[(row+tank.row)*640*2 + 640 + (1 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (14 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (1 + tank.col)*2+1] = GREEN;
@@ -165,11 +128,9 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (14 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (1 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (14 + tank.col)*2+1] = BLACK;
-*/
+
 			break;
-		case 4: // Cases 4, 5, 6, and 7 are all identical.
-/*			draw_pixel(framePointer, row+tank.row, 0+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 15+tank.col, BLACK);
+		case 4:
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2+1] = GREEN;
@@ -179,11 +140,9 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (0 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2+1] = BLACK;
-			break;*/
+
+			break;
 		case 5:
-/*			draw_pixel(framePointer, row+tank.row, 0+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 15+tank.col, BLACK);
-
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2+1] = GREEN;
@@ -194,9 +153,8 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (0 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2+1] = BLACK;
 
-			break;*/
+			break;
 		case 6:
-/*			draw_pixel(framePointer, row+tank.row, 0+t)
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2+1] = GREEN;
@@ -207,12 +165,9 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (0 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2+1] = BLACK;
 
-			break;*/
+			break;
 		case 7:
-			draw_pixel(framePointer, row+tank.row, 0+tank.col, GREEN);
-			draw_pixel(framePointer, row+tank.row, 15+tank.col, BLACK);
-
-/*			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2] = GREEN;
+			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + 640 + (0 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + 640 + (15 + tank.col)*2+1] = BLACK;
@@ -221,123 +176,105 @@ void move_left(uint32_t * framePointer){
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2] = BLACK;
 			framePointer[(row+tank.row)*640*2 + (0 + tank.col)*2+1] = GREEN;
 			framePointer[(row+tank.row)*640*2 + (15 + tank.col)*2+1] = BLACK;
-*/
+
 			break;
 		}
 	}
 }
 
 //moves our tank right by a certain number of pixels
-void move_right(uint32_t * framePointer){
+void move_right(unsigned int * framePointer){
 
-		tank.col ++;	// Move our tank right by a single pixel
+		tank.col += 1;
 
-		draw_pixel(framePointer, 0+tank.row, 7+tank.col, GREEN);
-		draw_pixel(framePointer, 0+tank.row, 6+tank.col, BLACK);
-/*
 		framePointer[(0+tank.row)*640*2 + 640 + (7 + tank.col)*2] = GREEN;
 		framePointer[(0+tank.row)*640*2 + 640 + (6 + tank.col)*2] = BLACK;
 		framePointer[(0+tank.row)*640*2 + 640 + (7 + tank.col)*2+1] = GREEN;
 		framePointer[(0+tank.row)*640*2 + 640 + (6 + tank.col)*2+1] = BLACK;
+
 		framePointer[(0+tank.row)*640*2 + (7 + tank.col)*2] = GREEN;
 		framePointer[(0+tank.row)*640*2 + (6 + tank.col)*2] = BLACK;
 		framePointer[(0+tank.row)*640*2 + (7 + tank.col)*2+1] = GREEN;
 		framePointer[(0+tank.row)*640*2 + (6 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 1+tank.row, 8+tank.col, GREEN);
-		draw_pixel(framePointer, 1+tank.row, 5+tank.col, BLACK);
-		/*
 		framePointer[(1+tank.row)*640*2 + 640 + (8 + tank.col)*2] = GREEN;
 		framePointer[(1+tank.row)*640*2 + 640 + (5 + tank.col)*2] = BLACK;
 		framePointer[(1+tank.row)*640*2 + 640 + (8 + tank.col)*2+1] = GREEN;
 		framePointer[(1+tank.row)*640*2 + 640 + (5 + tank.col)*2+1] = BLACK;
+
 		framePointer[(1+tank.row)*640*2 + (8 + tank.col)*2] = GREEN;
 		framePointer[(1+tank.row)*640*2 + (5 + tank.col)*2] = BLACK;
 		framePointer[(1+tank.row)*640*2 + (8 + tank.col)*2+1] = GREEN;
 		framePointer[(1+tank.row)*640*2 + (5 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 2+tank.row, 8+tank.col, GREEN);
-		draw_pixel(framePointer, 2+tank.row, 5+tank.col, BLACK);
-		/*
+
 		framePointer[(2+tank.row)*640*2 + 640 + (8 + tank.col)*2] = GREEN;
 		framePointer[(2+tank.row)*640*2 + 640 + (5 + tank.col)*2] = BLACK;
 		framePointer[(2+tank.row)*640*2 + 640 + (8 + tank.col)*2+1] = GREEN;
 		framePointer[(2+tank.row)*640*2 + 640 + (5 + tank.col)*2+1] = BLACK;
+
 		framePointer[(2+tank.row)*640*2 + (8 + tank.col)*2] = GREEN;
 		framePointer[(2+tank.row)*640*2 + (5 + tank.col)*2] = BLACK;
 		framePointer[(2+tank.row)*640*2 + (8 + tank.col)*2+1] = GREEN;
 		framePointer[(2+tank.row)*640*2 + (5 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 3+tank.row, 13+tank.col, GREEN);
-		draw_pixel(framePointer, 3+tank.row, 0+tank.col, BLACK);
-		/*
+
 		framePointer[(3+tank.row)*640*2 + 640 + (13 + tank.col)*2] = GREEN;
 		framePointer[(3+tank.row)*640*2 + 640 + (0 + tank.col)*2] = BLACK;
 		framePointer[(3+tank.row)*640*2 + 640 + (13 + tank.col)*2+1] = GREEN;
 		framePointer[(3+tank.row)*640*2 + 640 + (0 + tank.col)*2+1] = BLACK;
+
 		framePointer[(3+tank.row)*640*2 + (13 + tank.col)*2] = GREEN;
 		framePointer[(3+tank.row)*640*2 + (0 + tank.col)*2] = BLACK;
 		framePointer[(3+tank.row)*640*2 + (13 + tank.col)*2+1] = GREEN;
 		framePointer[(3+tank.row)*640*2 + (0 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 4+tank.row, 14+tank.col, GREEN);
-		draw_pixel(framePointer, 4+tank.row, -1+tank.col, BLACK);
-		/*
+
 		framePointer[(4+tank.row)*640*2 + 640 + (14 + tank.col)*2] = GREEN;
 		framePointer[(4+tank.row)*640*2 + 640 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(4+tank.row)*640*2 + 640 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(4+tank.row)*640*2 + 640 + (-1 + tank.col)*2+1] = BLACK;
+
 		framePointer[(4+tank.row)*640*2 + (14 + tank.col)*2] = GREEN;
 		framePointer[(4+tank.row)*640*2 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(4+tank.row)*640*2 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(4+tank.row)*640*2 + (-1 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 5+tank.row, 14+tank.col, GREEN);
-		draw_pixel(framePointer, 5+tank.row, -1+tank.col, BLACK);
-/*
+
 		framePointer[(5+tank.row)*640*2 + 640 + (14 + tank.col)*2] = GREEN;
 		framePointer[(5+tank.row)*640*2 + 640 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(5+tank.row)*640*2 + 640 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(5+tank.row)*640*2 + 640 + (-1 + tank.col)*2+1] = BLACK;
+
 		framePointer[(5+tank.row)*640*2 + (14 + tank.col)*2] = GREEN;
 		framePointer[(5+tank.row)*640*2 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(5+tank.row)*640*2 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(5+tank.row)*640*2 + (-1 + tank.col)*2+1] = BLACK;
-*/
 
-		draw_pixel(framePointer, 6+tank.row, 14+tank.col, GREEN);
-		draw_pixel(framePointer, 6+tank.row, -1+tank.col, BLACK);
-		/*
+
 		framePointer[(6+tank.row)*640*2 + 640 + (14 + tank.col)*2] = GREEN;
 		framePointer[(6+tank.row)*640*2 + 640 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(6+tank.row)*640*2 + 640 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(6+tank.row)*640*2 + 640 + (-1 + tank.col)*2+1] = BLACK;
+
 		framePointer[(6+tank.row)*640*2 + (14 + tank.col)*2] = GREEN;
 		framePointer[(6+tank.row)*640*2 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(6+tank.row)*640*2 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(6+tank.row)*640*2 + (-1 + tank.col)*2+1] = BLACK;
-*/
-	
-		draw_pixel(framePointer, 7+tank.row, 14+tank.col, GREEN);
-		draw_pixel(framePointer, 7+tank.row, -1+tank.col, BLACK);
-		/*
+
+
 		framePointer[(7+tank.row)*640*2 + 640 + (14 + tank.col)*2] = GREEN;
 		framePointer[(7+tank.row)*640*2 + 640 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(7+tank.row)*640*2 + 640 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(7+tank.row)*640*2 + 640 + (-1 + tank.col)*2+1] = BLACK;
+
 		framePointer[(7+tank.row)*640*2 + (14 + tank.col)*2] = GREEN;
 		framePointer[(7+tank.row)*640*2 + (-1 + tank.col)*2] = BLACK;
 		framePointer[(7+tank.row)*640*2 + (14 + tank.col)*2+1] = GREEN;
 		framePointer[(7+tank.row)*640*2 + (-1 + tank.col)*2+1] = BLACK;
-		*/
 }
 
-void fire_tank(uint32_t * framePointer){
+void fire_tank(unsigned int * framePointer){
 	if(!tank_shell.alive){
 		tank_shell.col = tank.col;
 		tank_shell.row = tank.row;
@@ -360,7 +297,7 @@ void fire_tank(uint32_t * framePointer){
 	}
 }
 
-void update_shell(uint32_t * framePointer){
+void update_shell(unsigned int * framePointer){
 	if(tank_shell.row<0){
 		tank_shell.alive = false;
 	}

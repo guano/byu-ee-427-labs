@@ -43,17 +43,13 @@
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="helloworld.c" partName="helloworld.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/helloworld.c" title="helloworld.c" tooltip="hello_world_0/src/helloworld.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/helloworld.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="5259" selectionTopPixel="1071"/>
+<editorState selectionHorizontalPixel="0" selectionLength="13" selectionOffset="5259" selectionTopPixel="799"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="bunkers.c" partName="bunkers.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/bunkers.c" title="bunkers.c" tooltip="hello_world_0/src/bunkers.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="bunkers.c" partName="bunkers.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/bunkers.c" title="bunkers.c" tooltip="hello_world_0/src/bunkers.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/bunkers.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="9" selectionOffset="5568" selectionTopPixel="2210"/>
+<editorState selectionHorizontalPixel="0" selectionLength="9" selectionOffset="5568" selectionTopPixel="1972"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" partName="tank.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/tank.c" title="tank.c" tooltip="hello_world_0/src/tank.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/tank.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1254" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" partName="interface.c" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/interface.c" title="interface.c" tooltip="hello_world_0/src/interface.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" partName="interface.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/interface.c" title="interface.c" tooltip="hello_world_0/src/interface.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/interface.c"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1362" selectionTopPixel="0"/>
 </editor>
@@ -61,9 +57,13 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/bunkers.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="349" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tank.h" partName="tank.h" path="C:/Users/superman/Desktop/spaceInvader2/hello_world_0/src/tank.h" title="tank.h" tooltip="hello_world_0/src/tank.h" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="tank.h" partName="tank.h" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/tank.h" title="tank.h" tooltip="hello_world_0/src/tank.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/tank.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="666" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="175" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" partName="tank.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvader/hello_world_0/src/tank.c" title="tank.c" tooltip="hello_world_0/src/tank.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_0/src/tank.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="825" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -81,7 +81,6 @@
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
 <category IMemento.internal.id="Errors"/>
-<category IMemento.internal.id="Warnings"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -228,43 +227,14 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/helloworld.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/bunkers.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/bunkers.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/helloworld.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/interface.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/bunkers.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank_new.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_0/src/tank_old.c"/>
 </editors>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="5149" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="26958" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="20681" y="11"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="9013" y="43"/>
-</item>
-<item historyLabel="aliens.h" index="1">
-<position info="not_deleted" x="463" y="43"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position/>
-</item>
-<item historyLabel="aliens.h" index="1">
-<position info="not_deleted" x="463" y="43"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="21030" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="21430" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position info="not_deleted" x="23253" y="0"/>
-</item>
-<item historyLabel="aliens.c" index="0">
-<position/>
-</item>
 <item historyLabel="aliens.h" index="1">
 <position info="not_deleted" x="463" y="43"/>
 </item>
@@ -376,8 +346,44 @@
 <item historyLabel="bunkers.h" index="3">
 <position info="not_deleted" x="349" y="0"/>
 </item>
-<item active="true" historyLabel="tank.c" index="4">
+<item historyLabel="tank.c" index="4">
 <position info="not_deleted" x="13648" y="0"/>
+</item>
+<item historyLabel="tank.c" index="4">
+<position info="not_deleted" x="13653" y="0"/>
+</item>
+<item historyLabel="bunkers.c" index="5">
+<position info="not_deleted" x="5568" y="9"/>
+</item>
+<item historyLabel="helloworld.c" index="6">
+<position info="not_deleted" x="5259" y="13"/>
+</item>
+<item historyLabel="interface.c" index="7">
+<position info="not_deleted" x="1362" y="0"/>
+</item>
+<item historyLabel="bunkers.h" index="8">
+<position info="not_deleted" x="349" y="0"/>
+</item>
+<item historyLabel="tank.h" index="9">
+<position info="not_deleted" x="666" y="0"/>
+</item>
+<item historyLabel="tank.c" index="4">
+<position info="not_deleted" x="273" y="0"/>
+</item>
+<item historyLabel="tank_new.c" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="tank_old.c" index="11">
+<position info="not_deleted" x="273" y="0"/>
+</item>
+<item historyLabel="tank.h" index="9">
+<position info="not_deleted" x="666" y="0"/>
+</item>
+<item historyLabel="tank.c" index="4">
+<position info="not_deleted" x="825" y="0"/>
+</item>
+<item active="true" historyLabel="tank.h" index="9">
+<position info="not_deleted" x="666" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -396,6 +402,12 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" tooltip="hello_world_0/src/tank.c">
+<persistable path="/hello_world_0/src/tank.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tank_new.c" tooltip="hello_world_0/src/tank_new.c">
+<persistable path="/hello_world_0/src/tank_new.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="aliens.h" tooltip="hello_world_0/src/aliens.h">
 <persistable path="/hello_world_0/src/aliens.h"/>
 </file>
@@ -417,9 +429,6 @@
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="aliens.c" tooltip="hello_world_0/src/aliens.c">
 <persistable path="/hello_world_0/src/aliens.c"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tank.c" tooltip="hello_world_0/src/tank.c">
-<persistable path="/hello_world_0/src/tank.c"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="renderer.h" tooltip="hello_world_0/src/renderer.h">
 <persistable path="/hello_world_0/src/renderer.h"/>
 </file>
@@ -437,9 +446,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="interface.h" tooltip="hello_world_0/src/interface.h">
 <persistable path="/hello_world_0/src/interface.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="xaxivdma.h" tooltip="hello_world_bsp_0/microblaze_0/include/xaxivdma.h">
-<persistable path="/hello_world_bsp_0/microblaze_0/include/xaxivdma.h"/>
 </file>
 </mruList>
 </workbench>

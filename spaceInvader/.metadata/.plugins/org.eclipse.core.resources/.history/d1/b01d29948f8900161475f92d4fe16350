@@ -380,3 +380,4 @@ void update_shell(uint32_t * framePointer){
 		framePointer[(tank_shell.row)*1280 + 640 + (7 + tank_shell.col)*2] = BLACK;
 	}
 }
+}

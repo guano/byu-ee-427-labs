@@ -53,7 +53,7 @@ struct tank_shell{		// The struct that stores the tank's bullet data
 
 // --------------------------------------------
 // Our declaration of functions to be used
-void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
+void draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color)
 //
 // --------------------------------------------
 

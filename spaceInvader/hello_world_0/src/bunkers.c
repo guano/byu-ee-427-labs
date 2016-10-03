@@ -14,8 +14,9 @@
 
 #include "bunkers.h"
 
-#define BUNKER_HEIGHT 18
-#define BUNKER_DAMAGE_HEIGHT 6
+#define BUNKER_HEIGHT 18		// Bunkers are 18 pixels high
+#define BUNKER_DAMAGE_HEIGHT 6	// Each bunnker square is size 6
+#define BUNKER_ROW 175			// All bunkers are at row 175
 #define GREEN 0x0000FF00
 #define BLACK 0x00000000
 
@@ -23,13 +24,13 @@
 	((b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
 
+// Necessary for storing the bunker data
 #define packword24(b23,b22,b21,b20,b19,b18,b17,b16,b15,b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \
 		((b23 << 23) | (b22 << 22) | (b21 << 21) | (b20 << 20) | (b19 << 19) | (b18 << 18) | (b17 << 17) | (b16 << 16) |						  \
 				(b15 << 15) | (b14 << 14) | (b13 << 13) | (b12 << 12) | (b11 << 11) | (b10 << 10) | (b9  << 9 ) | (b8  << 8 ) |						  \
 				(b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 // Shape of the entire bunker.
-static const int bunker_24x18[BUNKER_HEIGHT] =
-{
+static const int bunker_24x18[BUNKER_HEIGHT] = {
 		packword24(0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0),
 		packword24(0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0),
 		packword24(0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0),
@@ -47,67 +48,50 @@ static const int bunker_24x18[BUNKER_HEIGHT] =
 		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
 		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
 		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
-		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1)
-};
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1)};
 
+// First time a bunker is hit, the first damage that happens
 static const int bunkerDamage0_6x6[BUNKER_DAMAGE_HEIGHT] = {
-	packword6(0,1,1,0,0,0),
-	packword6(0,0,0,0,0,1),
-	packword6(1,1,0,1,0,0),
-	packword6(1,0,0,0,0,0),
-	packword6(0,0,1,1,0,0),
-	packword6(0,0,0,0,1,0)
-};
+	packword6(0,1,1,0,0,0),	packword6(0,0,0,0,0,1),	packword6(1,1,0,1,0,0),
+	packword6(1,0,0,0,0,0),	packword6(0,0,1,1,0,0),	packword6(0,0,0,0,1,0)};
 
+// Second time a bunker is hit, this is its damage
 static const int bunkerDamage1_6x6[BUNKER_DAMAGE_HEIGHT] = {
-	packword6(1,1,1,0,1,0),
-	packword6(1,0,1,0,0,1),
-	packword6(1,1,0,1,1,1),
-	packword6(1,0,0,0,0,0),
-	packword6(0,1,1,1,0,1),
-	packword6(0,1,1,0,1,0)
-};
+	packword6(1,1,1,0,1,0),	packword6(1,0,1,0,0,1),	packword6(1,1,0,1,1,1),
+	packword6(1,0,0,0,0,0),	packword6(0,1,1,1,0,1),	packword6(0,1,1,0,1,0)};
 
+// Third time a bunker is hit, this is its damage
 static const int bunkerDamage2_6x6[BUNKER_DAMAGE_HEIGHT] = {
-	packword6(1,1,1,1,1,1),
-	packword6(1,0,1,1,0,1),
-	packword6(1,1,0,1,1,1),
-	packword6(1,1,0,1,1,0),
-	packword6(0,1,1,1,0,1),
-	packword6(1,1,1,1,1,1)
-};
+	packword6(1,1,1,1,1,1),	packword6(1,0,1,1,0,1),	packword6(1,1,0,1,1,1),
+	packword6(1,1,0,1,1,0),	packword6(0,1,1,1,0,1),	packword6(1,1,1,1,1,1)};
 
+// Fourth time a bunker is hit, this is its damage
 static const int bunkerDamage3_6x6[BUNKER_DAMAGE_HEIGHT] = {
-	packword6(1,1,1,1,1,1),
-	packword6(1,1,1,1,1,1),
-	packword6(1,1,1,1,1,1),
-	packword6(1,1,1,1,1,1),
-	packword6(1,1,1,1,1,1),
-	packword6(1,1,1,1,1,1)
-};
+	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),
+	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1)};
 
 #define DAMAGE_WORD_WIDTH 6
 #define WORD_WIDTH 24
 #define NUM_OF_BUNKERS 4
 #define LOC_BUNKER_ONE 60	// Divided this by 2 because screen is half
-struct bunker{
-	int row;
-	int col;
-	int damage;
-	int pixel[];
+
+struct bunker{		// Holds the data for each bunker
+	int row;		// Where it is
+	int col;		// on the screen
+	int damage;		// What damage level the bunker is at
+	int pixel[];	// A bunker is made out of squares- whether it's alive/dead
 }bunker[3];
-void bunker1(int r,unsigned int * framePointer );
 
-
+// Initializes the bunkers
 void init_bunkers(unsigned int * framePointer){
-	int i, loc = LOC_BUNKER_ONE;
+	int i, loc = LOC_BUNKER_ONE;	//
 	for(i = 0; i < NUM_OF_BUNKERS ; i++){
-		bunker[i].row = 175;	// Divided by 2 because screen is half
-		bunker[i].col = loc;
-		bunker[i].damage = 0;
-		loc += LOC_BUNKER_ONE;
+		bunker[i].row = BUNKER_ROW;	// Divided by 2 because screen is half
+		bunker[i].col = loc;		// which column it is at
+		bunker[i].damage = 0;		// Start undamaged
+		loc += LOC_BUNKER_ONE;		// Add by the offset
 	}
-	build_bunkers(framePointer);
+	build_bunkers(framePointer);	// Draw the bunkers on the screen
 }
 
 

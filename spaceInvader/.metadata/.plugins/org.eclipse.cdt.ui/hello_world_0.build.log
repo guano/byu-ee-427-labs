@@ -2,24 +2,52 @@
 **** Build of configuration Debug for project hello_world_0 ****
 
 make all 
-Building file: ../src/helloworld.c
+Building file: ../src/bunkers.c
 Invoking: MicroBlaze gcc compiler
-mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.d" -o"src/helloworld.o" "../src/helloworld.c"
-../src/helloworld.c: In function 'init_tank':
-../src/helloworld.c:43: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
-../src/helloworld.c:35: error: declaration for parameter 'print' but no such parameter
-../src/aliens.h:21: error: declaration for parameter 'aliens_update_bullets' but no such parameter
-../src/aliens.h:20: error: declaration for parameter 'alien_missle' but no such parameter
-../src/aliens.h:19: error: declaration for parameter 'aliens_kill' but no such parameter
-../src/aliens.h:18: error: declaration for parameter 'aliens_right' but no such parameter
-../src/aliens.h:17: error: declaration for parameter 'aliens_left' but no such parameter
-../src/aliens.h:16: error: declaration for parameter 'alien_init' but no such parameter
-../src/interface.h:16: error: declaration for parameter 'draw_tanks' but no such parameter
-../src/interface.h:14: error: declaration for parameter 'draw_line' but no such parameter
-../src/tank.h:29: error: declaration for parameter 'update_shell' but no such parameter
-../src/tank.h:26: error: declaration for parameter 'fire_tank' but no such parameter
-../src/tank.h:23: error: declaration for parameter 'draw_tank' but no such parameter
-../src/tank.h:20: error: declaration for parameter 'move_right' but no such parameter
-../src/tank.h:18: error: declaration for parameter 'move_left' but no such parameter
-../src/helloworld.c:180: error: expected '{' at end of input
-make: *** [src/helloworld.o] Error 1
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/bunkers.d" -MT"src/bunkers.d" -o"src/bunkers.o" "../src/bunkers.c"
+../src/bunkers.c: In function 'rand_bunker':
+../src/bunkers.c:130: warning: implicit declaration of function 'rand'
+../src/bunkers.c:133: warning: implicit declaration of function 'bunker0'
+../src/bunkers.c:136: warning: implicit declaration of function 'bunker1'
+../src/bunkers.c:139: warning: implicit declaration of function 'bunker2'
+../src/bunkers.c:142: warning: implicit declaration of function 'bunker3'
+../src/bunkers.c: At top level:
+../src/bunkers.c:151: warning: conflicting types for 'bunker1'
+../src/bunkers.c:136: warning: previous implicit declaration of 'bunker1' was here
+../src/bunkers.c: In function 'bunker1':
+../src/bunkers.c:157: warning: implicit declaration of function 'degrigation_patern'
+../src/bunkers.c: At top level:
+../src/bunkers.c:237: warning: conflicting types for 'bunker0'
+../src/bunkers.c:133: warning: previous implicit declaration of 'bunker0' was here
+../src/bunkers.c:324: warning: conflicting types for 'bunker2'
+../src/bunkers.c:139: warning: previous implicit declaration of 'bunker2' was here
+../src/bunkers.c:410: warning: conflicting types for 'bunker3'
+../src/bunkers.c:142: warning: previous implicit declaration of 'bunker3' was here
+../src/bunkers.c:496: warning: conflicting types for 'degrigation_patern'
+../src/bunkers.c:157: warning: previous implicit declaration of 'degrigation_patern' was here
+Finished building: ../src/bunkers.c
+' '
+Building target: hello_world_0.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../hello_world_bsp_0/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"hello_world_0.elf"  ./src/aliens.o ./src/bunkers.o ./src/helloworld.o ./src/interface.o ./src/platform.o ./src/renderer.o ./src/tank.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: hello_world_0.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size hello_world_0.elf  |tee "hello_world_0.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  46048	   1420	   8704	  56172	   db6c	hello_world_0.elf
+Finished building: hello_world_0.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck hello_world_0.elf -hw ../../SpaceInvadersHW_hw_platform/system.xml -pe microblaze_0  |tee "hello_world_0.elf.elfcheck"
+elfcheck
+Xilinx EDK 13.4 Build EDK_O.87xd
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../SpaceInvadersHW_hw_platform/system.xml -pe
+microblaze_0 hello_world_0.elf 
+
+ELF file	: hello_world_0.elf
+elfcheck passed.
+Finished building: hello_world_0.elf.elfcheck
+' '

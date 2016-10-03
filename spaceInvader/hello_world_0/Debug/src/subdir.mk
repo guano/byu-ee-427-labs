@@ -10,8 +10,7 @@ C_SRCS += \
 ../src/interface.c \
 ../src/platform.c \
 ../src/renderer.c \
-../src/tank.c \
-../src/tank_old.c 
+../src/tank.c 
 
 LD_SRCS += \
 ../src/lscript.ld 
@@ -23,8 +22,7 @@ OBJS += \
 ./src/interface.o \
 ./src/platform.o \
 ./src/renderer.o \
-./src/tank.o \
-./src/tank_old.o 
+./src/tank.o 
 
 C_DEPS += \
 ./src/aliens.d \
@@ -33,8 +31,7 @@ C_DEPS += \
 ./src/interface.d \
 ./src/platform.d \
 ./src/renderer.d \
-./src/tank.d \
-./src/tank_old.d 
+./src/tank.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

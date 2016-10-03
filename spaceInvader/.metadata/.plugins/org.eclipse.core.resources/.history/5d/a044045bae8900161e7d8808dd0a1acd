@@ -1,0 +1,632 @@
+/*
+ * bunkers.c
+ *
+ *  Created on: Sep 21, 2016
+ *      Author: superman
+ */
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "platform.h"
+#include "xparameters.h"
+#include "xaxivdma.h"
+#include "xio.h"
+#include "time.h"
+#include "unistd.h"
+
+#include "bunkers.h"
+
+#define BUNKER_HEIGHT 18		// Bunkers are 18 pixels high
+#define BUNKER_DAMAGE_HEIGHT 6	// Each bunnker square is size 6
+#define BUNKER_ROW 175			// All bunkers are at row 175
+#define BUNKER_SIZE 10			// All bunkers have 10 sections
+#define BUNKER_0 0				// Gotta have
+#define BUNKER_1 1				// constants to
+#define BUNKER_2 2				// represent
+#define BUNKER_3 3				// each bunker
+#define BUNKER_DAMAGE_0 0		// Gotta have
+#define BUNKER_DAMAGE_1 1		// different
+#define BUNKER_DAMAGE_2 2		// damage
+#define BUNKER_DAMAGE_3 3		// values
+
+#define GREEN 0x0000FF00		// Hex value for green
+#define BLACK 0x00000000		// Hex value for black
+
+#define DAMAGE_WORD_WIDTH 6
+#define WORD_WIDTH 24
+#define NUM_OF_BUNKERS 4
+#define LOC_BUNKER_ONE 60	// Divided this by 2 because screen is half
+
+// ---------------------------------------------
+//	hardcoded static const stuff
+
+// Necessary for storing bunker damage data
+#define packword6(b5,b4,b3,b2,b1,b0) \
+		((b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
+
+// Necessary for storing the bunker data
+#define packword24(b23,b22,b21,b20,b19,b18,b17,b16,b15,b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \
+		((b23 << 23) | (b22 << 22) | (b21 << 21) | (b20 << 20) | (b19 << 19) | (b18 << 18) | (b17 << 17) | (b16 << 16) |						  \
+				(b15 << 15) | (b14 << 14) | (b13 << 13) | (b12 << 12) | (b11 << 11) | (b10 << 10) | (b9  << 9 ) | (b8  << 8 ) |						  \
+				(b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
+// Shape of the entire bunker.
+static const int bunker_24x18[BUNKER_HEIGHT] = {
+		packword24(0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0),
+		packword24(0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0),
+		packword24(0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0),
+		packword24(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1),
+		packword24(1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1)};
+
+// First time a bunker is hit, the first damage that happens
+static const int bunkerDamage0_6x6[BUNKER_DAMAGE_HEIGHT] = {
+		packword6(0,1,1,0,0,0),	packword6(0,0,0,0,0,1),	packword6(1,1,0,1,0,0),
+		packword6(1,0,0,0,0,0),	packword6(0,0,1,1,0,0),	packword6(0,0,0,0,1,0)};
+
+// Second time a bunker is hit, this is its damage
+static const int bunkerDamage1_6x6[BUNKER_DAMAGE_HEIGHT] = {
+		packword6(1,1,1,0,1,0),	packword6(1,0,1,0,0,1),	packword6(1,1,0,1,1,1),
+		packword6(1,0,0,0,0,0),	packword6(0,1,1,1,0,1),	packword6(0,1,1,0,1,0)};
+
+// Third time a bunker is hit, this is its damage
+static const int bunkerDamage2_6x6[BUNKER_DAMAGE_HEIGHT] = {
+		packword6(1,1,1,1,1,1),	packword6(1,0,1,1,0,1),	packword6(1,1,0,1,1,1),
+		packword6(1,1,0,1,1,0),	packword6(0,1,1,1,0,1),	packword6(1,1,1,1,1,1)};
+
+// Fourth time a bunker is hit, this is its damage
+static const int bunkerDamage3_6x6[BUNKER_DAMAGE_HEIGHT] = {
+		packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),
+		packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1),	packword6(1,1,1,1,1,1)};
+
+//	End hardcoded static const stuff
+// -----------------------------------------------------
+
+struct bunker{		// Holds the data for each bunker
+	int row;		// Where it is
+	int col;		// on the screen
+	int damage;		// What damage level the bunker is at
+	int pixel[];	// A bunker is made out of squares- whether it's alive/dead
+}bunker[3];
+
+
+// These arrays show how decayed each part of the bunker is.
+int bunker_zero[BUNKER_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int bunker_one[BUNKER_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int bunker_two[BUNKER_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int bunker_three[BUNKER_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+// -----------------------------------------------------
+// Declaration for internal functions
+void bunkers_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
+void bunker0(int r, uint32_t * framePointer);
+void bunker1(int r, uint32_t * framePointer);
+void bunker2(int r, uint32_t * framePointer);
+void bunker3(int r, uint32_t * framePointer);
+void degrigation_patern(int row, int col, int bunker_number, int damage, uint32_t * framePointer);
+void bunker_hit(uint32_t * framePointer, int location, int bunker_num);
+// End internal function declaration
+// -----------------------------------------------------
+
+/*
+ * Draws a pixel on the screen. To compensate for our double-resolution screen,
+ * it must draw 4 real pixels for every in-came pixel.
+ */
+void bunkers_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color){
+#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
+#define DRAW_PIXEL_ROW 640				// one row offset
+#define DRAW_PIXEL_DOUBLE 2				// for doubling
+
+	// We draw 4 pixels for every 1 small-screen pixel
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
+}
+
+// Initializes the bunkers
+void init_bunkers(uint32_t * framePointer){
+	int i, loc = LOC_BUNKER_ONE;	//
+	for(i = 0; i < NUM_OF_BUNKERS ; i++){
+		bunker[i].row = BUNKER_ROW;	// Divided by 2 because screen is half
+		bunker[i].col = loc;		// which column it is at
+		bunker[i].damage = 0;		// Start undamaged
+		loc += LOC_BUNKER_ONE;		// Add by the offset
+	}
+	build_bunkers(framePointer);	// Draw the bunkers on the screen
+}
+
+
+void build_bunkers(uint32_t * framePointer){
+	int row, col, b;							// Declare loop vars
+	for(row=0;row<18;row++){					// Go through rows
+		for(col=0;col<24;col++){				// Go through cols
+			if ((bunker_24x18[row] & (1<<(WORD_WIDTH-col-1)))) {// if pixel
+				for(b = 0; b <NUM_OF_BUNKERS; b++){// draw that pixel every time
+					bunkers_draw_pixel(framePointer,row+bunker[b].row,col+bunker[b].col,GREEN);
+				}
+			}
+		}
+	}
+}
+
+// This randomly selects a bunker and randomly destroys part of it
+void rand_bunker(uint32_t * framePointer){
+	int r = rand()%NUM_OF_BUNKERS;	// Randomly pick a bunker
+
+	//bunker_hit(framePointer, rand()%BUNKER_SIZE, r);
+	//return;
+	switch (r){
+	case BUNKER_0:				// Depending on the bunker number, destroy one in that.
+		bunker0(rand()%BUNKER_SIZE, framePointer);
+		break;
+	case BUNKER_1:				// bunker 1
+		bunker1(rand()%BUNKER_SIZE, framePointer);
+		break;
+	case BUNKER_2:				// bunker 2
+		bunker2(rand()%BUNKER_SIZE, framePointer);
+		break;
+	case BUNKER_3:				// bunker 3
+		bunker3(rand()%BUNKER_SIZE, framePointer);
+		break;
+	}
+}
+
+// Tries to hit a certain bunker at a certain location.
+// If location already dead, returns false
+void bunker_hit(uint32_t * framePointer, int location, int bunker_num){
+	int * bunker_damage;
+	switch(bunker_num){
+	case 0:
+		bunker_damage = bunker_zero;
+		break;
+	case 1:
+		bunker_damage = bunker_one;
+		break;
+	case 2:
+		bunker_damage = bunker_two;
+		break;
+	case 3:
+		bunker_damage = bunker_three;
+		break;
+	}
+	if(bunker_damage[location] == 4){
+		rand_bunker(framePointer);
+	}
+
+	int row, col;
+
+	switch(location){
+	case 0:
+		row = 0;
+		col = 0;
+		break;
+	case 1:
+		row = 0;
+		col = 6;
+		break;
+	case 2:
+		row = 0;
+		col = 12;
+		break;
+	case 3:
+		row = 0;
+		col = 18;
+		break;
+	case 4:
+		row = 6;
+		col = 0;
+		break;
+	case 5:
+		row = 6;
+		col = 5;
+		break;
+	case 6:
+		row = 6;
+		col = 12;
+		break;
+	case 7:
+		row = 6;
+		col = 18;
+		break;
+	case 8:
+		row = 12;
+		col = 0;
+		break;
+	case 9:
+		row = 12;
+		col = 18;
+		break;
+	}
+	degrigation_patern(row,col,bunker_num,bunker_damage[bunker_num],framePointer);
+	bunker_damage[location]++;
+}
+
+void bunker1(int r, uint32_t * framePointer){
+	switch(r){
+	case 0:
+		if(bunker_one[0]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 0, 1, bunker_one[0], framePointer);
+			bunker_one[0]+=1;
+		}
+		break;
+	case 1:
+		if(bunker_one[1]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 6, 1, bunker_one[1], framePointer);
+			bunker_one[1]+=1;
+		}
+		break;
+	case 2:
+		if(bunker_one[2]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 12, 1, bunker_one[2], framePointer);
+			bunker_one[2]+=1;
+		}
+		break;
+	case 3:
+		if(bunker_one[3]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 18, 1, bunker_one[3], framePointer);
+			bunker_one[3]+=1;
+		}
+		break;
+	case 4:
+		if(bunker_one[4]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 0, 1, bunker_one[4], framePointer);
+			bunker_one[4]+=1;
+		}
+		break;
+	case 5:
+		if(bunker_one[5]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 6, 1, bunker_one[5], framePointer);
+			bunker_one[5]+=1;
+		}
+		break;
+	case 6:
+		if(bunker_one[6]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 12, 1, bunker_one[6], framePointer);
+			bunker_one[6]+=1;
+		}
+		break;
+	case 7:
+		if(bunker_one[7]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 18, 1, bunker_one[7], framePointer);
+			bunker_one[7]+=1;
+		}
+		break;
+	case 8:
+		if(bunker_one[8]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 0, 1, bunker_one[8], framePointer);
+			bunker_one[8]+=1;
+		}
+		break;
+	case 9:
+		if(bunker_one[9]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 18, 1, bunker_one[9], framePointer);
+			bunker_one[9]+=1;
+		}
+		break;
+	}
+}
+
+void bunker0(int r, uint32_t * framePointer){
+	switch(r){
+	case 0:
+		if(bunker_zero[0]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 0, 0, bunker_zero[0], framePointer);
+			bunker_zero[0]+=1;
+		}
+		break;
+	case 1:
+		if(bunker_zero[1]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 6, 0, bunker_zero[1], framePointer);
+			bunker_zero[1]+=1;
+		}
+		break;
+	case 2:
+		if(bunker_zero[2]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 12, 0, bunker_zero[2], framePointer);
+			bunker_zero[2]+=1;
+		}
+		break;
+	case 3:
+		if(bunker_zero[3]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 18, 0, bunker_zero[3], framePointer);
+			bunker_zero[3]+=1;
+		}
+		break;
+	case 4:
+		if(bunker_zero[4]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 0, 0, bunker_zero[4], framePointer);
+			bunker_zero[4]+=1;
+		}
+		break;
+	case 5:
+		if(bunker_zero[5]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 6, 0, bunker_zero[5], framePointer);
+			bunker_zero[5]+=1;
+		}
+		break;
+	case 6:
+		if(bunker_zero[6]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 12, 0, bunker_zero[6], framePointer);
+			bunker_zero[6]+=1;
+		}
+		break;
+	case 7:
+		if(bunker_zero[7]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 18, 0, bunker_zero[7], framePointer);
+			bunker_zero[7]+=1;
+		}
+		break;
+	case 8:
+		if(bunker_zero[8]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 0, 0, bunker_zero[8], framePointer);
+			bunker_zero[8]+=1;
+		}
+		break;
+	case 9:
+		if(bunker_zero[9]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 18, 0, bunker_zero[9], framePointer);
+			bunker_zero[9]+=1;
+		}
+		break;
+	}
+}
+
+
+
+void bunker2(int r, uint32_t * framePointer){
+	switch(r){
+	case 0:
+		if(bunker_two[0]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 0, 2, bunker_two[0], framePointer);
+			bunker_two[0]+=1;
+		}
+		break;
+	case 1:
+		if(bunker_two[1]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 6, 2, bunker_two[1], framePointer);
+			bunker_two[1]+=1;
+		}
+		break;
+	case 2:
+		if(bunker_two[2]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 12, 2, bunker_two[2], framePointer);
+			bunker_two[2]+=1;
+		}
+		break;
+	case 3:
+		if(bunker_two[3]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 18, 2, bunker_two[3], framePointer);
+			bunker_two[3]+=1;
+		}
+		break;
+	case 4:
+		if(bunker_two[4]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 0, 2, bunker_two[4], framePointer);
+			bunker_two[4]+=1;
+		}
+		break;
+	case 5:
+		if(bunker_two[5]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 6, 2, bunker_two[5], framePointer);
+			bunker_two[5]+=1;
+		}
+		break;
+	case 6:
+		if(bunker_two[6]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 12, 2, bunker_two[6], framePointer);
+			bunker_two[6]+=1;
+		}
+		break;
+	case 7:
+		if(bunker_two[7]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 18, 2, bunker_two[7], framePointer);
+			bunker_two[7]+=1;
+		}
+		break;
+	case 8:
+		if(bunker_two[8]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 0, 2, bunker_two[8], framePointer);
+			bunker_two[8]+=1;
+		}
+		break;
+	case 9:
+		if(bunker_two[9]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 18, 2, bunker_two[9], framePointer);
+			bunker_two[9]+=1;
+		}
+		break;
+	}
+}
+
+
+void bunker3(int r, uint32_t * framePointer){
+	switch(r){
+	case 0:
+		if(bunker_three[0]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 0, 3, bunker_three[0], framePointer);
+			bunker_three[0]+=1;
+		}
+		break;
+	case 1:
+		if(bunker_three[1]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 6, 3, bunker_three[1], framePointer);
+			bunker_three[1]+=1;
+		}
+		break;
+	case 2:
+		if(bunker_three[2]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 12, 3, bunker_three[2], framePointer);
+			bunker_three[2]+=1;
+		}
+		break;
+	case 3:
+		if(bunker_three[3]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(0, 18, 3, bunker_three[3], framePointer);
+			bunker_three[3]+=1;
+		}
+		break;
+	case 4:
+		if(bunker_three[4]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 0, 3, bunker_three[4], framePointer);
+			bunker_three[4]+=1;
+		}
+		break;
+	case 5:
+		if(bunker_three[5]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 6, 3, bunker_three[5], framePointer);
+			bunker_three[5]+=1;
+		}
+		break;
+	case 6:
+		if(bunker_three[6]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 12, 3, bunker_three[6], framePointer);
+			bunker_three[6]+=1;
+		}
+		break;
+	case 7:
+		if(bunker_three[7]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(6, 18, 3, bunker_three[7], framePointer);
+			bunker_three[7]+=1;
+		}
+		break;
+	case 8:
+		if(bunker_three[8]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 0, 3, bunker_three[8], framePointer);
+			bunker_three[8]+=1;
+		}
+		break;
+	case 9:
+		if(bunker_three[9]== 4){
+			rand_bunker(framePointer);
+		}else {
+			degrigation_patern(12, 18, 3, bunker_three[9], framePointer);
+			bunker_three[9]+=1;
+		}
+		break;
+	}
+}
+
+// This goes through all the bunkers and destroys them according to our pattern
+void degrigation_patern(int row, int col, int bunker_num, int damage, uint32_t * framePointer){
+	int r,c;
+	for(r=0;r<BUNKER_DAMAGE_HEIGHT;r++){		// Go through rows
+		for(c=0;c<DAMAGE_WORD_WIDTH;c++){		// and columns
+			if (damage == BUNKER_DAMAGE_0		// 0 damage level
+					&& (bunkerDamage0_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
+				// If we need to erase a pixel here, do so.
+				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+						,c+col+bunker[bunker_num].col, BLACK);
+
+			}else if(damage == BUNKER_DAMAGE_1	// 1 damage level
+					&& (bunkerDamage1_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
+				// If we need to erase a pixel here, do so.
+				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+						,c+col+bunker[bunker_num].col, BLACK);
+
+			}else if(damage == BUNKER_DAMAGE_2	// 2 damage level
+					&& (bunkerDamage2_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
+				// If we need to erase a pixel here, do so.
+				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+						,c+col+bunker[bunker_num].col, BLACK);
+
+			}else if(damage == BUNKER_DAMAGE_3	// 3 damage level
+					&& (bunkerDamage3_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
+				// If we need to erase a pixel here, do so.
+				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+						,c+col+bunker[bunker_num].col, BLACK);
+			}
+		}
+	}
+}
+
+

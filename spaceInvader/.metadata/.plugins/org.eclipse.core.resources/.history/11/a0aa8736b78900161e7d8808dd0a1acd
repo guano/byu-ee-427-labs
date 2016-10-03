@@ -1,0 +1,16 @@
+/*
+ * interface.h
+ *
+ *  Created on: Sep 21, 2016
+ *      Author: superman
+ */
+
+#ifndef INTERFACE_H_
+#define INTERFACE_H_
+
+
+#endif /* INTERFACE_H_ */
+
+void interface_draw_line(uint32_t * framePointer);
+
+void interface_draw_tanks(uint32_t * framePointer);

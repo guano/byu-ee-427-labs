@@ -1,18 +1,21 @@
 /*
  * bunkers.h
- *
- *  Created on: Sep 21, 2016
- *      Author: superman
+ * Taylor Cowley and Andrew Okazaki
  */
 
 #ifndef BUNKERS_H_
 #define BUNKERS_H_
 
+#include <stdint.h>
+
+
+// Initializes the bunkers - draws them to the screen
+void bunkers_init(uint32_t * framePointer);
+
+// Draws the bunkers to the screen
+void bunkers_build(uint32_t * framePointer);
+
+// Hits a random bunker in a random place
+void bunkers_hit_rand_bunker(uint32_t * framePointer);
 
 #endif /* BUNKERS_H_ */
-
-void init_bunkers(unsigned int * framePointer);
-void hit_bunkers(int bunker);
-void build_bunkers(unsigned int * framePointer);
-void draw_data();
-void rand_bunker(unsigned int * framePointer);

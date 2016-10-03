@@ -1,0 +1,96 @@
+/*
+ * interface.c
+ *
+ *  Created on: Sep 21, 2016
+ *      Author: superman
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+#include "platform.h"
+#include "xparameters.h"
+#include "xaxivdma.h"
+#include "xio.h"
+#include "time.h"
+#include "unistd.h"
+#define TANK_HEIGHT 8
+#define GREEN 0x0000FF00
+
+// Packs each horizontal line of the figures into a single 32 bit word.
+#define packword15(b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0)  \
+((b14 << 14) | (b13 << 13) | (b12 << 12) | (b11 << 11) | (b10 << 10) | \
+ (b9  << 9 ) | (b8  << 8 ) | (b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | \
+ (b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
+
+ // This seems like a *very bad* way to store the tank data, but this is what
+ // we are doing for the moment.
+static const int tank_15x8[TANK_HEIGHT] =
+{
+packword15(0,0,0,0,0,0,0,1,0,0,0,0,0,0,0),
+packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),
+packword15(0,0,0,0,0,0,1,1,1,0,0,0,0,0,0),
+packword15(0,1,1,1,1,1,1,1,1,1,1,1,1,1,0),
+packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+};
+
+#define WORD_WIDTH 15
+
+// --------------------------------------------
+// Our declaration of functions to be used
+void interface_draw_pixel(uint32_t * framePointer,uint32_t row,uint32_t col,uint32_t color);
+// Ending declaration of internal functions
+// --------------------------------------------
+
+// This is 100% copied from aliens.c. Eventually it needs to move to its own global file
+void interface_draw_pixel(uint32_t * framePointer,uint32_t row,uint32_t col,uint32_t color){
+	#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
+	#define DRAW_PIXEL_ROW 640				// one row offset
+	#define DRAW_PIXEL_DOUBLE 2				// for doubling
+
+	// We draw 4 pixels for every 1 small-screen pixel
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
+	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
+
+}
+
+void draw_line(uint32_t * framePointer){
+	int row, col;
+	//for(row=275;row<452;row++){
+	row = 225;
+	for(col=0;col<320;col++){
+		//framePointer[(row)*640 + col] = GREEN;
+		interface_draw_pixel(framePointer, row, col, GREEN);
+	}
+	//}
+}
+
+
+void draw_tanks(uint32_t * framePointer){
+	 int row, col;
+	 for(row=0;row<TANK_HEIGHT;row++){
+		 for(col=0;col<WORD_WIDTH;col++){
+			 if((tank_15x8[row] & (1<<(WORD_WIDTH-col-1)))) {
+				 framePointer[(row+5)*1280 + (col + 560)*2] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + (col + 580)*2] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + (col + 600)*2] = 0x0000FF00;
+
+				 framePointer[(row+5)*1280 + (col + 560)*2+1] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + (col + 580)*2+1] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + (col + 600)*2+1] = 0x0000FF00;
+
+				 framePointer[(row+5)*1280 + 640 + (col + 560)*2+1] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + 640 + (col + 580)*2+1] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + 640 + (col + 600)*2+1] = 0x0000FF00;
+
+				 framePointer[(row+5)*1280 + 640 + (col + 560)*2] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + 640 + (col + 580)*2] = 0x0000FF00;
+				 framePointer[(row+5)*1280 + 640 + (col + 600)*2] = 0x0000FF00;
+			 }
+		 }
+	 }
+}

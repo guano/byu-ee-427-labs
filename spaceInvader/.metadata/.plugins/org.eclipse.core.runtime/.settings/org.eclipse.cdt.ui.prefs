@@ -1,4 +1,4 @@
-#Wed Sep 21 14:59:57 MDT 2016
+#Mon Oct 03 16:16:54 MDT 2016
 useQuickDiffPrefPage=true
 useAnnotationsPrefPage=true
 sourceHoverBackgroundColor=255,255,225
@@ -6,7 +6,6 @@ org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
 formatter_settings_version=1
 editor_folding_preprocessor_enabled=true
 formatter_profile=org.eclipse.cdt.ui.default.kandr_profile
-editor_folding_enabled=true
 spelling_locale_initialized=true
 eclipse.preferences.version=1
 org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>

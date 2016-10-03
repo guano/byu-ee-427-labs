@@ -91,8 +91,11 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="xilinx.gnu.mb.exe.debug.1185267468.1824837062" name="tank_old.c" rcbsApplicability="disable" resourcePath="src/tank_old.c" toolsToInvoke="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028.963683108">
+						<tool id="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028.963683108" name="MicroBlaze gcc compiler" superClass="xilinx.gnu.mb.c.toolchain.compiler.debug.986711028"/>
+					</fileInfo>
 					<sourceEntries>
-						<entry excluding="src/taylorsmain.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/tank_old.c|src/taylorsmain.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

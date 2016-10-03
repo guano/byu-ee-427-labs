@@ -2,10 +2,12 @@
 **** Build of configuration Debug for project hello_world_0 ****
 
 make all 
-Building file: ../src/tank.c
+Building file: ../src/bunkers.c
 Invoking: MicroBlaze gcc compiler
-mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/tank.d" -MT"src/tank.d" -o"src/tank.o" "../src/tank.c"
-Finished building: ../src/tank.c
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/bunkers.d" -MT"src/bunkers.d" -o"src/bunkers.o" "../src/bunkers.c"
+../src/bunkers.c: In function 'bunkers_hit_rand_bunker':
+../src/bunkers.c:167: warning: implicit declaration of function 'rand'
+Finished building: ../src/bunkers.c
 ' '
 Building target: hello_world_0.elf
 Invoking: MicroBlaze gcc linker
@@ -15,7 +17,7 @@ Finished building target: hello_world_0.elf
 Invoking: MicroBlaze Print Size
 mb-size hello_world_0.elf  |tee "hello_world_0.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  52572	   1420	   8708	  62700	   f4ec	hello_world_0.elf
+  42564	   1420	   8708	  52692	   cdd4	hello_world_0.elf
 Finished building: hello_world_0.elf.size
 ' '
 Invoking: Xilinx ELF Check

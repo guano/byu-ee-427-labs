@@ -1,8 +1,6 @@
 /*
  * aliens.h
- *
- *  Created on: Sep 21, 2016
- *      Author: superman
+ *	Taylor Cowley and Andrew Okazaki
  */
 
 #include <stdbool.h>
@@ -13,7 +11,8 @@
 
 #endif /* ALIENS_H_ */
 
-void alien_init(uint32_t * framePointer);	// Initializes the aliens
+void aliens_init(uint32_t * framePointer);	// Initializes the aliens
+void aliens_move(uint32_t * framePointer);	// Moves the aliens
 void aliens_left(uint32_t * framePointer);	// Moves aliens left
 void aliens_right(uint32_t * framePointer);	// Move aliens right
 void aliens_kill(uint32_t * framePointer);	// Kills a random alien

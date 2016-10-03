@@ -1,8 +1,6 @@
 /*
  * interface.h
- *
- *  Created on: Sep 21, 2016
- *      Author: superman
+ * Taylor Cowley and Andrew Okazaki
  */
 
 #ifndef INTERFACE_H_
@@ -11,6 +9,8 @@
 
 #endif /* INTERFACE_H_ */
 
-void draw_line(unsigned int * framePointer);
+// Draws the line at the bottom of the screen
+void interface_draw_line(uint32_t * framePointer);
 
-void draw_tanks(unsigned int * framePointer);
+// Draws the "extra life" tanks
+void interface_draw_tanks(uint32_t * framePointer);

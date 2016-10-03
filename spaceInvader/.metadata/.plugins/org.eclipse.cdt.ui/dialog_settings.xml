@@ -20,6 +20,13 @@
 		<item value="127" key="y"/>
 		<item value="678" key="x"/>
 	</section>
+	<section name="CRenameRefactoringInputPage">
+		<item value="false" key="macroDefinition"/>
+		<item value="2" key="scope"/>
+		<item value="false" key="comment"/>
+		<item value="false" key="references_inv"/>
+		<item value="" key="workingset"/>
+	</section>
 	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
 	</section>
 </section>

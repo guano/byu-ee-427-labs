@@ -1,26 +1,11 @@
 /*
- * Copyright (c) 2009 Xilinx, Inc.  All rights reserved.
- *
- * Xilinx, Inc.
- * XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS" AS A
- * COURTESY TO YOU.  BY PROVIDING THIS DESIGN, CODE, OR INFORMATION AS
- * ONE POSSIBLE   IMPLEMENTATION OF THIS FEATURE, APPLICATION OR
- * STANDARD, XILINX IS MAKING NO REPRESENTATION THAT THIS IMPLEMENTATION
- * IS FREE FROM ANY CLAIMS OF INFRINGEMENT, AND YOU ARE RESPONSIBLE
- * FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE FOR YOUR IMPLEMENTATION.
- * XILINX EXPRESSLY DISCLAIMS ANY WARRANTY WHATSOEVER WITH RESPECT TO
- * THE ADEQUACY OF THE IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO
- * ANY WARRANTIES OR REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE
- * FROM CLAIMS OF INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY
- * AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- */
-
-/*
  * helloworld.c: simple test application
+ * Currently used to test lab 3 for Space Invaders.
+ * Taylor Cowley and Andrew Okazaki
  */
 
 #include <stdio.h>
+#include <stdint.h>
 #include "platform.h"
 #include "xparameters.h"
 #include "xaxivdma.h"
@@ -32,15 +17,18 @@
 #include "interface.h"
 #include "aliens.h"
 #define DEBUG
+
+#define SCREEN_RES_X 640	// Our screen resolution is 640 * 480
+#define SCREEN_RES_Y 480	// Our screen resolution is 640 * 480
+#define BLACK 0x00000000	// Hex value for black
+
 void print(char *str);
 
 
 
 #define FRAME_BUFFER_0_ADDR 0xC1000000  // Starting location in DDR where we will store the images that we display.
-#define MAX_SILLY_TIMER 10000000;
 
-int main()
-{
+int main() {
 	init_platform();                   // Necessary for all programs.
 	int Status;                        // Keep track of success/failure of system function calls.
 	XAxiVdma videoDMAController;
@@ -101,23 +89,23 @@ int main()
      // Now, let's get ready to start displaying some stuff on the screen.
      // The variables framePointer and framePointer1 are just pointers to the base address
      // of frame 0 and frame 1.
-     unsigned int * framePointer0 = (unsigned int *) FRAME_BUFFER_0_ADDR;
+     uint32_t* framePointer0 = (uint32_t*) FRAME_BUFFER_0_ADDR;
      // Just paint some large red, green, blue, and white squares in different
      // positions of the image for each frame in the buffer (framePointer0 and framePointer1).
      int row=0, col=0;
-          for( row=0; row<480; row++) {
-         	 for(col=0; col<640; col++) {
-         		framePointer0[row*640 + col] = 0x00000000;
+          for( row=0; row<SCREEN_RES_Y; row++) {
+         	 for(col=0; col<SCREEN_RES_X; col++) {
+         		framePointer0[row*SCREEN_RES_X + col] = BLACK;
          	 }
           }
 
-     init_bunkers(framePointer0);
-     init_tank();
-     draw_tank(framePointer0, false);
+     bunkers_init(framePointer0);		// initialize the bunkers
+     tank_init();						// initialize the tank
+     tank_draw(framePointer0, false);	// draw the tank
 
-     draw_line(framePointer0);
-     draw_tanks(framePointer0);
-     alien_init(framePointer0);
+     interface_draw_line(framePointer0);			// draw the line at the bottom
+     interface_draw_tanks(framePointer0);			// draw the tanks at the top
+     aliens_init(framePointer0);			// initialize aliens
 
 
 
@@ -141,34 +129,29 @@ int main()
 	 input = getchar();
 	 switch(input){
 	 case '4':
-		 move_left(framePointer0);
+		 tank_move_left(framePointer0);		// move the tank left
 		 break;
 	 case '6':
-		 move_right(framePointer0);
+		 tank_move_right(framePointer0);		// move the tank right
 		 break;
 	 case '8':
-		 //aliens_left(framePointer0);
-		 aliens_move(framePointer0);
+		 aliens_move(framePointer0);	// move the aliens
 		 break;
 	 case '2':
-		 //Kill alien
-		 aliens_kill(framePointer0);
+		 aliens_kill(framePointer0);	// Kill an alien
 		 break;
 	 case '5':
-		 fire_tank(framePointer0);
+		 tank_fire(framePointer0);		// Make the tank fire
 		 break;
 	 case '3':
-		 //alien missile
-		 alien_missle(framePointer0);
+		 alien_missle(framePointer0);	// Make the aliens fire
 		 break;
 	 case'9':
-		 // update all bullets
-		 update_shell(framePointer0);
-		 aliens_update_bullets(framePointer0);
+		 tank_update_bullet(framePointer0);	// update all bullets
+		 aliens_update_bullets(framePointer0);	// update all bullets
 		 break;
 	 case '7':
-		 //Erode bunker
-		 rand_bunker(framePointer0);
+		 bunkers_hit_rand_bunker(framePointer0);	//Erode bunker
 		 break;
 	 }
 	 }

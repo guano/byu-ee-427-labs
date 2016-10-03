@@ -1,8 +1,6 @@
 /*
  * tank.c
- *
- *  Created on: Sep 21, 2016
- *      Author: superman
+ * Taylor Cowley and Andrew Okazaki
  */
 
 
@@ -77,13 +75,13 @@ void tank_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t c
 }
 
 // This initializes our tank at its proper location
-void init_tank(){
+void tank_init(){
 	tank.row = 210;		// Tank starts at this row
 	tank.col = 160;		// and column
 }
 
 // This draws (or erases, via the erase bool) an entire tank.
-void draw_tank(uint32_t * framePointer, bool erase){
+void tank_draw(uint32_t * framePointer, bool erase){
 	int color = erase ? BLACK : GREEN ;		// green or black depending on erase
 	int row, col;							// init loop vars
 	for(row=0;row<TANK_HEIGHT;row++){		// Go through tank x pixels
@@ -97,7 +95,7 @@ void draw_tank(uint32_t * framePointer, bool erase){
 }
 
 // moves our tank left by a certain number of pixels
-void move_left(uint32_t * framePointer){
+void tank_move_left(uint32_t * framePointer){
 #define L_0_GREEN	7	// When moving left,
 #define L_2_GREEN	6	// where to
 #define L_3_GREEN	1	// draw green
@@ -136,7 +134,7 @@ void move_left(uint32_t * framePointer){
 }
 
 //moves our tank right by a certain number of pixels
-void move_right(uint32_t * framePointer){
+void tank_move_right(uint32_t * framePointer){
 #define R_0_GREEN 7		// When moving
 #define R_1_GREEN 8		// right,
 #define R_2_GREEN 8		// which pixels
@@ -191,7 +189,7 @@ void move_right(uint32_t * framePointer){
 }
 
 // This creates a shell and initially draws it to the screen
-void fire_tank(uint32_t * framePointer){
+void tank_fire(uint32_t * framePointer){
 	if(!tank_shell.alive){			// Only go on if our shell is dead
 		tank_shell.col = tank.col;	// give it
 		tank_shell.row = tank.row;	// a location
@@ -207,7 +205,7 @@ void fire_tank(uint32_t * framePointer){
 }
 
 // This moves the shell up the screen
-void update_shell(uint32_t * framePointer){
+void tank_update_bullet(uint32_t * framePointer){
 	if(tank_shell.row<0){			// If shell is off the screen
 		tank_shell.alive = false;	// Kill it
 	}

@@ -1,9 +1,6 @@
 /*
  * tank.h
- *
- *  Created on: Sep 21, 2016
- *      Author: Taylor
- *  This header file contains everything you'll ever need to know or do about the tank. So yeah
+ * Taylor Cowley and Andrew Okazaki
  */
 
 #ifndef TANK_H_
@@ -12,19 +9,19 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void init_tank();
+void tank_init();
 // moves our tank left by a certain number of pixels
-void move_left(uint32_t * framePointer);
+void tank_move_left(uint32_t * framePointer);
 // moves our tank right by a certain number of pixels
-void move_right(uint32_t * framePointer);
+void tank_move_right(uint32_t * framePointer);
 
 // This simply draws the tank on the screen, where it is at now.
-void draw_tank(uint32_t * framePointer, bool erase);
+void tank_draw(uint32_t * framePointer, bool erase);
 
 // Alives a shell and draws it to the screen
-void fire_tank(uint32_t * framePointer);
+void tank_fire(uint32_t * framePointer);
 
 // Moves the shell up on the screen
-void update_shell(uint32_t * framePointer);
+void tank_update_bullet(uint32_t * framePointer);
 
 #endif /* TANK_H_ */

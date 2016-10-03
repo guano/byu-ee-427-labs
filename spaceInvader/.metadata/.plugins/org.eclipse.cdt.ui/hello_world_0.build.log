@@ -5,26 +5,8 @@ make all
 Building file: ../src/bunkers.c
 Invoking: MicroBlaze gcc compiler
 mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/bunkers.d" -MT"src/bunkers.d" -o"src/bunkers.o" "../src/bunkers.c"
-../src/bunkers.c: In function 'rand_bunker':
-../src/bunkers.c:130: warning: implicit declaration of function 'rand'
-../src/bunkers.c:133: warning: implicit declaration of function 'bunker0'
-../src/bunkers.c:136: warning: implicit declaration of function 'bunker1'
-../src/bunkers.c:139: warning: implicit declaration of function 'bunker2'
-../src/bunkers.c:142: warning: implicit declaration of function 'bunker3'
-../src/bunkers.c: At top level:
-../src/bunkers.c:151: warning: conflicting types for 'bunker1'
-../src/bunkers.c:136: warning: previous implicit declaration of 'bunker1' was here
-../src/bunkers.c: In function 'bunker1':
-../src/bunkers.c:157: warning: implicit declaration of function 'degrigation_patern'
-../src/bunkers.c: At top level:
-../src/bunkers.c:237: warning: conflicting types for 'bunker0'
-../src/bunkers.c:133: warning: previous implicit declaration of 'bunker0' was here
-../src/bunkers.c:324: warning: conflicting types for 'bunker2'
-../src/bunkers.c:139: warning: previous implicit declaration of 'bunker2' was here
-../src/bunkers.c:410: warning: conflicting types for 'bunker3'
-../src/bunkers.c:142: warning: previous implicit declaration of 'bunker3' was here
-../src/bunkers.c:496: warning: conflicting types for 'degrigation_patern'
-../src/bunkers.c:157: warning: previous implicit declaration of 'degrigation_patern' was here
+../src/bunkers.c: In function 'bunkers_hit_rand_bunker':
+../src/bunkers.c:167: warning: implicit declaration of function 'rand'
 Finished building: ../src/bunkers.c
 ' '
 Building target: hello_world_0.elf
@@ -35,7 +17,7 @@ Finished building target: hello_world_0.elf
 Invoking: MicroBlaze Print Size
 mb-size hello_world_0.elf  |tee "hello_world_0.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  46048	   1420	   8704	  56172	   db6c	hello_world_0.elf
+  42564	   1420	   8708	  52692	   cdd4	hello_world_0.elf
 Finished building: hello_world_0.elf.size
 ' '
 Invoking: Xilinx ELF Check

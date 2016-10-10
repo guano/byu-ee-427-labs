@@ -11,7 +11,7 @@
 #include "xio.h"
 #include "time.h"
 #include "unistd.h"
-
+#include "util.h"
 #include "bunkers.h"
 
 #define BUNKER_HEIGHT 18		// Bunkers are 18 pixels high
@@ -110,7 +110,6 @@ int32_t bunker_three[BUNKER_SIZE] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // -----------------------------------------------------
 // Declaration for internal functions
-void bunkers_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
 void bunker0(int32_t r, uint32_t * framePointer);
 void bunker1(int32_t r, uint32_t * framePointer);
 void bunker2(int32_t r, uint32_t * framePointer);
@@ -120,21 +119,6 @@ void bunker_hit(uint32_t * framePointer, int32_t location, int32_t bunker_num);
 // End internal function declaration
 // -----------------------------------------------------
 
-/*
- * Draws a pixel on the screen. To compensate for our double-resolution screen,
- * it must draw 4 real pixels for every in-came pixel.
- */
-void bunkers_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color){
-#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
-#define DRAW_PIXEL_ROW 640				// one row offset
-#define DRAW_PIXEL_DOUBLE 2				// for doubling
-
-	// We draw 4 pixels for every 1 small-screen pixel
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
-}
 
 // Initializes the bunkers
 void bunkers_init(uint32_t * framePointer){
@@ -155,7 +139,7 @@ void bunkers_build(uint32_t * framePointer){
 		for(col=0;col<BUNKER_COLS;col++){				// Go through cols
 			if ((bunker_24x18[row] & (1<<(WORD_WIDTH-col-1)))) {// if pixel
 				for(b = 0; b <NUM_OF_BUNKERS; b++){// draw that pixel every time
-					bunkers_draw_pixel(framePointer,row+bunker[b].row,col+bunker[b].col,GREEN);
+					util_draw_pixel(framePointer,row+bunker[b].row,col+bunker[b].col,GREEN);
 				}
 			}
 		}
@@ -388,25 +372,25 @@ void degrigation_patern(int32_t row, int32_t col, int32_t bunker_num, int32_t da
 			if (damage == BUNKER_DAMAGE_0		// 0 damage level
 					&& (bunkerDamage0_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
 				// If we need to erase a pixel here, do so.
-				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+				util_draw_pixel(framePointer,r+row+bunker[bunker_num].row
 						,c+col+bunker[bunker_num].col, BLACK);
 
 			}else if(damage == BUNKER_DAMAGE_1	// 1 damage level
 					&& (bunkerDamage1_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
 				// If we need to erase a pixel here, do so.
-				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+				util_draw_pixel(framePointer,r+row+bunker[bunker_num].row
 						,c+col+bunker[bunker_num].col, BLACK);
 
 			}else if(damage == BUNKER_DAMAGE_2	// 2 damage level
 					&& (bunkerDamage2_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
 				// If we need to erase a pixel here, do so.
-				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+				util_draw_pixel(framePointer,r+row+bunker[bunker_num].row
 						,c+col+bunker[bunker_num].col, BLACK);
 
 			}else if(damage == BUNKER_DAMAGE_3	// 3 damage level
 					&& (bunkerDamage3_6x6[r] & (1<<(DAMAGE_WORD_WIDTH-c-1)))){
 				// If we need to erase a pixel here, do so.
-				bunkers_draw_pixel(framePointer,r+row+bunker[bunker_num].row
+				util_draw_pixel(framePointer,r+row+bunker[bunker_num].row
 						,c+col+bunker[bunker_num].col, BLACK);
 			}
 		}

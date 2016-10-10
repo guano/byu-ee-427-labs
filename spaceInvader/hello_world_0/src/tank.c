@@ -11,6 +11,7 @@
 #include "xio.h"
 #include "time.h"
 #include "unistd.h"
+#include "util.h"
 
 #include "tank.h"	// Do we normally have to include our own h function?
 #define TANK_HEIGHT		8		// Tank is 8 pixels high
@@ -56,23 +57,9 @@ struct tank_shell{	// The struct that stores the tank's bullet data
 
 // --------------------------------------------
 // Our declaration of functions to be used
-void tank_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color);
 // Ending declaration of internal functions
 // --------------------------------------------
 
-// This is 100% copied from aliens.c. Eventually it needs to move to its own global file
-void tank_draw_pixel(uint32_t *framePointer,uint32_t row,uint32_t col,uint32_t color){
-	#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
-	#define DRAW_PIXEL_ROW 640				// one row offset
-	#define DRAW_PIXEL_DOUBLE 2				// for doubling
-
-	// We draw 4 pixels for every 1 small-screen pixel
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER + col*DRAW_PIXEL_DOUBLE+1] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row*DRAW_PIXEL_ROW_MULTIPLIER+DRAW_PIXEL_ROW+ col*DRAW_PIXEL_DOUBLE + 1] = color;
-
-}
 
 // This initializes our tank at its proper location
 void tank_init(){
@@ -88,7 +75,7 @@ void tank_draw(uint32_t * framePointer, bool erase){
 		for(col=0;col<WORD_WIDTH;col++){	// and tank y pixels
 			if ((tank_15x8[row] & (1<<(WORD_WIDTH-col-1)))) {	// If a pixel
 				//  Draw the pixel
-				tank_draw_pixel(framePointer, row+tank.row,col+tank.col,color);
+				util_draw_pixel(framePointer, row+tank.row,col+tank.col,color);
 			}
 		}
 	}
@@ -110,24 +97,24 @@ void tank_move_left(uint32_t * framePointer){
 	for(row = 0; row < TANK_HEIGHT; row++){
 		switch (row){	// Depending on the row
 		case 0:			// Draw/erase proper pixels
-			tank_draw_pixel(framePointer,row+tank.row,L_0_GREEN+tank.col,GREEN);
-			tank_draw_pixel(framePointer,row+tank.row,L_0_BLACK+tank.col,BLACK);
+			util_draw_pixel(framePointer,row+tank.row,L_0_GREEN+tank.col,GREEN);
+			util_draw_pixel(framePointer,row+tank.row,L_0_BLACK+tank.col,BLACK);
 			break;
 		case 1:	// Cases 1 and 2 are identical
 		case 2:			// Keep drawing/erasing pixels
-			tank_draw_pixel(framePointer,row+tank.row,L_2_GREEN+tank.col,GREEN);
-			tank_draw_pixel(framePointer,row+tank.row,L_2_BLACK+tank.col,BLACK);
+			util_draw_pixel(framePointer,row+tank.row,L_2_GREEN+tank.col,GREEN);
+			util_draw_pixel(framePointer,row+tank.row,L_2_BLACK+tank.col,BLACK);
 			break;
 		case 3:			// Keep drawing/erasing pixels
-			tank_draw_pixel(framePointer,row+tank.row,L_3_GREEN+tank.col,GREEN);
-			tank_draw_pixel(framePointer,row+tank.row,L_3_BLACK+tank.col,BLACK);
+			util_draw_pixel(framePointer,row+tank.row,L_3_GREEN+tank.col,GREEN);
+			util_draw_pixel(framePointer,row+tank.row,L_3_BLACK+tank.col,BLACK);
 			break;
 		case 4: // Cases 4, 5, 6, and 7 are all identical.
 		case 5:
 		case 6:
 		case 7:			// Keep drawing/erasing pixels
-			tank_draw_pixel(framePointer,row+tank.row,L_7_GREEN+tank.col,GREEN);
-			tank_draw_pixel(framePointer,row+tank.row,L_7_BLACK+tank.col,BLACK);
+			util_draw_pixel(framePointer,row+tank.row,L_7_GREEN+tank.col,GREEN);
+			util_draw_pixel(framePointer,row+tank.row,L_7_BLACK+tank.col,BLACK);
 			break;
 		}
 	}
@@ -156,36 +143,36 @@ void tank_move_right(uint32_t * framePointer){
 		tank.col ++;	// Move our tank right by a single pixel
 		int r = 0;		// Start our count pointer
 		// Draw and erase the proper pixels for row 0
-		tank_draw_pixel(framePointer, r+tank.row, R_0_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_0_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_0_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_0_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 1
-		tank_draw_pixel(framePointer, r+tank.row, R_1_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_1_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_1_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_1_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 2
-		tank_draw_pixel(framePointer, r+tank.row, R_2_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_2_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_2_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_2_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 3
-		tank_draw_pixel(framePointer, r+tank.row, R_3_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_3_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_3_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_3_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 4
-		tank_draw_pixel(framePointer, r+tank.row, R_4_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_4_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_4_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_4_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 5
-		tank_draw_pixel(framePointer, r+tank.row, R_5_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_5_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_5_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_5_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 6
-		tank_draw_pixel(framePointer, r+tank.row, R_6_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_6_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_6_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_6_BLACK+tank.col, BLACK);
 		r++;			// increment row counter
 		// Draw and erase the proper pixels for row 07
-		tank_draw_pixel(framePointer, r+tank.row, R_7_GREEN+tank.col, GREEN);
-		tank_draw_pixel(framePointer, r+tank.row, R_7_BLACK+tank.col, BLACK);
+		util_draw_pixel(framePointer, r+tank.row, R_7_GREEN+tank.col, GREEN);
+		util_draw_pixel(framePointer, r+tank.row, R_7_BLACK+tank.col, BLACK);
 }
 
 // This creates a shell and initially draws it to the screen
@@ -199,7 +186,7 @@ void tank_fire(uint32_t * framePointer){
 		int row;
 		// So go through all 3 pixels and draw them to the screen!
 		for(row = tank_shell.row-1;row>tank_shell.row-SHELL_LENGTH;row--){
-			tank_draw_pixel(framePointer,row,SHELL_COL_OFFSET+tank_shell.col,WHITE);
+			util_draw_pixel(framePointer,row,SHELL_COL_OFFSET+tank_shell.col,WHITE);
 		}
 	}
 }
@@ -212,8 +199,8 @@ void tank_update_bullet(uint32_t * framePointer){
 	else if(tank_shell.alive){		// Don't do anything if it's dead
 		tank_shell.row -= 1;			// move it up
 		// Erase the lowest pixel, and draw one higher up.
-		tank_draw_pixel(framePointer,tank_shell.row-SHELL_LENGTH,SHELL_COL_OFFSET+tank_shell.col, WHITE);
-		tank_draw_pixel(framePointer,tank_shell.row,SHELL_COL_OFFSET+tank_shell.col, BLACK);
+		util_draw_pixel(framePointer,tank_shell.row-SHELL_LENGTH,SHELL_COL_OFFSET+tank_shell.col, WHITE);
+		util_draw_pixel(framePointer,tank_shell.row,SHELL_COL_OFFSET+tank_shell.col, BLACK);
 	}
 }
 

@@ -11,7 +11,8 @@ src/tank.d src/tank.o: ../src/tank.c ../src/platform.h \
   ../../hello_world_bsp_0/microblaze_0/include/xdebug.h \
   ../../hello_world_bsp_0/microblaze_0/include/xstatus.h \
   ../../hello_world_bsp_0/microblaze_0/include/xil_assert.h \
-  ../../hello_world_bsp_0/microblaze_0/include/xio.h ../src/tank.h
+  ../../hello_world_bsp_0/microblaze_0/include/xio.h ../src/util.h \
+  ../src/tank.h
 
 ../src/platform.h:
 
@@ -40,5 +41,7 @@ src/tank.d src/tank.o: ../src/tank.c ../src/platform.h \
 ../../hello_world_bsp_0/microblaze_0/include/xil_assert.h:
 
 ../../hello_world_bsp_0/microblaze_0/include/xio.h:
+
+../src/util.h:
 
 ../src/tank.h:

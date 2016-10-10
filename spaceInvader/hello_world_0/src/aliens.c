@@ -10,6 +10,7 @@
 #include "xio.h"
 #include "time.h"
 #include "unistd.h"
+#include "util.h"
 #include <stdbool.h>
 #include <stdint.h>
 #define ALIEN_HEIGHT 8		// Aliens are 8 pixels tall
@@ -113,9 +114,6 @@ int32_t fire_top(uint32_t * framePointer, int32_t r);
 bool can_aliens_shoot();
 // Draws a bullet on the screen
 void draw_bullet(uint32_t * framePointer, int32_t bullet, uint32_t color);
-// Draws a pixel on the screen.
-void aliens_draw_pixel(uint32_t *framePointer, uint32_t row, uint32_t col,
-		uint32_t color);
 // End internal method declarations
 // -----------------------------------------------------------
 
@@ -148,25 +146,8 @@ struct alien_bullet { // Struct that holds our aliens' bullets
 
 int32_t alien_count; // a count of how many aliens are alive
 
-/*
- * Draws a pixel on the screen. To compensate for our double-resolution screen,
- * it must draw 4 real pixels for every in-came pixel.
- */
-void aliens_draw_pixel(uint32_t *framePointer, uint32_t row, uint32_t col,
-		uint32_t color) {
-#define DRAW_PIXEL_ROW_MULTIPLIER 1280	// 640 * 2 for screen doubling
-#define DRAW_PIXEL_ROW 640				// one row offset
-#define DRAW_PIXEL_DOUBLE 2				// for doubling
-	// We draw 4 pixels for every 1 small-screen pixel
-	framePointer[row * DRAW_PIXEL_ROW_MULTIPLIER + col * DRAW_PIXEL_DOUBLE]
-			= color;
-	framePointer[row * DRAW_PIXEL_ROW_MULTIPLIER + col * DRAW_PIXEL_DOUBLE + 1]
-			= color;
-	framePointer[row * DRAW_PIXEL_ROW_MULTIPLIER + DRAW_PIXEL_ROW + col
-			* DRAW_PIXEL_DOUBLE] = color;
-	framePointer[row * DRAW_PIXEL_ROW_MULTIPLIER + DRAW_PIXEL_ROW + col
-			* DRAW_PIXEL_DOUBLE + 1] = color;
-}
+
+
 
 //initialize all of the aliens by setting values contained in struct's and printing aliens to the screen
 void aliens_init(uint32_t * framePointer) {
@@ -218,10 +199,10 @@ void build_tops(uint32_t * framePointer, const int32_t alien_top[]) {
 				if ((alien_top[row] & (1 << (WORD_WIDTH - col - 1)))
 						&& top[i].alive) {
 					// If our alien is alive and has a pixel there, draw it
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							WHITE);
 				} else { // If not, erase it.
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							BLACK);
 				}
 			}
@@ -240,10 +221,10 @@ void build_middle(uint32_t * framePointer, const int32_t alien_middle[]) {
 				if ((alien_middle[row] & (1 << (WORD_WIDTH - col - 1)))
 						&& middleAlien[i].alive) {
 					// If our alien is alive and has a pixel there, draw it
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							WHITE);
 				} else { // Otherwise, erase it.
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							BLACK);
 				}
 			}
@@ -262,10 +243,10 @@ void build_bottom(uint32_t * framePointer, const int32_t alien_bottom[]) {
 				if ((alien_bottom[row] & (1 << (WORD_WIDTH - col - 1)))
 						&& bottomAlien[i].alive) {
 					// If our alien is alive and has a pixel here, draw it
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							WHITE);
 				} else { // otherwise, erase it.
-					aliens_draw_pixel(framePointer, currentRow, currentCol,
+					util_draw_pixel(framePointer, currentRow, currentCol,
 							BLACK);
 				}
 			}
@@ -298,9 +279,9 @@ void aliens_left(uint32_t * framePointer) {
 	for (row = 0; row < ALIEN_HEIGHT; row++) { // For all the alien Y pixels
 		for (i = 0; i < MIDDLE_TOTAL; i++) { // For every alien
 			// Erase them for the middle and bottom aliens - top is skinnier
-			aliens_draw_pixel(framePointer, row + bottomAlien[i].row,
+			util_draw_pixel(framePointer, row + bottomAlien[i].row,
 					WORD_WIDTH + bottomAlien[i].col, BLACK);
-			aliens_draw_pixel(framePointer, row + middleAlien[i].row,
+			util_draw_pixel(framePointer, row + middleAlien[i].row,
 					WORD_WIDTH + middleAlien[i].col, BLACK);
 		}
 
@@ -333,9 +314,9 @@ void aliens_right(uint32_t * framePointer) {
 	for (row = 0; row < ALIEN_HEIGHT; row++) { // For all the alien Y pixels
 		for (i = 0; i < MIDDLE_TOTAL; i++) { // For every alien
 			// Erase that column of pixels for mid and bottom. Top not necessary
-			aliens_draw_pixel(framePointer, row + bottomAlien[i].row,
+			util_draw_pixel(framePointer, row + bottomAlien[i].row,
 					bottomAlien[i].col - 1, BLACK); // Notice it's col-1 bottom
-			aliens_draw_pixel(framePointer, row + middleAlien[i].row,
+			util_draw_pixel(framePointer, row + middleAlien[i].row,
 					middleAlien[i].col, BLACK);
 		}
 	}
@@ -350,7 +331,7 @@ void hit_left_rail(uint32_t * framePointer) {
 			if (((alien_top_out_12x8[row] | alien_top_in_12x8[row]) & (1
 					<< (WORD_WIDTH - col - 1)))) {// if pixel exists here
 				for (i = 0; i < TOP_TOTAL; i++) { // ERASE IT!
-					aliens_draw_pixel(framePointer, row + top[i].row,
+					util_draw_pixel(framePointer, row + top[i].row,
 							col + top[i].col, BLACK);
 				}
 			}
@@ -365,7 +346,7 @@ void hit_left_rail(uint32_t * framePointer) {
 	}
 	for (row = 0; row < ALIEN_HEIGHT; row++) { // Now to erase pixels on left side
 		for (i = 0; i < MIDDLE_TOTAL; i++) { // For all the middle aliens
-			aliens_draw_pixel(framePointer, row + middleAlien[i].row,
+			util_draw_pixel(framePointer, row + middleAlien[i].row,
 					middleAlien[i].col, BLACK);// Erase the pixels on the left
 		}
 	}
@@ -380,7 +361,7 @@ void hit_right_rail(uint32_t * framePointer) {
 			if (((alien_top_out_12x8[row] | alien_top_in_12x8[row]) & (1
 					<< (WORD_WIDTH - col - 1)))) {// if pixel exists here
 				for (i = 0; i < TOP_TOTAL; i++) { // Erase it!
-					aliens_draw_pixel(framePointer, row + top[i].row,
+					util_draw_pixel(framePointer, row + top[i].row,
 							col + top[i].col, BLACK);
 				}
 			}
@@ -395,7 +376,7 @@ void hit_right_rail(uint32_t * framePointer) {
 	}
 	for (row = 0; row < ALIEN_HEIGHT; row++) { // Now to erase pixels on the right side
 		for (i = 0; i < TOP_TOTAL; i++) { // Erase the pixels on the right
-			aliens_draw_pixel(framePointer, row + top[i].row,
+			util_draw_pixel(framePointer, row + top[i].row,
 					WORD_WIDTH - 1 + top[i].col, BLACK);
 		}
 	}
@@ -518,64 +499,64 @@ void draw_bullet(uint32_t * framePointer, int32_t bullet, uint32_t color) {
 	case cross0: // Cross0 and cross 3 are identically drawn
 	case cross3: // The only difference is in the state machine where they go
 		// 5 pixels down in a line
-		aliens_draw_pixel(framePointer, row, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
+		util_draw_pixel(framePointer, row, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
 
 		// Crossbar on the cross - right in the middle
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_RIGHT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_RIGHT,
 				color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_LEFT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_LEFT,
 				color);
 		break;
 	case cross1:
 		// 5 pixels down in a line
-		aliens_draw_pixel(framePointer, row, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
+		util_draw_pixel(framePointer, row, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
 
 		// Crossbar on the cross- on the lower one
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col + PIXEL_RIGHT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col + PIXEL_RIGHT,
 				color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col + PIXEL_LEFT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col + PIXEL_LEFT,
 				color);
 		break;
 	case cross2:
 		// 5 pixels down in a line
-		aliens_draw_pixel(framePointer, row, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
+		util_draw_pixel(framePointer, row, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_4, col, color);
 
 		// Crossbar on the cross- on the upper one
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col + PIXEL_RIGHT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col + PIXEL_RIGHT,
 				color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col + PIXEL_LEFT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col + PIXEL_LEFT,
 				color);
 		break;
 	case lightning0:
 		// 5 pixels down - starting left then right, then going back left
-		aliens_draw_pixel(framePointer, row, col + PIXEL_LEFT, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_RIGHT,
+		util_draw_pixel(framePointer, row, col + PIXEL_LEFT, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_RIGHT,
 				color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_4, col + PIXEL_LEFT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_4, col + PIXEL_LEFT,
 				color);
 		break;
 	case lightning1:
 		// 5 pixels down - starting right then left, then back right
-		aliens_draw_pixel(framePointer, row, col + PIXEL_RIGHT, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_LEFT,
+		util_draw_pixel(framePointer, row, col + PIXEL_RIGHT, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_1, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_2, col + PIXEL_LEFT,
 				color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
-		aliens_draw_pixel(framePointer, row + PIXEL_LINE_4, col + PIXEL_RIGHT,
+		util_draw_pixel(framePointer, row + PIXEL_LINE_3, col, color);
+		util_draw_pixel(framePointer, row + PIXEL_LINE_4, col + PIXEL_RIGHT,
 				color);
 		break;
 	}

@@ -6,8 +6,6 @@
 * Section 1.3: Game Details and Specifications  
 ---
 #### Section 1.1: Space Invaders History  
-Two good-sized paragraphs are required for full credit.
-
 Space Invaders is a video game, developed by Tomohiro Nishikado, released in 1978 by Taito. Development was hindered by lack of technology at the time- Nishikado was required to design his own arcade board hardware capable of running it. Using an Intel 8080 CPU and a Texas Instruments sound chip, he was still reportedly disappointed in the limitations.
 
 Released as an arcade machine in Japan and the United States, Space Invaders became the best-selling video game at the time, and is still the second best-selling arcade game of all time, bested only by Pac-Man. Space Invaders is credited with expanding video games into a real industry, and inspiring future video-game legends, such as Shigeru Miyamoto (Nintendo, Mario) and Hideo Kojima (Castlevania, Metal Gear).

@@ -1,0 +1,25 @@
+/*
+ * bunkers.h
+ * Taylor Cowley and Andrew Okazaki
+ */
+
+#ifndef BUNKERS_H_
+#define BUNKERS_H_
+
+#include <stdint.h>
+#include <stdbool.h>
+
+
+// Initializes the bunkers - draws them to the screen
+void bunkers_init(uint32_t * framePointer);
+
+// Draws the bunkers to the screen
+void bunkers_build(uint32_t * framePointer);
+
+// Hits a random bunker in a random place
+void bunkers_hit_rand_bunker(uint32_t * framePointer);
+
+// Is our bunker hit?
+bool bunkers_detect_collision(uint32_t row, uint32_t col);
+
+#endif /* BUNKERS_H_ */

@@ -1,0 +1,37 @@
+
+**** Build of configuration Debug for project spaceInvadersLab4 ****
+
+make all 
+Building file: ../src/mother_ship.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/mother_ship.d" -MT"src/mother_ship.d" -o"src/mother_ship.o" "../src/mother_ship.c"
+../src/mother_ship.c: In function 'mother_ship_points_blink':
+../src/mother_ship.c:72: warning: unused variable 'blink_on'
+../src/mother_ship.c: In function 'mother_ship_detect_collision':
+../src/mother_ship.c:114: warning: implicit declaration of function 'rand'
+Finished building: ../src/mother_ship.c
+' '
+Building target: spaceInvadersLab4.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../spaceInvadersLab4SDK_BSP/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"spaceInvadersLab4.elf"  ./src/aliens.o ./src/bunkers.o ./src/interface.o ./src/mother_ship.o ./src/platform.o ./src/spaceInvadersRUN.o ./src/tank.o ./src/util.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: spaceInvadersLab4.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size spaceInvadersLab4.elf  |tee "spaceInvadersLab4.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  56584	   1496	   6568	  64648	   fc88	spaceInvadersLab4.elf
+Finished building: spaceInvadersLab4.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck spaceInvadersLab4.elf -hw ../../SpaceInvaderTestHW2_hw_platform/system.xml -pe microblaze_0  |tee "spaceInvadersLab4.elf.elfcheck"
+elfcheck
+Xilinx EDK 13.4 Build EDK_O.87xd
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../SpaceInvaderTestHW2_hw_platform/system.xml -pe
+microblaze_0 spaceInvadersLab4.elf 
+
+ELF file	: spaceInvadersLab4.elf
+elfcheck passed.
+Finished building: spaceInvadersLab4.elf.elfcheck
+' '

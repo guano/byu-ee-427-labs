@@ -32,30 +32,26 @@
 
 #define ONE_SECOND	100		// 100 ticks in a second
 #define HALF_SECOND 50		// 50 ticks in half a second
-#define QUARTER_SECOND 25
-#define EIGHTH_SECOND 12
-#define TENTH_SECOND 10
-#define TWENTIETH_SECOND 5
-#define SUPER_FAST 2
+#define QUARTER_SECOND 25	// 25 ticks in a quarter second
+#define EIGHTH_SECOND 12	// 12 ticks in an eigth second
+#define TENTH_SECOND 10		// 10 ticks in a tenth second
+#define TWENTIETH_SECOND 5	// 5 ticks in a twentieth second
+#define SUPER_FAST 2		// super fast
 
-#define MOTHER_SHIP_SPEED TENTH_SECOND
-#define MOTHER_SHIP_SPAWN_CONSTANT 1000
-#define ALIEN_SHOT_SPAWN_CONSTANT 100
-#define ALIEN_MOVE_SPEED HALF_SECOND
+#define MOTHER_SHIP_SPEED TENTH_SECOND		// Mother ship moves slowly
+#define MOTHER_SHIP_SPAWN_CONSTANT 1000		// Mother ship spawns infrequently
+#define ALIEN_SHOT_SPAWN_CONSTANT 100		// Aliens shoot frequently
+#define ALIEN_MOVE_SPEED HALF_SECOND		// aliens move very slowly
 
-
-
-#define BUTTON_UP		0x10
+#define BUTTON_UP		0x10	// Constants for button masks
 #define BUTTON_DOWN		0x4
 #define BUTTON_LEFT		0x8
 #define BUTTON_RIGHT	0x2
 #define BUTTON_CENTER	0x1
 
-void print(char *str);
+void print(char *str);			// print exists!
 
-
-
-#define FRAME_BUFFER_0_ADDR 0xC1000000  // Starting location in DDR where we will store the images that we display.
+#define FRAME_BUFFER_0_ADDR 0xC1000000  // Starting location in DDR
 
 //-----------------------------
 void timer_interrupt_handler();
@@ -69,15 +65,16 @@ XGpio gpPB;   // This is a handle for the push-button GPIO block.
 uint32_t* framePointer0 = (uint32_t*) FRAME_BUFFER_0_ADDR;
 int32_t currentButtonState;		// Current button being pressed
 int32_t mother_ship_points;
-
+uint32_t cpu_usage_timer = 0;
 
 void timer_interrupt_handler(){
-	static uint32_t timerCount;
-	static uint32_t mother_ship_move_counter;
-	tank_update_bullet(framePointer0);	// update all bullets
-	aliens_update_bullets(framePointer0);	// update all bullets
+	static uint32_t timerCount;					// Timer for timing
+	static uint32_t mother_ship_move_counter;	// Timer for mother ship
 
-	timerCount++;
+	tank_update_bullet(framePointer0);			// update all bullets
+	aliens_update_bullets(framePointer0);		// update all bullets
+
+	timerCount++;								// Increment all counters
 	mother_ship_move_counter++;
 	mother_ship_points++;
 
@@ -86,68 +83,40 @@ void timer_interrupt_handler(){
 		alien_missle(framePointer0);	// Make the aliens fire
 	}
 	if(r%MOTHER_SHIP_SPAWN_CONSTANT == 0){
-		mother_ship_spawn();
+		mother_ship_spawn();			// mother ship spawns!
 	}
-	if(mother_ship_move_counter >= MOTHER_SHIP_SPEED){
+	if(mother_ship_move_counter >= MOTHER_SHIP_SPEED){	// MS moves
 		mother_ship_move_counter = 0;
 		mother_ship_move();
-
 	}
 	if(mother_ship_points > TENTH_SECOND){
-		mother_ship_points = 0;
+		mother_ship_points = 0;			// Mother ship points will display
 		mother_ship_points_blink();
 	}
-	if(timerCount >= 5 /*ALIEN_MOVE_SPEED*/){
+	if(timerCount >= 5 ){
 		timerCount = 0;
 		aliens_move(framePointer0);	// move the aliens
 	}
 
 
-
-
 	// Now to check the buttons.
 	if(currentButtonState & BUTTON_LEFT){
-		tank_move_left(framePointer0);
+		tank_move_left(framePointer0);		// Moving the tank left
 	}
 	if(currentButtonState & BUTTON_RIGHT){
-		tank_move_right(framePointer0);
+		tank_move_right(framePointer0);		// Moving the tank right
 	}
 	if(currentButtonState & BUTTON_CENTER){
-		tank_fire(framePointer0);
+		tank_fire(framePointer0);			// Fire the tank!
 	}
-	if(currentButtonState & BUTTON_UP){
+	if(currentButtonState & BUTTON_UP){		// Not functional yet
+		xil_printf("cpu usage: %d\n\r", cpu_usage_timer);
 	}
 }
 void pb_interrupt_handler(){
 	XGpio_InterruptGlobalDisable(&gpPB);	// Can't be interrupted by buttons
-	xil_printf("Button Interrupt\n\r");
+
 	currentButtonState = XGpio_DiscreteRead(&gpPB, 1);
-	//xil_printf("Button state retrieved: %x\n\r", currentButtonState);
-	/*switch(currentButtonState){
-	case BUTTON_LEFT:
-		tank_move_left(framePointer0);		// move the tank left
-		break;
-	case BUTTON_RIGHT:
-		tank_move_right(framePointer0);		// move the tank right
-		break;
-	case BUTTON_UP:
-		xil_printf("volume goes up\n\r");
-
-		break;
-	case BUTTON_DOWN:
-		xil_printf("volume goes down\n\r");
-
-		break;
-	case BUTTON_CENTER:
-		tank_fire(framePointer0);		// Make the tank fire
-		break;
-	default:
-		xil_printf("Button pushed???\n\r");
-		break;
-	}*/
-
-
-
 	// Time to clear the interrupt and reenable GPIO interrupts
 	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
 	XGpio_InterruptGlobalEnable(&gpPB);
@@ -174,7 +143,6 @@ void interrupt_handler_dispatcher(void* ptr) {
 	}
 }
 
-
 void init_interrupts(void){
 	int32_t success;
 	print("\n\rHello . Let's have a fun \e[31m\e[1mtime \e[21m\e[0m\n\r");
@@ -196,8 +164,6 @@ void init_interrupts(void){
 	// And enable again
 	microblaze_enable_interrupts();
 }
-
-
 
 int main() {
 	init_platform();                   // Necessary for all programs.
@@ -271,18 +237,12 @@ int main() {
 		}
 	}
 
-	bunkers_init(framePointer0);
-
-
-
+	bunkers_init(framePointer0);			// Init the bunkers
 	tank_init();							// initialize the tank
 	tank_draw(framePointer0, false);		// draw the tank
 	interface_init_board(framePointer0);	// draw the tanks at the top
 	aliens_init(framePointer0);				// initialize aliens
-	mother_ship_init(framePointer0);
-
-
-
+	mother_ship_init(framePointer0);		// Init the mother ship
 
 	// This tells the HDMI controller the resolution of your display (there must be a better way to do this).
 	XIo_Out32(XPAR_AXI_HDMI_0_BASEADDR, 640*480);
@@ -301,9 +261,13 @@ int main() {
 	char input;
 	srand((unsigned)time( NULL ));
 
-
 	xil_printf("Are we getting here?\n\r");
+
+
+
 	while(1){
+		cpu_usage_timer++;
+		/*		// This doesn't need to be here no more
 		//aliens_move(framePointer0);	// move the aliens
 		tank_update_bullet(framePointer0);	// update all bullets
 		aliens_update_bullets(framePointer0);	// update all bullets
@@ -335,11 +299,8 @@ int main() {
 			break;
 		case '7':
 			break;
-		}
+		}*/
 	}
-
-
 	cleanup_platform();
-
 	return 0;
 }

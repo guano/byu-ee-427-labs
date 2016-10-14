@@ -5,10 +5,8 @@
 
 #ifndef TANK_H_
 #define TANK_H_
-
 #include <stdint.h>
 #include <stdbool.h>
-
 
 void tank_init();
 // moves our tank left by a certain number of pixels
@@ -30,6 +28,5 @@ void tank_die();
 
 // Our tank tells whether something hit it, and dies if it is hit.
 bool tank_detect_collision(uint32_t row, uint32_t col);
-
 
 #endif /* TANK_H_ */

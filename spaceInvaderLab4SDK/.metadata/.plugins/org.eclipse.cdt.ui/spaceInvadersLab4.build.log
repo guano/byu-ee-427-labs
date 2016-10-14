@@ -2,14 +2,15 @@
 **** Build of configuration Debug for project spaceInvadersLab4 ****
 
 make all 
-Building file: ../src/mother_ship.c
+Building file: ../src/spaceInvadersRUN.c
 Invoking: MicroBlaze gcc compiler
-mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/mother_ship.d" -MT"src/mother_ship.d" -o"src/mother_ship.o" "../src/mother_ship.c"
-../src/mother_ship.c: In function 'mother_ship_points_blink':
-../src/mother_ship.c:72: warning: unused variable 'blink_on'
-../src/mother_ship.c: In function 'mother_ship_detect_collision':
-../src/mother_ship.c:114: warning: implicit declaration of function 'rand'
-Finished building: ../src/mother_ship.c
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/spaceInvadersRUN.d" -MT"src/spaceInvadersRUN.d" -o"src/spaceInvadersRUN.o" "../src/spaceInvadersRUN.c"
+../src/spaceInvadersRUN.c: In function 'timer_interrupt_handler':
+../src/spaceInvadersRUN.c:81: warning: implicit declaration of function 'rand'
+../src/spaceInvadersRUN.c: In function 'main':
+../src/spaceInvadersRUN.c:262: warning: implicit declaration of function 'srand'
+../src/spaceInvadersRUN.c:261: warning: unused variable 'input'
+Finished building: ../src/spaceInvadersRUN.c
 ' '
 Building target: spaceInvadersLab4.elf
 Invoking: MicroBlaze gcc linker
@@ -19,7 +20,7 @@ Finished building target: spaceInvadersLab4.elf
 Invoking: MicroBlaze Print Size
 mb-size spaceInvadersLab4.elf  |tee "spaceInvadersLab4.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  56584	   1496	   6568	  64648	   fc88	spaceInvadersLab4.elf
+  50838	   1496	   6570	  58904	   e618	spaceInvadersLab4.elf
 Finished building: spaceInvadersLab4.elf.size
 ' '
 Invoking: Xilinx ELF Check

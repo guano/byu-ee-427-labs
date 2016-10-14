@@ -1,11 +1,4 @@
 /*
- * bunkers_new.c
- *
- *  Created on: Oct 12, 2016
- *      Author: superman
- */
-
-/*
  * bunkers.c
  * Taylor Cowley and Andrew Okazaki
  */
@@ -22,28 +15,28 @@
 #include "bunkers.h"
 
 
-#define NUM_BUNKERS 4
-#define NUM_SQUARES 10
-#define NUM_SQUARES_IN_LINE 4
-#define BUNKER_ROW 60
-#define LOC_BUNKER_ONE 60
-#define SQUARE_INCREMENT 6
-#define LEFT_STRUT_ROW 12
-#define LEFT_STRUT_COL 0
-#define RIGHT_STRUT_ROW 12
-#define RIGHT_STRUT_COL 18
+#define NUM_BUNKERS 4			// We have 4 bunkers
+#define NUM_SQUARES 10			// Each bunker has 10 sections
+#define NUM_SQUARES_IN_LINE 4	// In a line there are 4 sections
+#define BUNKER_ROW 60			// Row the bunkers live on
+#define LOC_BUNKER_ONE 60		// Wher ethe first bunker is
+#define SQUARE_INCREMENT 6		// Each section is this square
+#define LEFT_STRUT_ROW 12		// The extra sections live here
+#define LEFT_STRUT_COL 0		// and here
+#define RIGHT_STRUT_ROW 12		// and here
+#define RIGHT_STRUT_COL 18		// and here
 #define BUNKER_ROWS		18		// How many rows each bunker has
 #define BUNKER_COLS		24		// How many columns each bunker has
 #define GREEN 0x0000FF00		// Hex value for green
-#define BUNKER_ROW_LOC 175
-#define BUNKER_DAMAGE_1 1
-#define BUNKER_DAMAGE_2 2
-#define BUNKER_DAMAGE_3 3
-#define BUNKER_DAMAGE_4 4
+#define BUNKER_ROW_LOC 175		// Where our bunker livess?
+#define BUNKER_DAMAGE_1 1		// how
+#define BUNKER_DAMAGE_2 2		// much
+#define BUNKER_DAMAGE_3 3		// damage
+#define BUNKER_DAMAGE_4 4		// we have
 #define WHITE 0xFFFFFFF		// These
 #define BLACK 0x0000000		// are colors
-#define ZERO_DAMAGE 0
-#define BUFFER 1
+#define ZERO_DAMAGE 0			// No damage!
+#define BUFFER 1				// One pixel buffer needed sometimes
 
 // ---------------------------------------------
 //	hardcoded static const stuff
@@ -104,24 +97,26 @@ static const int32_t bunkerDamage3_6x6[SQUARE_INCREMENT] = {
 
 
 // -------------------------------------
+// Internal function declaration
 void squares_init();
 void bunker_degrade(uint32_t i, uint32_t j);
+// end internal function declaration
 // -------------------------------------
 
-
-struct bunker{
-	uint32_t row;
-	uint32_t col;
-	struct squares{
-		uint32_t row;
-		uint32_t col;
-		uint32_t damage;
+struct bunker{					// Our bunker
+	uint32_t row;				// has a row
+	uint32_t col;				// and a column
+	struct squares{				// and 10 sections
+		uint32_t row;				// Which have their rows
+		uint32_t col;				// and columns
+		uint32_t damage;			// and damage
 	}squares[NUM_SQUARES];
 }bunker[NUM_BUNKERS];
-uint32_t * frame;
+
+uint32_t * frame;				// Variable to store the screen frame
 
 
-
+// For debugging. Prints out a pixel for each section of bunker
 void bunkers_debug_print(){
 	int i,j;
 	for(i=0;i<NUM_BUNKERS;i++){
@@ -147,25 +142,24 @@ void bunkers_init(uint32_t * framePointer){
 	squares_init(); // init the bunker squares
 }
 
+// Initializes the bunker sections
 void squares_init(){
-	uint32_t i, j, row_count, col_count;
+	uint32_t i, j, row_count, col_count;			// Var init
 	row_count = 0;
 	col_count = 0;
-	for(i = 0; i < NUM_BUNKERS; i++){
-		for(j = 0; j < NUM_SQUARES-2; j++){
+	for(i = 0; i < NUM_BUNKERS; i++){				// Go through all bunkers
+		for(j = 0; j < NUM_SQUARES-2; j++){			// And all squares
 			if(j == NUM_SQUARES_IN_LINE){
 				row_count += SQUARE_INCREMENT;
 				col_count = 0;
 			}
-
+			//// And give them addresses and damage
 			bunker[i].squares[j].row = bunker[i].row + row_count;
 			bunker[i].squares[j].col = bunker[i].col + col_count;
 			bunker[i].squares[j].damage = ZERO_DAMAGE;
-
-
 			col_count += SQUARE_INCREMENT;
-
 		}
+		// Now to initialize the last two sections
 		bunker[i].squares[j].row = bunker[i].row + LEFT_STRUT_ROW;
 		bunker[i].squares[j].col = bunker[i].col + LEFT_STRUT_COL;
 		bunker[i].squares[j].damage = ZERO_DAMAGE;
@@ -173,12 +167,12 @@ void squares_init(){
 		bunker[i].squares[j].row = bunker[i].row + RIGHT_STRUT_ROW;
 		bunker[i].squares[j].col = bunker[i].col + RIGHT_STRUT_COL;
 		bunker[i].squares[j].damage = ZERO_DAMAGE;
-
 		row_count = 0;
 		col_count = 0;
 	}
 }
 
+// Draws the bunkers
 void bunkers_build(uint32_t * framePointer){
 	frame = framePointer;
 	int32_t row, col, b;							// Declare loop vars
@@ -200,22 +194,26 @@ bool bunkers_detect_collision(uint32_t row, uint32_t col, bool forceDestroy){
 	uint32_t i, j;
 	for(i = 0; i < NUM_BUNKERS; i++){
 		for(j=0; j < NUM_SQUARES; j++){
-			if(bunker[i].squares[j].damage < 4 && bunker[i].squares[j].row + SQUARE_INCREMENT >= row &&  bunker[i].squares[j].row <= row){
-				if((col <=  bunker[i].squares[j].col + SQUARE_INCREMENT+BUFFER) && (col >= bunker[i].squares[j].col-BUFFER)){
-					if(forceDestroy){
-						bunker_degrade(i,j);
-						bunker_degrade(i,j);
-						bunker_degrade(i,j);
-						bunker_degrade(i,j);
-					}else {
-						bunker_degrade(i,j);
+			if(bunker[i].squares[j].damage < 4 && bunker[i].squares[j].row +
+					SQUARE_INCREMENT >= row&&  bunker[i].squares[j].row <= row){
+				// If we have been hit
+				if((col <=  bunker[i].squares[j].col + SQUARE_INCREMENT+BUFFER)
+						&& (col >= bunker[i].squares[j].col-BUFFER)){
+					// and we have been hit
+					if(forceDestroy){		// an alien crashed into us
+						bunker_degrade(i,j);// completely
+						bunker_degrade(i,j);// destroy
+						bunker_degrade(i,j);// totally
+						bunker_degrade(i,j);//
+					}else {					// Just a bullet
+						bunker_degrade(i,j);// only one destroy
 					}
-					return true;
+					return true;			// We have been hit!
 				}
 			}
 		}
 	}
-	return false;
+	return false;							// Noone got hit, sorry
 }
 
 void bunker_degrade(uint32_t i, uint32_t j){

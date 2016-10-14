@@ -3,7 +3,6 @@
  * Taylor Cowley and Andrew Okazaki
  */
 
-
 #include <stdint.h>
 #include <stdio.h>
 #include "platform.h"
@@ -13,16 +12,15 @@
 #include "time.h"
 #include "unistd.h"
 #include "util.h"
-#include "interface.h"// enable to take life afaw from tank
-#include "bunkers.h" // tank shell to hit bunker
-#include "aliens.h"	// required to call collision detection function
-#include "mother_ship.h" // required to collition detection to kill her.
-
-#include "tank.h"	// Do we normally have to include our own h function?
+#include "interface.h"		// enable to take life afaw from tank
+#include "bunkers.h" 		// tank shell to hit bunker
+#include "aliens.h"			// required to call collision detection function
+#include "mother_ship.h" 	// required to collition detection to kill her.
+#include "tank.h"
 #define TANK_HEIGHT		8		// Tank is 8 pixels high
-#define TANK_DEATH_HEIGHT 16 	//height of tank death sprite
+#define TANK_DEATH_HEIGHT 16 	// height of tank death sprite
 #define TANK_DEATH_WIDTH 26 	// width of tank death sprite
-#define TANK_WIDTH		15
+#define TANK_WIDTH		15		// Tank is 15 pixels wide
 #define TANK_INIT_ROW	210		// Tank starts at row 210
 #define TANK_INIT_COL	160		// Tank starts at col 160
 #define SHELL_LENGTH 3			// Shell is 3 pixels long
@@ -37,8 +35,8 @@
 // Packs each horizontal line of the figures into a single 32 bit word.
 #define packword15(b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0)  \
 		((b14 << 14) | (b13 << 13) | (b12 << 12) | (b11 << 11) | (b10 << 10) | \
-				(b9  << 9 ) | (b8  << 8 ) | (b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | \
-				(b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
+		(b9  << 9 ) | (b8  << 8 ) | (b7  << 7 ) | (b6  << 6 ) | (b5  << 5 ) | \
+		(b4  << 4 ) | (b3  << 3 ) | (b2  << 2 ) | (b1  << 1 ) | (b0  << 0 ) )
 
 
 #define packWord26(b25,b24,b23,b22,b21,b20,b19,b18,b17,b16,b15,b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \
@@ -54,10 +52,8 @@ static const int tank_15x8[TANK_HEIGHT] = {		// This is how we
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
 		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
-};
-static const int tankDeath1[TANK_DEATH_HEIGHT] =
-{
+		packword15(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)};
+static const int tankDeath1[TANK_DEATH_HEIGHT] = {
 	packWord26(0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packWord26(0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 	packWord26(0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0),
@@ -73,11 +69,8 @@ static const int tankDeath1[TANK_DEATH_HEIGHT] =
 	packWord26(0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0),
 	packWord26(0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0),
 	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-
-};
-static const int tankDeath2[TANK_DEATH_HEIGHT] =
-{
+	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),};
+static const int tankDeath2[TANK_DEATH_HEIGHT] = {
 	packWord26(1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1),
 	packWord26(1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1),
 	packWord26(0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
@@ -93,9 +86,7 @@ static const int tankDeath2[TANK_DEATH_HEIGHT] =
 	packWord26(0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0),
 	packWord26(0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0),
 	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-
-};
+	packWord26(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),};
 
 #define WORD_WIDTH 15
 
@@ -110,20 +101,18 @@ struct tank_shell{	// The struct that stores the tank's bullet data
 	bool alive;		// Whether it is alive
 }tank_shell;
 
-
 // --------------------------------------------
 // Our declaration of functions to be used
 void tank_kill_bullet(uint32_t * framePointer);
 // Ending declaration of internal functions
 // --------------------------------------------
 
-
 // This initializes our tank at its proper location
 void tank_init(){
 	tank.row = 210;		// Tank starts at this row
 	tank.col = 160;		// and column
 }
-uint32_t frame; // frame pointer
+uint32_t * frame; // frame pointer
 // This draws (or erases, via the erase bool) an entire tank.
 void tank_draw(uint32_t * framePointer, bool erase){
 	frame = framePointer;
@@ -308,7 +297,7 @@ bool tank_detect_collision(uint32_t row, uint32_t col){
 	return false;
 }
 
-// Kills our tank
+// Kills our tank. Also, seizes hold of the program so nothing else happens
 void tank_die(){
 	uint32_t row, col, i;	// init loop vars
 	for(i = 0; i < 400 ; i++){
@@ -341,8 +330,7 @@ void tank_die(){
 			}
 		}
 	}
-	tank_draw(frame, false);
-	xil_printf("Your tank died.\n\r");
+	tank_draw(frame, false);	// Releases the program and redraws the tank.
 }
 
 

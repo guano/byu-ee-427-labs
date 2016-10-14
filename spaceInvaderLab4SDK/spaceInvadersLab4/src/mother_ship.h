@@ -1,8 +1,7 @@
 /*
  * mother_ship.h
  *
- *  Created on: Oct 12, 2016
- *      Author: superman
+ *  Taylor Cowley and Andrew Okazaki
  */
 
 #ifndef MOTHER_SHIP_H_
@@ -10,7 +9,6 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
 
 // Initializes the mother ship
 void mother_ship_init();
@@ -24,13 +22,10 @@ void mother_ship_move();
 // Detects a bullet collision on the mother ship
 bool mother_ship_detect_collision(uint32_t row, uint32_t col);
 
-
+// Draws the mother ship
 void mother_ship_draw(uint32_t color);
 
+// Shows the points for killing the mother ship
 void mother_ship_points_blink();
-
-
-
-
 
 #endif /* MOTHER_SHIP_H_ */

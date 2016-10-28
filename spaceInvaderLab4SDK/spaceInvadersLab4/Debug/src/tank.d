@@ -11,6 +11,7 @@ src/tank.d src/tank.o: ../src/tank.c ../src/platform.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xdebug.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xstatus.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xil_assert.h \
+  ../src/sound/sound.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xio.h ../src/util.h \
   ../src/interface.h ../src/bunkers.h ../src/aliens.h \
   ../src/mother_ship.h ../src/tank.h
@@ -40,6 +41,8 @@ src/tank.d src/tank.o: ../src/tank.c ../src/platform.h \
 ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xstatus.h:
 
 ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xil_assert.h:
+
+../src/sound/sound.h:
 
 ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xio.h:
 

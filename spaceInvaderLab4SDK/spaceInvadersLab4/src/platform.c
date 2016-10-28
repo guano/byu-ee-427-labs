@@ -53,8 +53,7 @@ disable_caches()
 }
 
 void
-init_uart()
-{
+init_uart(){
 #ifdef STDOUT_IS_PS7_UART
     /* Use the PS UART for Zynq devices */
     XUartPs Uart_Ps_0;

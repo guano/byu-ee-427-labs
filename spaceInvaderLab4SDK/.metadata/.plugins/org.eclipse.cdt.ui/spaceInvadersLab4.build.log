@@ -2,25 +2,130 @@
 **** Build of configuration Debug for project spaceInvadersLab4 ****
 
 make all 
+Building file: ../src/aliens.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/aliens.d" -MT"src/aliens.d" -o"src/aliens.o" "../src/aliens.c"
+../src/aliens.c: In function 'aliens_left':
+../src/aliens.c:326: warning: implicit declaration of function 'sound_init_alien1'
+../src/aliens.c:327: warning: implicit declaration of function 'sound_init_alien2'
+../src/aliens.c:333: warning: implicit declaration of function 'sound_init_alien3'
+../src/aliens.c:334: warning: implicit declaration of function 'sound_init_alien4'
+../src/aliens.c: In function 'aliens_kill':
+../src/aliens.c:598: warning: implicit declaration of function 'rand'
+Finished building: ../src/aliens.c
+' '
+Building file: ../src/bunkers.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/bunkers.d" -MT"src/bunkers.d" -o"src/bunkers.o" "../src/bunkers.c"
+Finished building: ../src/bunkers.c
+' '
+Building file: ../src/interface.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/interface.d" -MT"src/interface.d" -o"src/interface.o" "../src/interface.c"
+Finished building: ../src/interface.c
+' '
+Building file: ../src/mother_ship.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/mother_ship.d" -MT"src/mother_ship.d" -o"src/mother_ship.o" "../src/mother_ship.c"
+../src/mother_ship.c: In function 'mother_ship_detect_collision':
+../src/mother_ship.c:110: warning: implicit declaration of function 'rand'
+Finished building: ../src/mother_ship.c
+' '
+Building file: ../src/platform.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/platform.d" -MT"src/platform.d" -o"src/platform.o" "../src/platform.c"
+Finished building: ../src/platform.c
+' '
 Building file: ../src/spaceInvadersRUN.c
 Invoking: MicroBlaze gcc compiler
 mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/spaceInvadersRUN.d" -MT"src/spaceInvadersRUN.d" -o"src/spaceInvadersRUN.o" "../src/spaceInvadersRUN.c"
 ../src/spaceInvadersRUN.c: In function 'timer_interrupt_handler':
-../src/spaceInvadersRUN.c:81: warning: implicit declaration of function 'rand'
+../src/spaceInvadersRUN.c:89: warning: implicit declaration of function 'rand'
 ../src/spaceInvadersRUN.c: In function 'main':
-../src/spaceInvadersRUN.c:262: warning: implicit declaration of function 'srand'
-../src/spaceInvadersRUN.c:261: warning: unused variable 'input'
+../src/spaceInvadersRUN.c:290: warning: implicit declaration of function 'srand'
+../src/spaceInvadersRUN.c:289: warning: unused variable 'input'
 Finished building: ../src/spaceInvadersRUN.c
+' '
+Building file: ../src/tank.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/tank.d" -MT"src/tank.d" -o"src/tank.o" "../src/tank.c"
+Finished building: ../src/tank.c
+' '
+Building file: ../src/util.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/util.d" -MT"src/util.d" -o"src/util.o" "../src/util.c"
+Finished building: ../src/util.c
+' '
+Building file: ../src/sound/sound.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound.d" -MT"src/sound/sound.d" -o"src/sound/sound.o" "../src/sound/sound.c"
+Finished building: ../src/sound/sound.c
+' '
+Building file: ../src/sound/sound_alien1.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_alien1.d" -MT"src/sound/sound_alien1.d" -o"src/sound/sound_alien1.o" "../src/sound/sound_alien1.c"
+Finished building: ../src/sound/sound_alien1.c
+' '
+Building file: ../src/sound/sound_alien2.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_alien2.d" -MT"src/sound/sound_alien2.d" -o"src/sound/sound_alien2.o" "../src/sound/sound_alien2.c"
+Finished building: ../src/sound/sound_alien2.c
+' '
+Building file: ../src/sound/sound_alien3.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_alien3.d" -MT"src/sound/sound_alien3.d" -o"src/sound/sound_alien3.o" "../src/sound/sound_alien3.c"
+Finished building: ../src/sound/sound_alien3.c
+' '
+Building file: ../src/sound/sound_alien4.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_alien4.d" -MT"src/sound/sound_alien4.d" -o"src/sound/sound_alien4.o" "../src/sound/sound_alien4.c"
+Finished building: ../src/sound/sound_alien4.c
+' '
+Building file: ../src/sound/sound_alienKill.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_alienKill.d" -MT"src/sound/sound_alienKill.d" -o"src/sound/sound_alienKill.o" "../src/sound/sound_alienKill.c"
+Finished building: ../src/sound/sound_alienKill.c
+' '
+Building file: ../src/sound/sound_explosion.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_explosion.d" -MT"src/sound/sound_explosion.d" -o"src/sound/sound_explosion.o" "../src/sound/sound_explosion.c"
+Finished building: ../src/sound/sound_explosion.c
+' '
+Building file: ../src/sound/sound_motherShipHigh.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_motherShipHigh.d" -MT"src/sound/sound_motherShipHigh.d" -o"src/sound/sound_motherShipHigh.o" "../src/sound/sound_motherShipHigh.c"
+Finished building: ../src/sound/sound_motherShipHigh.c
+' '
+Building file: ../src/sound/sound_motherShipLow.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_motherShipLow.d" -MT"src/sound/sound_motherShipLow.d" -o"src/sound/sound_motherShipLow.o" "../src/sound/sound_motherShipLow.c"
+Finished building: ../src/sound/sound_motherShipLow.c
+' '
+Building file: ../src/sound/sound_tank.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/sound_tank.d" -MT"src/sound/sound_tank.d" -o"src/sound/sound_tank.o" "../src/sound/sound_tank.c"
+Finished building: ../src/sound/sound_tank.c
+' '
+Building file: ../src/sound/xac97_l.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/sound/xac97_l.d" -MT"src/sound/xac97_l.d" -o"src/sound/xac97_l.o" "../src/sound/xac97_l.c"
+../src/sound/xac97_l.c: In function 'XAC97_InitAudio':
+../src/sound/xac97_l.c:57: warning: unused variable 'i'
+../src/sound/xac97_l.c: In function 'XAC97_RecAudio':
+../src/sound/xac97_l.c:97: warning: unused variable 'i'
+../src/sound/xac97_l.c: In function 'XAC97_PlayAudio':
+../src/sound/xac97_l.c:132: warning: unused variable 'i'
+Finished building: ../src/sound/xac97_l.c
 ' '
 Building target: spaceInvadersLab4.elf
 Invoking: MicroBlaze gcc linker
-mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../spaceInvadersLab4SDK_BSP/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"spaceInvadersLab4.elf"  ./src/aliens.o ./src/bunkers.o ./src/interface.o ./src/mother_ship.o ./src/platform.o ./src/spaceInvadersRUN.o ./src/tank.o ./src/util.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../spaceInvadersLab4SDK_BSP/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"spaceInvadersLab4.elf"  ./src/aliens.o ./src/bunkers.o ./src/interface.o ./src/mother_ship.o ./src/platform.o ./src/spaceInvadersRUN.o ./src/tank.o ./src/util.o  ./src/sound/sound.o ./src/sound/sound_alien1.o ./src/sound/sound_alien2.o ./src/sound/sound_alien3.o ./src/sound/sound_alien4.o ./src/sound/sound_alienKill.o ./src/sound/sound_explosion.o ./src/sound/sound_motherShipHigh.o ./src/sound/sound_motherShipLow.o ./src/sound/sound_tank.o ./src/sound/xac97_l.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
 Finished building target: spaceInvadersLab4.elf
 ' '
 Invoking: MicroBlaze Print Size
 mb-size spaceInvadersLab4.elf  |tee "spaceInvadersLab4.elf.size"
    text	   data	    bss	    dec	    hex	filename
-  50838	   1496	   6570	  58904	   e618	spaceInvadersLab4.elf
+  56862	 193564	   6618	 257044	  3ec14	spaceInvadersLab4.elf
 Finished building: spaceInvadersLab4.elf.size
 ' '
 Invoking: Xilinx ELF Check

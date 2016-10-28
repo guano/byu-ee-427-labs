@@ -8,6 +8,7 @@
 #include "platform.h"
 #include "xparameters.h"
 #include "xaxivdma.h"
+#include "sound/sound.h"
 #include "xio.h"
 #include "time.h"
 #include "unistd.h"
@@ -233,6 +234,7 @@ void tank_move_right(uint32_t * framePointer){
 // This creates a shell and initially draws it to the screen
 void tank_fire(uint32_t * framePointer){
 	if(!tank_shell.alive){			// Only go on if our shell is dead
+		sound_init_tank(); // tank shoot sound
 		tank_shell.col = tank.col;	// give it
 		tank_shell.row = tank.row;	// a location
 		tank_shell.alive = true;	// make it alive!
@@ -292,6 +294,7 @@ bool tank_detect_collision(uint32_t row, uint32_t col){
 	if(row == tank.row && col > tank.col && col < tank.col+TANK_WIDTH){
 		interface_kill_tank();
 		tank_die();
+		sound_init_explosion(); // tank expode
 		return true;
 	}
 	return false;

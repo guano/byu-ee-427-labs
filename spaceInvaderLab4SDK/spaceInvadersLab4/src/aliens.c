@@ -8,6 +8,7 @@
 #include "xparameters.h"
 #include "xaxivdma.h"
 #include "xio.h"
+#include "sound/sound.h"
 #include "time.h"
 #include "unistd.h"
 #include "util.h"
@@ -322,11 +323,15 @@ void aliens_left(uint32_t * framePointer) {
 	}
 	if (alien_count == 0) { // If aliens are out, make them in
 		alien_count = 1;
+		sound_init_alien1(); // sound
+		sound_init_alien2(); // sound
 		build_tops(framePointer, alien_top_in_12x8, false); // Draw top aliens
 		build_middle(framePointer, alien_middle_in_12x8, false); // Draw mid aliens
 		build_bottom(framePointer, alien_bottom_in_12x8, false); // Draw bot aliens
 	} else { // And vice versa
 		alien_count = 0;
+		sound_init_alien3();// sound
+		sound_init_alien4(); // sound
 		build_tops(framePointer, alien_top_out_12x8, false); // Draw top aliens
 		build_middle(framePointer, alien_middle_out_12x8, false); // Draw mid aliens
 		build_bottom(framePointer, alien_bottom_out_12x8, false); // Draw bot aliens
@@ -385,11 +390,15 @@ void aliens_right(uint32_t * framePointer) {
 
 	if (alien_count == 0) { // If aliens are out, make them in
 		alien_count = 1;
+		sound_init_alien1(); // sound
+		sound_init_alien2(); // sound
 		build_tops(framePointer, alien_top_in_12x8, false); // Draw top aliens
 		build_middle(framePointer, alien_middle_in_12x8, false); // Draw mid aliens
 		build_bottom(framePointer, alien_bottom_in_12x8, false); // Draw bot aliens
 	} else { // And vice versa
 		alien_count = 0;
+		sound_init_alien3(); // sound
+		sound_init_alien4(); // sound
 		build_tops(framePointer, alien_top_out_12x8, false); // Draw top aliens
 		build_middle(framePointer, alien_middle_out_12x8, false); // Draw mid aliens
 		build_bottom(framePointer, alien_bottom_out_12x8, false); // Draw bot aliens
@@ -906,6 +915,7 @@ bool aliens_detect_collision(uint32_t row,uint32_t col){
 		for(i=0;i<ALIEN_COLUMNS;i++){
 			if(top[i].alive && col > top[i].col && col < top[i].col + ALIEN_WIDTH){
 				// The bullet has hit the bottom of our alien!
+				sound_init_alienKill();// kill sound
 				interface_increment_score(TOP_POINTS);
 				top[i].alive = false;	// Kill the alien
 				top[i].exploding = true;
@@ -922,6 +932,7 @@ bool aliens_detect_collision(uint32_t row,uint32_t col){
 		for(i=0;i<ALIEN_COLUMNS;i++){
 			if(middleAlien[i].alive &&
 					col > middleAlien[i].col&&col<middleAlien[i].col+ALIEN_WIDTH){
+				sound_init_alienKill(); // kill sound
 				// The bullet has hit the bottom of our alien!
 				interface_increment_score(MIDDLE_POINTS);
 				middleAlien[i].alive = false;	// Kill the alien
@@ -940,6 +951,7 @@ bool aliens_detect_collision(uint32_t row,uint32_t col){
 		for(i=ALIEN_COLUMNS;i<ALIEN_COLUMNS+ALIEN_COLUMNS;i++){
 			if(middleAlien[i].alive &&
 					col>middleAlien[i].col && col < middleAlien[i].col + ALIEN_WIDTH){
+				sound_init_alienKill();// kill sound
 				// The bullet has hit the bottom of our alien!
 				interface_increment_score(MIDDLE_POINTS);
 				aliens_delete_middle(i); // kill alien
@@ -958,6 +970,7 @@ bool aliens_detect_collision(uint32_t row,uint32_t col){
 			if(bottomAlien[i].alive &&
 					col > bottomAlien[i].col && col < bottomAlien[i].col + ALIEN_WIDTH){
 				// The bullet has hit the bottom of our alien!
+				sound_init_alienKill();// kill sound
 				interface_increment_score(BOTTOM_POINTS);
 				aliens_delete_bottom(i); // kill alien
 				bottomAlien[i].alive = false;	// Kill the alien
@@ -975,6 +988,7 @@ bool aliens_detect_collision(uint32_t row,uint32_t col){
 			if(bottomAlien[i].alive &&
 					col > bottomAlien[i].col && col < bottomAlien[i].col + ALIEN_WIDTH){
 				// The bullet has hit the bottom of our alien!
+				sound_init_alienKill();// kill sound
 				interface_increment_score(BOTTOM_POINTS);
 				aliens_delete_bottom(i); // kill alien
 				bottomAlien[i].alive = false;	// Kill the alien

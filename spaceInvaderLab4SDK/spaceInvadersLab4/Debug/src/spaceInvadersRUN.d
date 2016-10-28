@@ -13,7 +13,10 @@ src/spaceInvadersRUN.d src/spaceInvadersRUN.o: ../src/spaceInvadersRUN.c \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xil_assert.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xio.h ../src/tank.h \
   ../src/interface.h ../src/aliens.h ../src/bunkers.h \
-  ../src/mother_ship.h ../src/util.h \
+  ../src/mother_ship.h ../src/util.h ../src/sound/xac97_l.h \
+  ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xbasic_types.h \
+  ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xio.h \
+  ../src/sound/sound.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xgpio.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xgpio_l.h \
   ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/mb_interface.h \
@@ -59,6 +62,14 @@ src/spaceInvadersRUN.d src/spaceInvadersRUN.o: ../src/spaceInvadersRUN.c \
 ../src/mother_ship.h:
 
 ../src/util.h:
+
+../src/sound/xac97_l.h:
+
+../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xbasic_types.h:
+
+../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xio.h:
+
+../src/sound/sound.h:
 
 ../../spaceInvadersLab4SDK_BSP/microblaze_0/include/xgpio.h:
 

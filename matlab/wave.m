@@ -1,11 +1,10 @@
 
 
-filename = 'guitar_8_bit_mono.wav';
+filename = 'fastinvader3.wav';
 [y,Fs] = wavread(filename, 'native');
-R = y(1:8000);
-
-B = reshape(R,[],5);
-csvwrite('data.txt',B);
+R = y(1:1040); 
+B = reshape(R,[],10);
+csvwrite('data.txt',B,0,1);
 [L,W] = size(R);
 
 

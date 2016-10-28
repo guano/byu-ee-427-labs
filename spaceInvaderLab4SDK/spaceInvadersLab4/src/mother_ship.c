@@ -5,6 +5,7 @@
  */
 
 #include "mother_ship.h"
+#include "sound/sound.h"
 #include "interface.h" // enables update score
 #include "util.h"
 
@@ -77,20 +78,26 @@ void mother_ship_spawn(){
 	mother_ship.alive = true;					// She is now alive
 	mother_ship_draw(MOTHER_SHIP_COLOR);		// Draw her.
 	blinking = false;							// No score blinking anymore
+
+
+
 }
 
 // Moves the mother ship right
 void mother_ship_move(){
-	if(!mother_ship.alive)
-		return;									// Can't move when dead!
-	mother_ship_draw(BLACK);					// Erase old version
-	mother_ship.col += MOTHER_SHIP_MOVE_SPEED;	// Move her
-	if(mother_ship.col > SCREEN_WIDTH-MOTHER_SHIP_WIDTH){	// She left.
-		mother_ship.alive = false;				// So is now dead
-		mother_ship.col = SCREEN_WIDTH;			// And off the screen
-		return;									// Exit
+	if(mother_ship.alive){									// Can't move when dead!
+		mother_ship_draw(BLACK);					// Erase old version
+		mother_ship.col += MOTHER_SHIP_MOVE_SPEED;	// Move her
+		if(mother_ship.col > SCREEN_WIDTH-MOTHER_SHIP_WIDTH){	// She left.
+			mother_ship.alive = false;				// So is now dead
+			mother_ship.col = SCREEN_WIDTH;			// And off the screen
+			sound_motherShipStop();
+			return;									// Exit
+		}
+		mother_ship_draw(MOTHER_SHIP_COLOR);		// Draw her!
+
+		sound_init_motherShipLow(); 				// play high pitch sound
 	}
-	mother_ship_draw(MOTHER_SHIP_COLOR);		// Draw her!
 }
 
 // Detects a bullet collision on the mother ship
@@ -98,6 +105,8 @@ bool mother_ship_detect_collision(uint32_t row, uint32_t col){
 	// If it is at the right row and in-between her columns
 	if(row == mother_ship.row+MOTHER_SHIP_HEIGHT
 			&& col>mother_ship.col && col < mother_ship.col+MOTHER_SHIP_WIDTH){
+		sound_motherShipStop();
+		sound_init_motherShipHigh();
 		mother_ship_points = rand()%500 + 316;			// Make random point
 		interface_increment_score(mother_ship_points);	// Player gets points
 		mother_ship.alive = false;						// She dies

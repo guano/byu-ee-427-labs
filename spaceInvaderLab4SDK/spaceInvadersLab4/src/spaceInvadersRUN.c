@@ -18,10 +18,14 @@
 #include "bunkers.h"
 #include "mother_ship.h"
 #include "util.h"
-
+#include "sound/xac97_l.h"
+#include "sound/sound.h"
 #include "xgpio.h"
 #include "mb_interface.h"
 #include "xintc_l.h"
+#include "sound/sound.h"
+
+
 
 #define DEBUG
 
@@ -43,8 +47,8 @@
 #define ALIEN_SHOT_SPAWN_CONSTANT 100		// Aliens shoot frequently
 #define ALIEN_MOVE_SPEED HALF_SECOND		// aliens move very slowly
 
-#define BUTTON_UP		0x10	// Constants for button masks
-#define BUTTON_DOWN		0x4
+#define BUTTON_UP		0x4	// Constants for button masks
+#define BUTTON_DOWN		0x10
 #define BUTTON_LEFT		0x8
 #define BUTTON_RIGHT	0x2
 #define BUTTON_CENTER	0x1
@@ -66,8 +70,12 @@ uint32_t* framePointer0 = (uint32_t*) FRAME_BUFFER_0_ADDR;
 int32_t currentButtonState;		// Current button being pressed
 int32_t mother_ship_points;
 uint32_t cpu_usage_timer = 0;
+uint32_t sound_count = 0;
+
 
 void timer_interrupt_handler(){
+
+
 	static uint32_t timerCount;					// Timer for timing
 	static uint32_t mother_ship_move_counter;	// Timer for mother ship
 
@@ -93,7 +101,7 @@ void timer_interrupt_handler(){
 		mother_ship_points = 0;			// Mother ship points will display
 		mother_ship_points_blink();
 	}
-	if(timerCount >= 5 ){
+	if(timerCount >= HALF_SECOND ){
 		timerCount = 0;
 		aliens_move(framePointer0);	// move the aliens
 	}
@@ -110,8 +118,12 @@ void timer_interrupt_handler(){
 		tank_fire(framePointer0);			// Fire the tank!
 	}
 	if(currentButtonState & BUTTON_UP){		// Not functional yet
-		xil_printf("cpu usage: %d\n\r", cpu_usage_timer);
+		sound_vol_up();
 	}
+	if(currentButtonState & BUTTON_DOWN){		// Not functional yet
+		sound_vol_down();
+	}
+
 }
 void pb_interrupt_handler(){
 	XGpio_InterruptGlobalDisable(&gpPB);	// Can't be interrupted by buttons
@@ -120,6 +132,12 @@ void pb_interrupt_handler(){
 	// Time to clear the interrupt and reenable GPIO interrupts
 	XGpio_InterruptClear(&gpPB, 0xFFFFFFFF);
 	XGpio_InterruptGlobalEnable(&gpPB);
+}
+
+// We are making sound here :)
+void sound_interrupt_handler(){
+// Making sound!
+	sound_run();
 }
 
 // Main interrupt handler, queries interrupt controller to see what peripheral
@@ -141,6 +159,12 @@ void interrupt_handler_dispatcher(void* ptr) {
 		XIntc_AckIntr(XPAR_INTC_0_BASEADDR, // Acknowledge the interrupt
 				XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK);
 	}
+	 // Check the sound card
+	if (intc_status & XPAR_AXI_AC97_0_INTERRUPT_MASK){
+	// Acknowledge that interrupt
+	XIntc_AckIntr(XPAR_INTC_0_BASEADDR, XPAR_AXI_AC97_0_INTERRUPT_MASK);
+	sound_interrupt_handler();	// Make sound!
+	}
 }
 
 void init_interrupts(void){
@@ -156,16 +180,20 @@ void init_interrupts(void){
 	// Register the interrupt handler
 	microblaze_register_handler(interrupt_handler_dispatcher, NULL);
 	// And enable interrupts
-	XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,
-			(XPAR_FIT_TIMER_0_INTERRUPT_MASK |
-					XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK));
+	 XIntc_EnableIntr(XPAR_INTC_0_BASEADDR,	// interrupts to enable
+	(XPAR_FIT_TIMER_0_INTERRUPT_MASK |	// fit timer
+			XPAR_PUSH_BUTTONS_5BITS_IP2INTC_IRPT_MASK |	// buttons
+				XPAR_AXI_AC97_0_INTERRUPT_MASK));	// sound card
 	// Master the enable
 	XIntc_MasterEnable(XPAR_INTC_0_BASEADDR);
 	// And enable again
 	microblaze_enable_interrupts();
 }
 
+
+
 int main() {
+	sound_init_AC_97();
 	init_platform();                   // Necessary for all programs.
 	init_interrupts();
 	int Status;                        // Keep track of success/failure of system function calls.
@@ -261,45 +289,14 @@ int main() {
 	char input;
 	srand((unsigned)time( NULL ));
 
+
 	xil_printf("Are we getting here?\n\r");
 
+	//initialize AC-97
 
 
 	while(1){
 		cpu_usage_timer++;
-		/*		// This doesn't need to be here no more
-		//aliens_move(framePointer0);	// move the aliens
-		tank_update_bullet(framePointer0);	// update all bullets
-		aliens_update_bullets(framePointer0);	// update all bullets
-		//interface_increment_score(framePointer0,0);
-		input = getchar();
-		switch(input){
-		case '4':
-			tank_move_left(framePointer0);		// move the tank left
-			break;
-		case '6':
-			tank_move_right(framePointer0);		// move the tank right
-			break;
-		case '8':
-			mother_ship_spawn();
-			break;
-		case '2':
-			interface_kill_tank();
-			interface_increment_score(1);
-			//aliens_kill(framePointer0);	// Kill an alien
-			break;
-		case '5':
-			tank_fire(framePointer0);		// Make the tank fire
-			break;
-		case '3':
-			alien_missle(framePointer0);	// Make the aliens fire
-			break;
-		case'9':
-			mother_ship_move();
-			break;
-		case '7':
-			break;
-		}*/
 	}
 	cleanup_platform();
 	return 0;

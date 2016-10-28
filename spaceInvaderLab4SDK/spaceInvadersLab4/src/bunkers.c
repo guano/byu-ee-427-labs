@@ -194,7 +194,7 @@ bool bunkers_detect_collision(uint32_t row, uint32_t col, bool forceDestroy){
 	uint32_t i, j;
 	for(i = 0; i < NUM_BUNKERS; i++){
 		for(j=0; j < NUM_SQUARES; j++){
-			if(bunker[i].squares[j].damage < 4 && bunker[i].squares[j].row +
+			if(bunker[i].squares[j].damage < BUNKER_DAMAGE_4 && bunker[i].squares[j].row +
 					SQUARE_INCREMENT >= row&&  bunker[i].squares[j].row <= row){
 				// If we have been hit
 				if((col <=  bunker[i].squares[j].col + SQUARE_INCREMENT+BUFFER)

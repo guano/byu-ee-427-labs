@@ -3,30 +3,31 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="257" key="DIALOG_WIDTH"/>
 		<item value="189" key="DIALOG_Y_ORIGIN"/>
-		<item value="1359" key="DIALOG_X_ORIGIN"/>
 		<item value="380" key="DIALOG_HEIGHT"/>
+		<item value="1359" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
-		<item value="false" key="incremental"/>
+		<item value="false" key="casesensitive"/>
+		<item value="true" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="col" key="selection"/>
+		<item value="int " key="selection"/>
 		<list key="findhistory">
+			<item value="int "/>
+			<item value="4 "/>
+			<item value="4"/>
+			<item value="220"/>
+			<item value="aliens_kill"/>
+			<item value="5"/>
 			<item value="col"/>
 			<item value="bool"/>
-			<item value="middlealiens"/>
-			<item value="game_over"/>
-			<item value="alien_bottom"/>
-			<item value="build_bottom"/>
-			<item value="int"/>
-			<item value="debug"/>
 		</list>
 		<list key="replacehistory">
-			<item value="c"/>
+			<item value="N_BUTTE"/>
 			<item value=""/>
+			<item value="c"/>
 			<item value="uint32_t"/>
 		</list>
 	</section>

@@ -1,8 +1,6 @@
 /*
  * sound.c
- *
- *  Created on: Oct 26, 2016
- *      Author: superman
+ * Taylor Cowley and Andrew Okazaki
  */
 
 #include <stdint.h>
@@ -12,6 +10,7 @@
 #define ZERO 0
 #define INCREMENTAL_STEP 100
 #define SHIFT 16
+#define VOLUME_STEP 30			// Volume up or down by 30 each time
 //tank-------------------------------------------------------------------------
 extern int32_t tankFireSoundRate;
 extern int32_t tankFireSoundFrames;
@@ -164,12 +163,13 @@ void sound_init_motherShipLow(){
 void sound_func(int32_t SoundRate, int32_t SoundFrames,int32_t Sound[], int32_t count){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
+	// Get the sound card all set up with the sound rate
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR,AC97_PCM_DAC_Rate,SoundRate);
-	for(i = 0; i < INCREMENTAL_STEP; i++){
-		count += 1;
-		sample = (Sound[count] << SHIFT) | tankFireSound[count] ;
-		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-		if(count >= tankFireSoundFrames){
+	for(i = 0; i < INCREMENTAL_STEP; i++){	// Gives the sound card
+		count ++;
+		sample = (Sound[count] << SHIFT) | tankFireSound[count];
+		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);	// give sample to sound card
+		if(count >= tankFireSoundFrames){	// resets the fifo
 			XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 			XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 		}
@@ -180,12 +180,14 @@ void sound_func(int32_t SoundRate, int32_t SoundFrames,int32_t Sound[], int32_t 
 void tank_sound_func(){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
+	// set up sound card with sound rate
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR,AC97_PCM_DAC_Rate,tankFireSoundRate);
-	for(i = 0; i < INCREMENTAL_STEP; i++){
-		sound_tank.count += 1;
+	for(i = 0; i < INCREMENTAL_STEP; i++){	// give it 100 samples
+		sound_tank.count ++;
+		// create a sample; give it to sound card
 		sample = (tankFireSound[sound_tank.count] << SHIFT) | tankFireSound[sound_tank.count] ;
 		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-		if(sound_tank.count >= tankFireSoundFrames){
+		if(sound_tank.count >= tankFireSoundFrames){// reset it at end of sound
 			XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 			XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 		}
@@ -195,12 +197,14 @@ void tank_sound_func(){
 void ufo_sound_func(){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
+	// Set up sound card with proper sound rate
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, motherShipLowSoundRate);
 	for(i = 0; i < INCREMENTAL_STEP; i++){
-		sound_motherShipLow.count += 1;
+		sound_motherShipLow.count ++;	// increment
+		// Create sample and give it to FIFO
 		sample = (motherShipLowSound[sound_motherShipLow.count] << SHIFT) | motherShipLowSound[sound_motherShipLow.count] ;
 		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-		if(sound_motherShipLow.count >= motherShipLowSoundFrames){
+		if(sound_motherShipLow.count >= motherShipLowSoundFrames){//	At end of sound, reset.
 			XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 			XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 		}
@@ -211,12 +215,14 @@ void ufo_sound_func(){
 void ufo_kill_sound_func(){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
+	// Give sound card proper sound rate
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, motherShipHighSoundRate);
 	for(i = 0; i < INCREMENTAL_STEP; i++){
-		sound_motherShipHigh.count += 1;
+		sound_motherShipHigh.count ++; // increment
+		// Make sample and give it to FIFO
 		sample = (motherShipHighSound[sound_motherShipHigh.count] << SHIFT) | motherShipHighSound[sound_motherShipHigh.count] ;
 		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-		if(sound_motherShipHigh.count >= motherShipHighSoundFrames){
+		if(sound_motherShipHigh.count >= motherShipHighSoundFrames){// At end of sound, reset
 			XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 			XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 		}
@@ -227,12 +233,13 @@ void ufo_kill_sound_func(){
 void tank_explosion_sound_func(){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
+	// Give sound card proper sound rate
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, tankExplodeSoundRate);
 	for(i = 0; i < INCREMENTAL_STEP; i++){
-		sound_explosion.count += 1;
+		sound_explosion.count ++;	// increment
 		sample = (tankExplosionSound[sound_explosion.count] << SHIFT) | tankExplosionSound[sound_explosion.count] ;
 		XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-		if(sound_explosion.count >= tankExplosionSoundFrames){
+		if(sound_explosion.count >= tankExplosionSoundFrames){// at end of sound, reset
 			XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 			XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 		}
@@ -244,90 +251,103 @@ void tank_explosion_sound_func(){
 void sound_run(){
 	uint32_t i; // initiate variable
 	uint32_t sample = 0; // initiate variable to 0
-	if(sound_tank.count <= tankFireSoundFrames){
+
+	// This block of code sends sound data of only one sound at a time
+	if(sound_tank.count <= tankFireSoundFrames){					// Tank fire
 		tank_sound_func();
-	}else if(sound_motherShipLow.count <= motherShipLowSoundFrames){
+	}else if(sound_motherShipLow.count <= motherShipLowSoundFrames){// Mother ship 1
 		ufo_sound_func();
-	}else if(sound_motherShipHigh.count <= motherShipHighSoundFrames){
+	}else if(sound_motherShipHigh.count <= motherShipHighSoundFrames){// Mother ship 2
 		ufo_kill_sound_func();
-	}else if(sound_explosion.count <= tankExplosionSoundFrames){
+	}else if(sound_explosion.count <= tankExplosionSoundFrames){// tank death
 		tank_explosion_sound_func();
-	}else if(sound_alien1.count <= alien1SoundFrames){
+	}else if(sound_alien1.count <= alien1SoundFrames){			// Alien 1
+		// Give sound card good sound rate
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, alien1SoundRate);
-		for(i = 0; i < INCREMENTAL_STEP; i++){
-			sound_alien1.count += 1;
+		for(i = 0; i < INCREMENTAL_STEP; i++){	// 100 samples
+			sound_alien1.count ++;
+			// Create sample and load it into FIFO
 			sample = (alien1Sound[sound_alien1.count] << SHIFT) | alien1Sound[sound_alien1.count] ;
 			XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-			if(sound_alien1.count >= alien1SoundFrames){
+			if(sound_alien1.count >= alien1SoundFrames){	// end of sound; reset
 				XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 				XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 			}
 		}
-	}else if(sound_alien2.count <= alien2SoundFrames){
+	}else if(sound_alien2.count <= alien2SoundFrames){			// Alien 2
+		// Give sound card good sample rate
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, alien2SoundRate);
 		for(i = 0; i < INCREMENTAL_STEP; i++){
-			sound_alien2.count += 1;
+			sound_alien2.count ++;
+			// Create sample and give it to FIFO
 			sample = (alien2Sound[sound_alien2.count] << SHIFT) | alien2Sound[sound_alien2.count] ;
 			XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-			if(sound_alien2.count >= alien2SoundFrames){
+			if(sound_alien2.count >= alien2SoundFrames){	// end of sound, reset
 				XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 				XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 			}
 		}
-	}else if(sound_alien3.count <= alien3SoundFrames){
+	}else if(sound_alien3.count <= alien3SoundFrames){			// Alien 3
+		// Give sound card good sample rate
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, alien3SoundRate);
 		for(i = 0; i < INCREMENTAL_STEP; i++){
-			sound_alien3.count += 1;
+			sound_alien3.count ++;
+			// Create sample and give it to sound card
 			sample = (alien2Sound[sound_alien3.count] << SHIFT) | alien2Sound[sound_alien3.count] ;
 			XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-			if(sound_alien3.count >= alien3SoundFrames){
+			if(sound_alien3.count >= alien3SoundFrames){	// end of sound, reset
 				XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 				XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 			}
 		}
-	}else if(sound_alien4.count <= alien4SoundFrames){
+	}else if(sound_alien4.count <= alien4SoundFrames){			// Alien 4
+		// Give sound card good sample rate
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, alien4SoundRate);
 		for(i = 0; i < INCREMENTAL_STEP; i++){
-			sound_alien4.count += 1;
+			sound_alien4.count ++;
+			// Create sample and load it into FIFO
 			sample = (alien4Sound[sound_alien4.count] << SHIFT) | alien4Sound[sound_alien4.count] ;
 			XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-			if(sound_alien4.count >= alien4SoundFrames){
+			if(sound_alien4.count >= alien4SoundFrames){	// end of sound, reset
 				XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 				XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 			}
 		}
-	}else if(sound_alienKill.count <= alienKillSoundFrames){
+	}else if(sound_alienKill.count <= alienKillSoundFrames){	// ALien death
+		// Give sound card good sound rate
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_PCM_DAC_Rate, alienKillSoundRate);
 		for(i = 0; i < INCREMENTAL_STEP; i++){
-			sound_alienKill.count += 1;
+			sound_alienKill.count ++;
+			// Create sample, give it to sound card
 			sample = (alienKillSound[sound_alienKill.count] << SHIFT) | alienKillSound[sound_alienKill.count] ;
 			XAC97_mSetInFifoData(XPAR_AXI_AC97_0_BASEADDR, sample);
-			if(sound_alienKill.count >= alienKillSoundFrames){
+			if(sound_alienKill.count >= alienKillSoundFrames){	// end of sample, reset
 				XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 				XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 			}
 		}
-	}else{
+	}else{											// No sound playing; clear.
 		XAC97_ClearFifos(XPAR_AXI_AC97_0_BASEADDR);
 		XAC97_mSetControl(XPAR_AXI_AC97_0_BASEADDR,AC97_ENABLE_IN_FIFO_INTERRUPT);
 	}
 }
 
+// turn the sound up
 void sound_vol_up(){
-		sound_vol += 30;
+		sound_vol += VOLUME_STEP;
 		XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_AuxOutVol, sound_vol);
 }
 
+// turn the sound down
 void sound_vol_down(){
-	sound_vol -= 30;
+	sound_vol -= VOLUME_STEP;
 	XAC97_WriteReg(XPAR_AXI_AC97_0_BASEADDR, AC97_AuxOutVol, sound_vol);
 }
 
-
-
-
+// Stop playing the mother ship sound
 void sound_motherShipStop(){
-	sound_motherShipLow.count = motherShipLowSoundFrames+ 100;
+	// Set it to the end
+	sound_motherShipLow.count = motherShipLowSoundFrames+ VOLUME_STEP;
 }
 
 

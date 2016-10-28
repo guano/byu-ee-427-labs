@@ -20,6 +20,8 @@
 #define ALIEN_HEIGHT 8		// Aliens are 8 pixels tall
 #define ALIEN_WIDTH 12		// Aliens are 12 pixels wide
 #define ALIEN_COLUMNS 11	// 11 columns of aliens
+#define ALIEN_TOTAL 55				// total number of aliens
+#define ALIEN_BULLET_DEATH_ROW 	220 // bullets die here
 #define BULLET_HEIGHT 5		// Bullets are 5 pixels tall
 #define TOP_TOTAL 11		// 11 aliens in top group
 #define LOC_ALIEN_ONE 50	// Pixel where the first alien is
@@ -595,7 +597,7 @@ void aliens_move(uint32_t * framePointer) {
 // Kills a random alien
 // Currently has a bug that if the last alien dies, infinite loop
 void aliens_kill(uint32_t * framePointer) {
-	int32_t r = rand() % 55; // Get a random number
+	int32_t r = rand() % ALIEN_TOTAL; // Get a random number
 
 	if (r < TOP_TOTAL) { // If we have killed a top
 		if (!top[r].alive) { // Already dead!
@@ -810,7 +812,7 @@ void aliens_update_bullets(uint32_t * framePointer) {
 				alien_bullet[i].alive = false;
 				continue;
 			}
-			if(alien_bullet[i].row == 220){
+			if(alien_bullet[i].row == ALIEN_BULLET_DEATH_ROW){
 				alien_bullet[i].alive = false;
 				continue;
 			}

@@ -167,7 +167,7 @@ uint32_t score = 0; 			// keep track of game score
 
 //initialize the score board to all zeros
 void interface_init_numbers(){									//set the frame
-	int row, col;												//declare vars
+	uint32_t row, col;												//declare vars
 	for(row=0;row<WORDS_HEIGHT;row++){							//through width
 		 for(col=0;col<NUMBER_WIDTH;col++){						//and height
 			 if((ZERO_4x5[row] & (1<<(NUMBER_WIDTH-col-1)))){	//and draw score
@@ -188,24 +188,32 @@ void interface_init_numbers(){									//set the frame
 	 }
 }
 
+
+
+#define INTERFACE_DIGIT_MOD 10
+#define INTERFACE_START_COL 55
+#define INTERFACE_COL_OFFSET 5
+#define INTERFACE_SINGLE_DIGIT_DIVISION 1
+#define INTERFACE_NUM_DIGITS 6
+
 //increment the score by value
 void interface_increment_score(uint32_t value){
 	uint32_t i, temp_score; // initialize variables
-	uint32_t mod = 10;		 		// set the modulus value
-	uint32_t divide = 1;	  		// set the value to divide by
-	uint32_t digit_loc = 55;  		// set the column location of first digit
+	uint32_t mod = INTERFACE_DIGIT_MOD;		 		// set the modulus value
+	uint32_t divide = INTERFACE_SINGLE_DIGIT_DIVISION;	  		// set the value to divide by
+	uint32_t digit_loc = INTERFACE_START_COL;  		// set the column location of first digit
 	score += value;			  		// increment the game score by value
 	temp_score = score; 	  		// set a temporary score to edit
 
-	for(i = 0; i < 6; i++){ 				// loop through all six digits
+	for(i = 0; i < INTERFACE_NUM_DIGITS; i++){ 				// loop through all six digits
 		uint32_t number = temp_score % mod; // modulus the score
 		number = number / divide;			// convert to a single digit value
 		temp_score = temp_score - number;	// update the temporary score
 		interface_digit(number,digit_loc); 	// print to screen
 
-		digit_loc -= 5;	// update to the next digit column location
-		divide *= 10;   // increment the number we divide by
-		mod *= 10;      // increment the modulus number
+		digit_loc -= INTERFACE_COL_OFFSET;	// update to the next digit column location
+		divide *= INTERFACE_DIGIT_MOD;   // increment the number we divide by
+		mod *= INTERFACE_DIGIT_MOD;      // increment the modulus number
 	}
 }
 
@@ -251,7 +259,7 @@ void interface_digit(uint32_t value, uint32_t digit){
 //number[] is the sprite of 1,2,3 ect.
 //digit is the column offset of the screen to print to
 void interface_update_digit(const uint32_t number[], uint32_t digit){
-	int row, col;											//init row and col
+	uint32_t row, col;											//init row and col
 	for(row=0;row<WORDS_HEIGHT;row++){						// Go through width
 		 for(col=0;col<NUMBER_WIDTH;col++){					// and height
 			 if((number[row] & (1<<(NUMBER_WIDTH-col-1)))){	// if  sprite
@@ -278,7 +286,7 @@ void interface_init_board(uint32_t * framePointer){
 
 //This draws the word score to the screen.
 void interface_draw_score(){
-	int row, col;
+	uint32_t row, col;
 	for(row=0;row<WORDS_HEIGHT;row++){						// Go through width
 		 for(col=0;col<SCORE_WIDTH;col++){					// and height
 			 if((SCORE_28x5[row] & (1<<(SCORE_WIDTH-col-1)))){// and draw score
@@ -291,7 +299,7 @@ void interface_draw_score(){
 
 //This draws the word lives to the screen.
 void interface_draw_lives(){
-	int row, col;
+	uint32_t row, col;
 	for(row=0;row<WORDS_HEIGHT;row++){						// Go through width
 		 for(col=0;col<LIVES_WIDTH;col++){					// and height
 			 if((LIVES_24x5[row] & (1<<(LIVES_WIDTH-col-1)))){// and draw Lives
@@ -303,7 +311,7 @@ void interface_draw_lives(){
 }
 // This draws the green line at the bottom of the screen
 void interface_draw_line(){
-	int row, col;								// Initialize
+	uint32_t row, col;								// Initialize
 	row = LINE_Y;								// variables
 	for(col=0;col<GAME_X;col++){				// Go along the screen and draw
 		util_draw_pixel(frame, row, col, GREEN);//draw green
@@ -312,7 +320,7 @@ void interface_draw_line(){
 
 // This draws the extra tanks to the screen
 void interface_draw_tanks(){
-	 int row, col;											// Init loop vars
+	uint32_t row, col;											// Init loop vars
 	 for(row=0;row<TANK_HEIGHT;row++){						// Go through width
 		 for(col=0;col<TANK_WIDTH;col++){					// and height
 			 if((tank_15x8[row] & (1<<(TANK_WIDTH-col-1)))) {// and draw 3 tanks
@@ -328,7 +336,7 @@ void interface_draw_tanks(){
 }
 // This draws the game over screen
 void interface_draw_game_over(){
-	int row, col;
+	uint32_t row, col;
 	for(row=0;row<WORDS_HEIGHT;row++){						// Go through width
 		 for(col=0;col<SCORE_WIDTH;col++){					// and height
 			 if((GAME_28x5[row] & (1<<(SCORE_WIDTH-col-1)))){// and draw score
@@ -356,7 +364,7 @@ void interface_kill_tank(){
 	}
 
 
-	int row, col;
+	uint32_t row, col;
 	switch(lives){											// lives left
 	case 2: 												// lives = 2
 		for(row=0;row<TANK_HEIGHT;row++){					// Go through width
@@ -400,7 +408,7 @@ void interface_game_over(){
 
 // Draw the win screen
 void interface_success(){
-	int row, col;
+	uint32_t row, col;
 	for(row=0;row<WORDS_HEIGHT;row++){					// Go through width
 		 for(col=0;col<SCORE_WIDTH;col++){				// and height
 			 if((WIN_28x5[row] & (1<<(SCORE_WIDTH-col-1)))){// and draw score
@@ -456,7 +464,7 @@ void interface_ship_digit(const uint32_t value, uint32_t digit, bool erase){
 //digit is the column offset of the screen to print to
 void interface_update_ship_digit(const uint32_t number[], uint32_t digit, bool erase){
 	uint32_t color = erase ? BLACK : MOTHER_SHIP_POINT_COLOR;
-	int row, col;	//initialize row and column
+	uint32_t row, col;	//initialize row and column
 	for(row=0;row<WORDS_HEIGHT;row++){																	// Go through width
 		 for(col=0;col<NUMBER_WIDTH;col++){																// and height
 			 if((number[row] & (1<<(NUMBER_WIDTH-col-1)))){												// if value in sprite = 1
@@ -468,23 +476,25 @@ void interface_update_ship_digit(const uint32_t number[], uint32_t digit, bool e
 	 }
 }
 
+
+#define INTERFACE_NUM_MOTHERSHIP_DIGITS 3
 // print the alien points of ship
 void interface_alien_ship_points(uint32_t mother_ship_points, uint32_t col_loc, bool erase){
 //	xil_printf("printing points %d\n\r", mother_ship_points);
 
 	uint32_t i, temp_score; // initialize variables
-	uint32_t mod = 10;		 		// set the modulus value
-	uint32_t divide = 1;	  		// set the value to divide by
+	uint32_t mod = INTERFACE_DIGIT_MOD;		 		// set the modulus value
+	uint32_t divide = INTERFACE_SINGLE_DIGIT_DIVISION;	  		// set the value to divide by
 	temp_score = mother_ship_points; 	  		// set a temporary score to edit
-	for(i = 0; i < 3; i++){ 				// loop through all six digits
+	for(i = 0; i < INTERFACE_NUM_MOTHERSHIP_DIGITS; i++){ 				// loop through all six digits
 		uint32_t number = temp_score % mod; // modulus the score
 		number = number / divide;			// divide the number to convert to a single digit value
 		temp_score = temp_score - number;	// update the temporary score
 		interface_ship_digit(number,col_loc,erase); 	// print to screen
 
-		col_loc -= 5;	// update to the next digit column location
-		divide *= 10;   // increment the number we divide by
-		mod *= 10;      // increment the modulus number
+		col_loc -= INTERFACE_COL_OFFSET;	// update to the next digit column location
+		divide *= INTERFACE_DIGIT_MOD;   // increment the number we divide by
+		mod *= INTERFACE_DIGIT_MOD;      // increment the modulus number
 	}
 }
 

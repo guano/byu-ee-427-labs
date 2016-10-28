@@ -32,6 +32,8 @@ static const uint32_t MOTHER_SHIP_16x7[] ={
 #define MOTHER_SHIP_COLOR SHOCKING_PINK
 #define BLACK 0x0				// Black color for erasing
 #define BLINKING_TIMES 10		// How long we want the score to stay
+#define MOTHER_SHIP_START_POINTS 123
+#define MOTHER_SHIP_RAND_POINTS_MOD 500
 
 struct{							// Defines our mother ship
 	uint32_t row;				// Lives at a certain row
@@ -39,7 +41,7 @@ struct{							// Defines our mother ship
 	bool alive;					// Is she alive?
 }mother_ship;
 
-uint32_t mother_ship_points=123;// Initial value of points for killing her
+uint32_t mother_ship_points=MOTHER_SHIP_START_POINTS;// Initial value of points for killing her
 uint32_t * frame;				// The variable to write pixels to the screen
 bool blinking;					// Whether the score of dead mother ship is.
 
@@ -107,7 +109,7 @@ bool mother_ship_detect_collision(uint32_t row, uint32_t col){
 			&& col>mother_ship.col && col < mother_ship.col+MOTHER_SHIP_WIDTH){
 		sound_motherShipStop();
 		sound_init_motherShipHigh();
-		mother_ship_points = rand()%500 + 316;			// Make random point
+		mother_ship_points = rand()%MOTHER_SHIP_RAND_POINTS_MOD + MOTHER_SHIP_START_POINTS;			// Make random point
 		interface_increment_score(mother_ship_points);	// Player gets points
 		mother_ship.alive = false;						// She dies
 		mother_ship_draw(BLACK);						// and gets erased

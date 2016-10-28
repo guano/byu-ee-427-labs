@@ -21,11 +21,13 @@
 #define TANK_HEIGHT		8		// Tank is 8 pixels high
 #define TANK_DEATH_HEIGHT 16 	// height of tank death sprite
 #define TANK_DEATH_WIDTH 26 	// width of tank death sprite
+#define TANK_DEATH_TIME 400
 #define TANK_WIDTH		15		// Tank is 15 pixels wide
 #define TANK_INIT_ROW	210		// Tank starts at row 210
 #define TANK_INIT_COL	160		// Tank starts at col 160
 #define SHELL_LENGTH 3			// Shell is 3 pixels long
 #define SHELL_COL_OFFSET 7		// Shell is 7 pixels offset from the tank
+#define SHELL_DEATH_ROW 20
 #define EXPLOSION_ROW_OFFSET -1 // tank explosion row offset
 #define EXPLOSION_COL_OFFSET -4 // tank explosion column offset
 
@@ -110,8 +112,8 @@ void tank_kill_bullet(uint32_t * framePointer);
 
 // This initializes our tank at its proper location
 void tank_init(){
-	tank.row = 210;		// Tank starts at this row
-	tank.col = 160;		// and column
+	tank.row = TANK_INIT_ROW;		// Tank starts at this row
+	tank.col = TANK_INIT_COL;		// and column
 }
 uint32_t * frame; // frame pointer
 // This draws (or erases, via the erase bool) an entire tank.
@@ -255,7 +257,7 @@ void tank_update_bullet(uint32_t * framePointer){
 	}
 
 
-	if(tank_shell.row<20){			// If shell is off the screen
+	if(tank_shell.row<SHELL_DEATH_ROW){			// If shell is off the screen
 		tank_kill_bullet(framePointer);
 	}else if(bunkers_detect_collision(tank_shell.row-SHELL_LENGTH,
 			tank_shell.col+SHELL_COL_OFFSET, false)){
@@ -303,7 +305,7 @@ bool tank_detect_collision(uint32_t row, uint32_t col){
 // Kills our tank. Also, seizes hold of the program so nothing else happens
 void tank_die(){
 	uint32_t row, col, i;	// init loop vars
-	for(i = 0; i < 400 ; i++){
+	for(i = 0; i < TANK_DEATH_TIME ; i++){
 		for(row=0;row<TANK_DEATH_HEIGHT;row++){		// Go through tank x pixels
 			for(col=0;col<TANK_DEATH_WIDTH;col++){	// and tank y pixels
 				if ((tankDeath1[row] & (1<<(TANK_DEATH_WIDTH-col-1)))) {	// If a pixel

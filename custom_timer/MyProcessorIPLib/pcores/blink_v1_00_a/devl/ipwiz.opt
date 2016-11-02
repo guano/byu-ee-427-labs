@@ -1,0 +1,12 @@
+-batch 
+-create blink 
+-ver 1.00.a 
+-dir "C:\Users\superman\Desktop\byu-ee-427-labs\custom_timer\MyProcessorIPLib" 
+-lang vhdl 
+-bus axi4lite s 
+-rst 
+-reg 1 
+-xps 
+-ise 
+-bfmsim all
+-driver 

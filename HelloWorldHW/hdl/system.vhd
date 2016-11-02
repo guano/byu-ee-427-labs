@@ -13,9 +13,9 @@ entity system is
     RS232_Uart_1_sin : in std_logic;
     RESET : in std_logic;
     Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
-    LEDs_8Bits_TRI_O : out std_logic_vector(7 downto 0);
     GCLK : in std_logic;
-    DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0)
+    DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0);
+    blink_0_LEDs_pin : out std_logic_vector(3 downto 0)
   );
 end system;
 
@@ -1344,7 +1344,7 @@ architecture STRUCTURE of system is
     );
   end component;
 
-  component leds_8bits_wrapper is
+  component dip_switches_8bits_wrapper is
     port (
       S_AXI_ACLK : in std_logic;
       S_AXI_ARESETN : in std_logic;
@@ -1375,34 +1375,28 @@ architecture STRUCTURE of system is
     );
   end component;
 
-  component dip_switches_8bits_wrapper is
+  component blink_0_wrapper is
     port (
+      LEDs : out std_logic_vector(3 downto 0);
       S_AXI_ACLK : in std_logic;
       S_AXI_ARESETN : in std_logic;
       S_AXI_AWADDR : in std_logic_vector(31 downto 0);
       S_AXI_AWVALID : in std_logic;
-      S_AXI_AWREADY : out std_logic;
       S_AXI_WDATA : in std_logic_vector(31 downto 0);
       S_AXI_WSTRB : in std_logic_vector(3 downto 0);
       S_AXI_WVALID : in std_logic;
-      S_AXI_WREADY : out std_logic;
-      S_AXI_BRESP : out std_logic_vector(1 downto 0);
-      S_AXI_BVALID : out std_logic;
       S_AXI_BREADY : in std_logic;
       S_AXI_ARADDR : in std_logic_vector(31 downto 0);
       S_AXI_ARVALID : in std_logic;
+      S_AXI_RREADY : in std_logic;
       S_AXI_ARREADY : out std_logic;
       S_AXI_RDATA : out std_logic_vector(31 downto 0);
       S_AXI_RRESP : out std_logic_vector(1 downto 0);
       S_AXI_RVALID : out std_logic;
-      S_AXI_RREADY : in std_logic;
-      IP2INTC_Irpt : out std_logic;
-      GPIO_IO_I : in std_logic_vector(7 downto 0);
-      GPIO_IO_O : out std_logic_vector(7 downto 0);
-      GPIO_IO_T : out std_logic_vector(7 downto 0);
-      GPIO2_IO_I : in std_logic_vector(31 downto 0);
-      GPIO2_IO_O : out std_logic_vector(31 downto 0);
-      GPIO2_IO_T : out std_logic_vector(31 downto 0)
+      S_AXI_WREADY : out std_logic;
+      S_AXI_BRESP : out std_logic_vector(1 downto 0);
+      S_AXI_BVALID : out std_logic;
+      S_AXI_AWREADY : out std_logic
     );
   end component;
 
@@ -1465,6 +1459,7 @@ architecture STRUCTURE of system is
   signal axi4lite_0_S_WREADY : std_logic_vector(0 to 0);
   signal axi4lite_0_S_WSTRB : std_logic_vector(3 downto 0);
   signal axi4lite_0_S_WVALID : std_logic_vector(0 to 0);
+  signal blink_0_LEDs : std_logic_vector(3 downto 0);
   signal clk_100_0000MHz : std_logic_vector(0 to 0);
   signal microblaze_0_d_bram_ctrl_2_microblaze_0_bram_block_BRAM_Addr : std_logic_vector(0 to 31);
   signal microblaze_0_d_bram_ctrl_2_microblaze_0_bram_block_BRAM_Clk : std_logic;
@@ -1537,7 +1532,6 @@ architecture STRUCTURE of system is
   signal net_gnd3 : std_logic_vector(0 to 2);
   signal net_gnd4 : std_logic_vector(0 to 3);
   signal net_gnd5 : std_logic_vector(4 downto 0);
-  signal net_gnd8 : std_logic_vector(7 downto 0);
   signal net_gnd16 : std_logic_vector(0 to 15);
   signal net_gnd32 : std_logic_vector(0 to 31);
   signal net_gnd4096 : std_logic_vector(0 to 4095);
@@ -1562,13 +1556,14 @@ architecture STRUCTURE of system is
   attribute BOX_TYPE of axi4lite_0_wrapper : component is "user_black_box";
   attribute BOX_TYPE of rs232_uart_1_wrapper : component is "user_black_box";
   attribute BOX_TYPE of push_buttons_5bits_wrapper : component is "user_black_box";
-  attribute BOX_TYPE of leds_8bits_wrapper : component is "user_black_box";
   attribute BOX_TYPE of dip_switches_8bits_wrapper : component is "user_black_box";
+  attribute BOX_TYPE of blink_0_wrapper : component is "user_black_box";
 
 begin
 
   -- Internal assignments
 
+  blink_0_LEDs_pin <= blink_0_LEDs;
   pgassign1(4 downto 4) <= clk_100_0000MHz(0 to 0);
   pgassign1(3 downto 3) <= clk_100_0000MHz(0 to 0);
   pgassign1(2 downto 2) <= clk_100_0000MHz(0 to 0);
@@ -1583,7 +1578,6 @@ begin
   net_gnd4(0 to 3) <= B"0000";
   net_gnd4096(0 to 4095) <= X"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
   net_gnd5(4 downto 0) <= B"00000";
-  net_gnd8(7 downto 0) <= B"00000000";
   net_vcc0 <= '1';
 
   proc_sys_reset_0 : proc_sys_reset_0_wrapper
@@ -2897,7 +2891,7 @@ begin
       GPIO2_IO_T => open
     );
 
-  LEDs_8Bits : leds_8bits_wrapper
+  DIP_Switches_8Bits : dip_switches_8bits_wrapper
     port map (
       S_AXI_ACLK => pgassign1(4),
       S_AXI_ARESETN => axi4lite_0_M_ARESETN(3),
@@ -2919,42 +2913,36 @@ begin
       S_AXI_RVALID => axi4lite_0_M_RVALID(3),
       S_AXI_RREADY => axi4lite_0_M_RREADY(3),
       IP2INTC_Irpt => open,
-      GPIO_IO_I => net_gnd8,
-      GPIO_IO_O => LEDs_8Bits_TRI_O,
-      GPIO_IO_T => open,
-      GPIO2_IO_I => net_gnd32(0 to 31),
-      GPIO2_IO_O => open,
-      GPIO2_IO_T => open
-    );
-
-  DIP_Switches_8Bits : dip_switches_8bits_wrapper
-    port map (
-      S_AXI_ACLK => pgassign1(4),
-      S_AXI_ARESETN => axi4lite_0_M_ARESETN(4),
-      S_AXI_AWADDR => axi4lite_0_M_AWADDR(159 downto 128),
-      S_AXI_AWVALID => axi4lite_0_M_AWVALID(4),
-      S_AXI_AWREADY => axi4lite_0_M_AWREADY(4),
-      S_AXI_WDATA => axi4lite_0_M_WDATA(159 downto 128),
-      S_AXI_WSTRB => axi4lite_0_M_WSTRB(19 downto 16),
-      S_AXI_WVALID => axi4lite_0_M_WVALID(4),
-      S_AXI_WREADY => axi4lite_0_M_WREADY(4),
-      S_AXI_BRESP => axi4lite_0_M_BRESP(9 downto 8),
-      S_AXI_BVALID => axi4lite_0_M_BVALID(4),
-      S_AXI_BREADY => axi4lite_0_M_BREADY(4),
-      S_AXI_ARADDR => axi4lite_0_M_ARADDR(159 downto 128),
-      S_AXI_ARVALID => axi4lite_0_M_ARVALID(4),
-      S_AXI_ARREADY => axi4lite_0_M_ARREADY(4),
-      S_AXI_RDATA => axi4lite_0_M_RDATA(159 downto 128),
-      S_AXI_RRESP => axi4lite_0_M_RRESP(9 downto 8),
-      S_AXI_RVALID => axi4lite_0_M_RVALID(4),
-      S_AXI_RREADY => axi4lite_0_M_RREADY(4),
-      IP2INTC_Irpt => open,
       GPIO_IO_I => DIP_Switches_8Bits_TRI_I,
       GPIO_IO_O => open,
       GPIO_IO_T => open,
       GPIO2_IO_I => net_gnd32(0 to 31),
       GPIO2_IO_O => open,
       GPIO2_IO_T => open
+    );
+
+  blink_0 : blink_0_wrapper
+    port map (
+      LEDs => blink_0_LEDs,
+      S_AXI_ACLK => pgassign1(4),
+      S_AXI_ARESETN => axi4lite_0_M_ARESETN(4),
+      S_AXI_AWADDR => axi4lite_0_M_AWADDR(159 downto 128),
+      S_AXI_AWVALID => axi4lite_0_M_AWVALID(4),
+      S_AXI_WDATA => axi4lite_0_M_WDATA(159 downto 128),
+      S_AXI_WSTRB => axi4lite_0_M_WSTRB(19 downto 16),
+      S_AXI_WVALID => axi4lite_0_M_WVALID(4),
+      S_AXI_BREADY => axi4lite_0_M_BREADY(4),
+      S_AXI_ARADDR => axi4lite_0_M_ARADDR(159 downto 128),
+      S_AXI_ARVALID => axi4lite_0_M_ARVALID(4),
+      S_AXI_RREADY => axi4lite_0_M_RREADY(4),
+      S_AXI_ARREADY => axi4lite_0_M_ARREADY(4),
+      S_AXI_RDATA => axi4lite_0_M_RDATA(159 downto 128),
+      S_AXI_RRESP => axi4lite_0_M_RRESP(9 downto 8),
+      S_AXI_RVALID => axi4lite_0_M_RVALID(4),
+      S_AXI_WREADY => axi4lite_0_M_WREADY(4),
+      S_AXI_BRESP => axi4lite_0_M_BRESP(9 downto 8),
+      S_AXI_BVALID => axi4lite_0_M_BVALID(4),
+      S_AXI_AWREADY => axi4lite_0_M_AWREADY(4)
     );
 
 end architecture STRUCTURE;

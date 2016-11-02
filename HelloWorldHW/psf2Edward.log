@@ -3,6 +3,9 @@ WARNING:EDK:3605 - Use of the repository located at
    (equivalent of $XILINX_EDK/../edk_user_repository) is now deprecated. 
    It is recommended that you use Global SearchPath preference to specify search
    paths that apply to all the projects.
+WARNING:EDK:2418 - Specified path
+   'C:\Users\superman\Desktop\db\space_invaders\user_hardware\' is not a
+   directory!
 
 Checking platform configuration ...
 IPNAME: lmb_v10, INSTANCE: microblaze_0_ilmb - 1 master(s) : 1 slave(s) 

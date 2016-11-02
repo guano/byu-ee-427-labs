@@ -6,6 +6,10 @@ vhdl
 default
 -lp
 C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/
+-lp
+C:/Users/superman/Desktop/byu-ee-427-labs/custom_timer/
+-lp
+C:/Users/superman/Desktop/db/space_invaders/user_hardware
 -msg
 __xps/ise/xmsgprops.lst
 system.mhs

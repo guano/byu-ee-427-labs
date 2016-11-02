@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "C:\Users\superman\Desktop\byu-ee-427-labs\custom_timer\MyProcessorIPLib\pcores\blink_v1_00_a\devl\synthesis\blink_xst.prj"
+-top blink
+-p virtex6
+-ofn "C:\Users\superman\Desktop\byu-ee-427-labs\custom_timer\MyProcessorIPLib\pcores\blink_v1_00_a\devl\synthesis\blink_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib blink_v1_00_a

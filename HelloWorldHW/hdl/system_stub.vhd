@@ -13,9 +13,9 @@ entity system_stub is
     RS232_Uart_1_sin : in std_logic;
     RESET : in std_logic;
     Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
-    LEDs_8Bits_TRI_O : out std_logic_vector(7 downto 0);
     GCLK : in std_logic;
-    DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0)
+    DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0);
+    blink_0_LEDs_pin : out std_logic_vector(3 downto 0)
   );
 end system_stub;
 
@@ -27,9 +27,9 @@ architecture STRUCTURE of system_stub is
       RS232_Uart_1_sin : in std_logic;
       RESET : in std_logic;
       Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
-      LEDs_8Bits_TRI_O : out std_logic_vector(7 downto 0);
       GCLK : in std_logic;
-      DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0)
+      DIP_Switches_8Bits_TRI_I : in std_logic_vector(7 downto 0);
+      blink_0_LEDs_pin : out std_logic_vector(3 downto 0)
     );
   end component;
 
@@ -44,9 +44,9 @@ begin
       RS232_Uart_1_sin => RS232_Uart_1_sin,
       RESET => RESET,
       Push_Buttons_5Bits_TRI_I => Push_Buttons_5Bits_TRI_I,
-      LEDs_8Bits_TRI_O => LEDs_8Bits_TRI_O,
       GCLK => GCLK,
-      DIP_Switches_8Bits_TRI_I => DIP_Switches_8Bits_TRI_I
+      DIP_Switches_8Bits_TRI_I => DIP_Switches_8Bits_TRI_I,
+      blink_0_LEDs_pin => blink_0_LEDs_pin
     );
 
 end architecture STRUCTURE;

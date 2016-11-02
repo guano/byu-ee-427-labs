@@ -1,0 +1,10 @@
+##############################################################################
+## Filename:          C:/Users/superman/Desktop/byu-ee-427-labs/custom_timer/MyProcessorIPLib/pcores/blink_v1_00_a/data/blink_v2_1_0.pao
+## Description:       Peripheral Analysis Order
+## Date:              Wed Nov 02 15:03:55 2016 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+lib proc_common_v3_00_a  all 
+lib axi_lite_ipif_v1_01_a  all 
+lib blink_v1_00_a user_logic vhdl
+lib blink_v1_00_a blink vhdl

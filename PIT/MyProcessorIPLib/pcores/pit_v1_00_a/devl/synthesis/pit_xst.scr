@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "C:\Users\superman\Desktop\byu-ee-427-labs\PIT\MyProcessorIPLib\pcores\pit_v1_00_a\devl\synthesis\pit_xst.prj"
+-top pit
+-p virtex6
+-ofn "C:\Users\superman\Desktop\byu-ee-427-labs\PIT\MyProcessorIPLib\pcores\pit_v1_00_a\devl\synthesis\pit_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib pit_v1_00_a

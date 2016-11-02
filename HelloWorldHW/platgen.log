@@ -3,7 +3,9 @@ Release 13.4 - platgen Xilinx EDK 13.4 Build EDK_O.87xd
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 Command Line: platgen -p xc6slx45csg324-3 -lang vhdl -intstyle default -lp
-C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/ -msg
+C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/ -lp
+C:/Users/superman/Desktop/byu-ee-427-labs/custom_timer/ -lp
+C:/Users/superman/Desktop/db/space_invaders/user_hardware -msg
 __xps/ise/xmsgprops.lst system.mhs 
 
 WARNING:EDK - INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable
@@ -23,7 +25,7 @@ WARNING:EDK - INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable
    qualify for Xilinx software updates or new releases.
 
 
-Parse C:/EE427/HelloWorldHW/system.mhs ...
+Parse C:/Users/superman/Desktop/byu-ee-427-labs/HelloWorldHW/system.mhs ...
 
 Read MPD definitions ...
 WARNING:EDK:3605 - Use of the repository located at
@@ -31,6 +33,9 @@ WARNING:EDK:3605 - Use of the repository located at
    (equivalent of $XILINX_EDK/../edk_user_repository) is now deprecated. 
    It is recommended that you use Global SearchPath preference to specify search
    paths that apply to all the projects.
+WARNING:EDK:3243 - specified path
+   'C:\Users\superman\Desktop\db\space_invaders\user_hardware\' is not a
+   directory!
 
 Overriding IP level properties ...
 INFO:EDK:4130 - IPNAME: microblaze, INSTANCE:microblaze_0 - tcl is overriding
@@ -65,10 +70,10 @@ Address Map for Processor microblaze_0
   (0000000000-0x00007fff) microblaze_0_d_bram_ctrl	microblaze_0_dlmb
   (0000000000-0x00007fff) microblaze_0_i_bram_ctrl	microblaze_0_ilmb
   (0x40000000-0x4000ffff) Push_Buttons_5Bits	axi4lite_0
-  (0x40020000-0x4002ffff) LEDs_8Bits	axi4lite_0
   (0x40040000-0x4004ffff) DIP_Switches_8Bits	axi4lite_0
   (0x40600000-0x4060ffff) RS232_Uart_1	axi4lite_0
   (0x41400000-0x4140ffff) debug_module	axi4lite_0
+  (0x7c600000-0x7c60ffff) blink_0	axi4lite_0
 INFO:EDK:4130 - IPNAME: lmb_v10, INSTANCE:microblaze_0_ilmb - tool is overriding
    PARAMETER C_LMB_NUM_SLAVES value to 1 -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\lmb_v10_v2_00_b\data
@@ -203,12 +208,50 @@ Creating hardware output directories ...
 Managing hardware (BBD-specified) netlist files ...
 
 Managing cache ...
+IPNAME:proc_sys_reset INSTANCE:proc_sys_reset_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 23 -
+Copying cache implementation netlist
+IPNAME:lmb_v10 INSTANCE:microblaze_0_ilmb -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 36 -
+Copying cache implementation netlist
+IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_i_bram_ctrl -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 43 -
+Copying cache implementation netlist
+IPNAME:lmb_v10 INSTANCE:microblaze_0_dlmb -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 52 -
+Copying cache implementation netlist
+IPNAME:lmb_bram_if_cntlr INSTANCE:microblaze_0_d_bram_ctrl -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 59 -
+Copying cache implementation netlist
+IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 68 -
+Copying cache implementation netlist
+IPNAME:microblaze INSTANCE:microblaze_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 75 -
+Copying cache implementation netlist
+IPNAME:mdm INSTANCE:debug_module -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 98 -
+Copying cache implementation netlist
+IPNAME:axi_interconnect INSTANCE:axi4lite_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 124 -
+Copying cache implementation netlist
+IPNAME:axi_uartlite INSTANCE:rs232_uart_1 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 132 -
+Copying cache implementation netlist
+IPNAME:axi_gpio INSTANCE:push_buttons_5bits -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 147 -
+Copying cache implementation netlist
+IPNAME:axi_gpio INSTANCE:dip_switches_8bits -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 161 -
+Copying cache implementation netlist
 
 Elaborating instances ...
 IPNAME:bram_block INSTANCE:microblaze_0_bram_block -
-C:\EE427\HelloWorldHW\system.mhs line 68 - elaborating IP
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 68 -
+elaborating IP
 IPNAME:clock_generator INSTANCE:clock_generator_0 -
-C:\EE427\HelloWorldHW\system.mhs line 111 - elaborating IP
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 111 -
+elaborating IP
 ClkGen elaborate status: PASSED
 ----------------------------------------
 
@@ -231,50 +274,21 @@ Running XST synthesis ...
 INFO:EDK:4211 - The following instances are synthesized with XST. The MPD option
    IMP_NETLIST=TRUE indicates that a NGC file is to be produced using XST
    synthesis. IMP_NETLIST=FALSE (default) instances are not synthesized. 
-INSTANCE:proc_sys_reset_0 - C:\EE427\HelloWorldHW\system.mhs line 23 - Running
-XST synthesis
-INSTANCE:microblaze_0_ilmb - C:\EE427\HelloWorldHW\system.mhs line 36 - Running
-XST synthesis
-INSTANCE:microblaze_0_i_bram_ctrl - C:\EE427\HelloWorldHW\system.mhs line 43 -
+INSTANCE:clock_generator_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 111 -
 Running XST synthesis
-INSTANCE:microblaze_0_dlmb - C:\EE427\HelloWorldHW\system.mhs line 52 - Running
-XST synthesis
-INSTANCE:microblaze_0_d_bram_ctrl - C:\EE427\HelloWorldHW\system.mhs line 59 -
-Running XST synthesis
-INSTANCE:microblaze_0_bram_block - C:\EE427\HelloWorldHW\system.mhs line 68 -
-Running XST synthesis
-INSTANCE:microblaze_0 - C:\EE427\HelloWorldHW\system.mhs line 75 - Running XST
-synthesis
-INSTANCE:debug_module - C:\EE427\HelloWorldHW\system.mhs line 98 - Running XST
-synthesis
-INSTANCE:clock_generator_0 - C:\EE427\HelloWorldHW\system.mhs line 111 - Running
-XST synthesis
-INSTANCE:axi4lite_0 - C:\EE427\HelloWorldHW\system.mhs line 124 - Running XST
-synthesis
-INSTANCE:rs232_uart_1 - C:\EE427\HelloWorldHW\system.mhs line 132 - Running XST
-synthesis
-INSTANCE:push_buttons_5bits - C:\EE427\HelloWorldHW\system.mhs line 147 -
-Running XST synthesis
-INSTANCE:leds_8bits - C:\EE427\HelloWorldHW\system.mhs line 161 - Running XST
-synthesis
-INSTANCE:dip_switches_8bits - C:\EE427\HelloWorldHW\system.mhs line 175 -
+INSTANCE:blink_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 175 -
 Running XST synthesis
 
 Running NGCBUILD ...
-IPNAME:microblaze_0_ilmb_wrapper INSTANCE:microblaze_0_ilmb -
-C:\EE427\HelloWorldHW\system.mhs line 36 - Running NGCBUILD
-IPNAME:microblaze_0_dlmb_wrapper INSTANCE:microblaze_0_dlmb -
-C:\EE427\HelloWorldHW\system.mhs line 52 - Running NGCBUILD
-IPNAME:microblaze_0_wrapper INSTANCE:microblaze_0 -
-C:\EE427\HelloWorldHW\system.mhs line 75 - Running NGCBUILD
 IPNAME:clock_generator_0_wrapper INSTANCE:clock_generator_0 -
-C:\EE427\HelloWorldHW\system.mhs line 111 - Running NGCBUILD
-IPNAME:axi4lite_0_wrapper INSTANCE:axi4lite_0 - C:\EE427\HelloWorldHW\system.mhs
-line 124 - Running NGCBUILD
+C:\Users\superman\Desktop\byu-ee-427-labs\HelloWorldHW\system.mhs line 111 -
+Running NGCBUILD
 INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
    If any constraint needs to be overridden, this should be done by modifying
    the data/system.ucf file.
 
 Rebuilding cache ...
 
-Total run time: 136.00 seconds
+Total run time: 22.00 seconds

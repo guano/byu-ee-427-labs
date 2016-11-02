@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="C:\Users\superman\Desktop\byu-ee-427-labs\blink_workspace\HelloWorldHW_hw_platform\system_bd.bmm" key="HelloWorldHW_hw_platform-bmmFile"/>
+	<item value="bootloop" key="HelloWorldHW_hw_platform-microblaze_0-initElf"/>
+	<item value="C:\Users\superman\Desktop\byu-ee-427-labs\blink_workspace\HelloWorldHW_hw_platform\system.bit" key="HelloWorldHW_hw_platform-bitFile"/>
+</section>

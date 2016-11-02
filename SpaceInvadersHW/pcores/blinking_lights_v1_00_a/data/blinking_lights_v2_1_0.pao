@@ -1,0 +1,10 @@
+##############################################################################
+## Filename:          C:/Users/superman/Desktop/byu-ee-427-labs/SpaceInvadersHW/pcores/blinking_lights_v1_00_a/data/blinking_lights_v2_1_0.pao
+## Description:       Peripheral Analysis Order
+## Date:              Wed Nov 02 16:06:00 2016 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+lib proc_common_v3_00_a  all 
+lib axi_lite_ipif_v1_01_a  all 
+lib blinking_lights_v1_00_a user_logic vhdl
+lib blinking_lights_v1_00_a blinking_lights vhdl

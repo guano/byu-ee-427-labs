@@ -1,0 +1,11 @@
+-batch 
+-create pit 
+-ver 1.00.a 
+-dir "C:\Users\superman\Desktop\byu-ee-427-labs\PIT\MyProcessorIPLib" 
+-lang vhdl 
+-bus axi4lite s 
+-reg 4 
+-xps 
+-ise 
+-bfmsim all
+-driver 

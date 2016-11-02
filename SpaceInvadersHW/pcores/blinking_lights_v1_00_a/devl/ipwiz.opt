@@ -1,0 +1,8 @@
+-batch 
+-create blinking_lights 
+-ver 1.00.a 
+-dir "C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW" 
+-lang vhdl 
+-bus axi4lite s 
+-reg 1 
+-xps 

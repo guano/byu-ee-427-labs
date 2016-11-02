@@ -4,6 +4,7 @@ VerMgmt: 13.4
 IntStyle: default
 Flow: ise
 ModuleSearchPath: C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib
+ModuleSearchPath: C:/Users/superman/Desktop/byu-ee-427-labs/custom_timer
 MHS File: system.mhs
 Architecture: spartan6
 Device: xc6slx45

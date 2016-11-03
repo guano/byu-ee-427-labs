@@ -1,5 +1,5 @@
 
-<EDKSYSTEM EDKVERSION="13.4" EDWVERSION="1.2" TIMESTAMP="Wed Nov 02 17:23:06 2016">
+<EDKSYSTEM EDKVERSION="13.4" EDWVERSION="1.2" TIMESTAMP="Thu Nov 03 15:08:04 2016">
 
   <SYSTEMINFO ARCH="spartan6" DEVICE="xc6slx45" PACKAGE="csg324" PART="xc6slx45csg324-3" SOURCE="C:/Users/superman/Desktop/byu-ee-427-labs/SpaceInvadersHW/system.xmp" SPEEDGRADE="-3"/>
 
@@ -9753,10 +9753,10 @@
         <PARAMETER MPD_INDEX="4" NAME="C_S_AXI_DATA_WIDTH" TYPE="INTEGER" VALUE="32">
           <DESCRIPTION>AXI Data Width</DESCRIPTION>
         </PARAMETER>
-        <PARAMETER MPD_INDEX="5" NAME="C_NUM_INTR_INPUTS" TYPE="INTEGER" VALUE="2">
+        <PARAMETER CHANGEDBY="SYSTEM" MPD_INDEX="5" NAME="C_NUM_INTR_INPUTS" TYPE="INTEGER" VALUE="3">
           <DESCRIPTION>Number of Interrupt Inputs </DESCRIPTION>
         </PARAMETER>
-        <PARAMETER CHANGEDBY="SYSTEM" MPD_INDEX="6" NAME="C_KIND_OF_INTR" TYPE="std_logic_vector" VALUE="0b11111111111111111111111111111110">
+        <PARAMETER CHANGEDBY="SYSTEM" MPD_INDEX="6" NAME="C_KIND_OF_INTR" TYPE="std_logic_vector" VALUE="0b11111111111111111111111111111100">
           <DESCRIPTION>Type of Interrupt for Each Input </DESCRIPTION>
         </PARAMETER>
         <PARAMETER CHANGEDBY="SYSTEM" MPD_INDEX="7" NAME="C_KIND_OF_EDGE" TYPE="std_logic_vector" VALUE="0b11111111111111111111111111111111">
@@ -9793,14 +9793,15 @@
             <CONNECTION INSTANCE="clock_generator_0" PORT="CLKOUT2"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" ENDIAN="LITTLE" IS_INSTANTIATED="TRUE" LEFT="1" LSB="0" MHS_INDEX="1" MPD_INDEX="19" MSB="1" NAME="Intr" RIGHT="0" SENSITIVITY="EDGE_RISING" SIGIS="INTERRUPT" SIGNAME="axi_ac97_0_Interrupt &amp; axi_timer_0_Interrupt" VECFORMULA="[(C_NUM_INTR_INPUTS-1):0]">
+        <PORT DIR="I" ENDIAN="LITTLE" IS_INSTANTIATED="TRUE" LEFT="2" LSB="0" MHS_INDEX="1" MPD_INDEX="19" MSB="2" NAME="Intr" RIGHT="0" SENSITIVITY="EDGE_RISING" SIGIS="INTERRUPT" SIGNAME="axi_ac97_0_Interrupt &amp; axi_timer_0_Interrupt &amp; pit_0_myinterrupt" VECFORMULA="[(C_NUM_INTR_INPUTS-1):0]">
           <SIGNALS>
             <SIGNAL NAME="axi_ac97_0_Interrupt"/>
             <SIGNAL NAME="axi_timer_0_Interrupt"/>
+            <SIGNAL NAME="pit_0_myinterrupt"/>
           </SIGNALS>
           <DESCRIPTION>Interrupt Inputs</DESCRIPTION>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_ac97_0_Interrupt &amp; axi_timer_0_Interrupt"/>
+            <CONNECTION INSTANCE="axi_ac97_0_Interrupt &amp; axi_timer_0_Interrupt &amp; pit_0_myinterrupt"/>
           </CONNECTIONS>
         </PORT>
         <PORT BUS="S_AXI" DEF_SIGNAME="axi4lite_0_M_ARESETN" DIR="I" MPD_INDEX="1" NAME="S_AXI_ARESETN" SIGIS="RST" SIGNAME="axi4lite_0_M_ARESETN">
@@ -9932,6 +9933,7 @@
       <INTERRUPTINFO INTC_INDEX="0" TYPE="CONTROLLER">
         <SOURCE INSTANCE="axi_ac97_0" PRIORITY="0" SIGNAME="axi_ac97_0_Interrupt"/>
         <SOURCE INSTANCE="axi_timer_0" PRIORITY="1" SIGNAME="axi_timer_0_Interrupt"/>
+        <SOURCE INSTANCE="pit_0" PRIORITY="2" SIGNAME="pit_0_myinterrupt"/>
         <TARGET INSTANCE="microblaze_0"/>
       </INTERRUPTINFO>
     </MODULE>
@@ -10314,7 +10316,11 @@
             <CONNECTION INSTANCE="clock_generator_0" PORT="CLKOUT2"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" MPD_INDEX="0" NAME="myinterrupt" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="__NOC__"/>
+        <PORT DIR="O" IS_INSTANTIATED="TRUE" MHS_INDEX="1" MPD_INDEX="0" NAME="myinterrupt" SENSITIVITY="LEVEL_HIGH" SIGIS="INTERRUPT" SIGNAME="pit_0_myinterrupt">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_intc_0" PORT="Intr"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT BUS="S_AXI" DEF_SIGNAME="axi4lite_0_M_ARESETN" DIR="I" MPD_INDEX="2" NAME="S_AXI_ARESETN" SIGIS="RST" SIGNAME="axi4lite_0_M_ARESETN">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi4lite_0" PORT="M_AXI_ARESET_OUT_N"/>
@@ -10438,6 +10444,9 @@
           </SLAVES>
         </MEMRANGE>
       </MEMORYMAP>
+      <INTERRUPTINFO TYPE="SOURCE">
+        <TARGET INSTANCE="axi_intc_0" INTC_INDEX="0" PRIORITY="2"/>
+      </INTERRUPTINFO>
     </MODULE>
   </MODULES>
 

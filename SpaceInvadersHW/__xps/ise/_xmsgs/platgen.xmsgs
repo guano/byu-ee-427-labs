@@ -23,9 +23,6 @@ WARNING:Security:42 - Your software subscription period has lapsed. Your current
 It is recommended that you use Global SearchPath preference to specify search paths that apply to all the projects.
 </msg>
 
-<msg type="warning" file="EDK" num="3243" delta="old" >specified path &apos;<arg fmt="%s" index="1">C:\Users\superman\Desktop\db\space_invaders\user_hardware\</arg>&apos; is not a directory!
-</msg>
-
 <msg type="info" file="EDK" num="4130" delta="old" >IPNAME: <arg fmt="%s" index="1">microblaze</arg>, INSTANCE:<arg fmt="%s" index="2">microblaze_0</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_ENDIANNESS</arg> value to <arg fmt="%s" index="6">1</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\microblaze_v8_20_b\data\microblaze_v2_1_0.mpd line 195</arg> 
 </msg>
 
@@ -48,6 +45,9 @@ It is recommended that you use Global SearchPath preference to specify search pa
 </msg>
 
 <msg type="info" file="EDK" num="4130" delta="old" >IPNAME: <arg fmt="%s" index="1">axi_s6_ddrx</arg>, INSTANCE:<arg fmt="%s" index="2">MCB_DDR2</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_SYS_RST_PRESENT</arg> value to <arg fmt="%s" index="6">1</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\data\axi_s6_ddrx_v2_1_0.mpd line 237</arg> 
+</msg>
+
+<msg type="info" file="EDK" num="4130" delta="new" >IPNAME: <arg fmt="%s" index="1">axi_intc</arg>, INSTANCE:<arg fmt="%s" index="2">axi_intc_0</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_NUM_INTR_INPUTS</arg> value to <arg fmt="%s" index="6">3</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\data\axi_intc_v2_1_0.mpd line 80</arg> 
 </msg>
 
 <msg type="info" file="EDK" num="1432" delta="old" >Frequency for Top-Level Input Clock &apos;<arg fmt="%s" index="1">axi4lite_0_M_AXI_ACLK_pin</arg>&apos; is not specified. Clock DRCs will not be performed for IPs connected to that clock port, unless they are connected through the clock generator IP. 
@@ -156,7 +156,7 @@ It is recommended that you use Global SearchPath preference to specify search pa
 <msg type="info" file="EDK" num="4130" delta="old" >IPNAME: <arg fmt="%s" index="1">axi_s6_ddrx</arg>, INSTANCE:<arg fmt="%s" index="2">MCB_DDR2</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_S5_AXI_REG_EN0</arg> value to <arg fmt="%s" index="6">0x0000F</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\data\axi_s6_ddrx_v2_1_0.mpd line 230</arg> 
 </msg>
 
-<msg type="info" file="EDK" num="4130" delta="old" >IPNAME: <arg fmt="%s" index="1">axi_intc</arg>, INSTANCE:<arg fmt="%s" index="2">axi_intc_0</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_KIND_OF_INTR</arg> value to <arg fmt="%s" index="6">0b11111111111111111111111111111110</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\data\axi_intc_v2_1_0.mpd line 81</arg> 
+<msg type="info" file="EDK" num="4130" delta="new" >IPNAME: <arg fmt="%s" index="1">axi_intc</arg>, INSTANCE:<arg fmt="%s" index="2">axi_intc_0</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_KIND_OF_INTR</arg> value to <arg fmt="%s" index="6">0b11111111111111111111111111111100</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\data\axi_intc_v2_1_0.mpd line 81</arg> 
 </msg>
 
 <msg type="info" file="EDK" num="4130" delta="old" >IPNAME: <arg fmt="%s" index="1">axi_intc</arg>, INSTANCE:<arg fmt="%s" index="2">axi_intc_0</arg> - <arg fmt="%s" index="3">tcl</arg> is overriding <arg fmt="%s" index="4">PARAMETER</arg> <arg fmt="%s" index="5">C_KIND_OF_EDGE</arg> value to <arg fmt="%s" index="6">0b11111111111111111111111111111111</arg> - <arg fmt="%s" index="7">C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\data\axi_intc_v2_1_0.mpd line 82</arg> 
@@ -168,17 +168,8 @@ It is recommended that you use Global SearchPath preference to specify search pa
 <msg type="info" file="EDK" num="4211" delta="old" >The following instances are synthesized with <arg fmt="%s" index="1">XST</arg>. The MPD option IMP_NETLIST=TRUE indicates that a NGC file is to be produced using <arg fmt="%s" index="2">XST</arg> synthesis. IMP_NETLIST=FALSE (default) instances are not synthesized. 
 </msg>
 
-<msg type="error" file="EDK" num="546" delta="new" >Aborting XST flow execution!
-</msg>
-
-<msg type="info" file="EDK" num="2246" delta="new" >Refer to <arg fmt="%s" index="1">C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\synthesis\pit_0_wrapper_xst.srp</arg> for details
-</msg>
-
 <msg type="info" file="EDK" num="3509" delta="old" >NCF files should not be modified as they will be regenerated.
 If any constraint needs to be overridden, this should be done by modifying the data/<arg fmt="%s" index="1">system</arg>.ucf file.
-</msg>
-
-<msg type="error" file="EDK" num="440" delta="new" ><arg fmt="%s" index="1">platgen</arg> failed with errors!
 </msg>
 
 </messages>

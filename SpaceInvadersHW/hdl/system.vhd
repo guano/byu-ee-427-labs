@@ -2079,7 +2079,7 @@ architecture STRUCTURE of system is
       S_AXI_RRESP : out std_logic_vector(1 downto 0);
       S_AXI_RVALID : out std_logic;
       S_AXI_RREADY : in std_logic;
-      Intr : in std_logic_vector(1 downto 0);
+      Intr : in std_logic_vector(2 downto 0);
       Irq : out std_logic
     );
   end component;
@@ -2437,7 +2437,8 @@ architecture STRUCTURE of system is
   signal net_vcc4 : std_logic_vector(3 downto 0);
   signal pgassign1 : std_logic_vector(9 downto 0);
   signal pgassign2 : std_logic_vector(2 downto 0);
-  signal pgassign3 : std_logic_vector(1 downto 0);
+  signal pgassign3 : std_logic_vector(2 downto 0);
+  signal pit_0_myinterrupt : std_logic;
   signal proc_sys_reset_0_BUS_STRUCT_RESET : std_logic_vector(0 to 0);
   signal proc_sys_reset_0_Dcm_locked : std_logic;
   signal proc_sys_reset_0_Interconnect_aresetn : std_logic_vector(0 to 0);
@@ -2530,8 +2531,9 @@ begin
   pgassign2(2 downto 2) <= clk_100_0000MHzPLL0(0 to 0);
   pgassign2(1 downto 1) <= clk_100_0000MHzPLL0(0 to 0);
   pgassign2(0 downto 0) <= clk_100_0000MHzPLL0(0 to 0);
-  pgassign3(1) <= axi_ac97_0_Interrupt;
-  pgassign3(0) <= axi_timer_0_Interrupt;
+  pgassign3(2) <= axi_ac97_0_Interrupt;
+  pgassign3(1) <= axi_timer_0_Interrupt;
+  pgassign3(0) <= pit_0_myinterrupt;
   net_gnd0 <= '0';
   net_gnd1(0 to 0) <= B"0";
   net_gnd10(9 downto 0) <= B"0000000000";
@@ -4604,7 +4606,7 @@ begin
 
   pit_0 : pit_0_wrapper
     port map (
-      myinterrupt => open,
+      myinterrupt => pit_0_myinterrupt,
       S_AXI_ACLK => pgassign1(9),
       S_AXI_ARESETN => axi4lite_0_M_ARESETN(9),
       S_AXI_AWADDR => axi4lite_0_M_AWADDR(319 downto 288),

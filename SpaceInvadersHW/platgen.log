@@ -4,9 +4,8 @@ Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 Command Line: platgen -p xc6slx45csg324-3 -lang vhdl -intstyle default -lp
 C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/ -lp
-C:/Users/superman/Desktop/byu-ee-427-labs/PIT/ -lp
-C:/Users/superman/Desktop/db/space_invaders/user_hardware -msg
-__xps/ise/xmsgprops.lst system.mhs 
+C:/Users/superman/Desktop/byu-ee-427-labs/PIT/ -msg __xps/ise/xmsgprops.lst
+system.mhs 
 
 WARNING:EDK - INFO:Security:51 - The XILINXD_LICENSE_FILE environment variable
    is not set.
@@ -33,9 +32,6 @@ WARNING:EDK:3605 - Use of the repository located at
    (equivalent of $XILINX_EDK/../edk_user_repository) is now deprecated. 
    It is recommended that you use Global SearchPath preference to specify search
    paths that apply to all the projects.
-WARNING:EDK:3243 - specified path
-   'C:\Users\superman\Desktop\db\space_invaders\user_hardware\' is not a
-   directory!
 
 Overriding IP level properties ...
 INFO:EDK:4130 - IPNAME: microblaze, INSTANCE:microblaze_0 - tcl is overriding
@@ -70,6 +66,10 @@ INFO:EDK:4130 - IPNAME: axi_s6_ddrx, INSTANCE:MCB_DDR2 - tcl is overriding
    PARAMETER C_SYS_RST_PRESENT value to 1 -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\
    data\axi_s6_ddrx_v2_1_0.mpd line 237 
+INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
+   PARAMETER C_NUM_INTR_INPUTS value to 3 -
+   C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\dat
+   a\axi_intc_v2_1_0.mpd line 80 
 
 Computing clock values...
 INFO:EDK:1432 - Frequency for Top-Level Input Clock 'axi4lite_0_M_AXI_ACLK_pin'
@@ -247,7 +247,7 @@ INFO:EDK:4130 - IPNAME: axi_s6_ddrx, INSTANCE:MCB_DDR2 - tcl is overriding
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_s6_ddrx_v1_05_a\
    data\axi_s6_ddrx_v2_1_0.mpd line 230 
 INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
-   PARAMETER C_KIND_OF_INTR value to 0b11111111111111111111111111111110 -
+   PARAMETER C_KIND_OF_INTR value to 0b11111111111111111111111111111100 -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\axi_intc_v1_01_a\dat
    a\axi_intc_v2_1_0.mpd line 81 
 INFO:EDK:4130 - IPNAME: axi_intc, INSTANCE:axi_intc_0 - tcl is overriding
@@ -353,9 +353,6 @@ Copying cache implementation netlist
 IPNAME:d_qspi_axi INSTANCE:digilent_quadspi_cntlr -
 C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 327 -
 Copying cache implementation netlist
-IPNAME:axi_intc INSTANCE:axi_intc_0 -
-C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 339 -
-Copying cache implementation netlist
 IPNAME:axi_timer INSTANCE:axi_timer_0 -
 C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 349 -
 Copying cache implementation netlist
@@ -401,16 +398,15 @@ Running XST synthesis
 INSTANCE:axi_ac97_0 -
 C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 234 -
 Running XST synthesis
+INSTANCE:axi_intc_0 -
+C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 339 -
+Running XST synthesis
 INSTANCE:blinking_lights_0 -
 C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 359 -
 Running XST synthesis
 INSTANCE:pit_0 -
 C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\system.mhs line 369 -
 Running XST synthesis
-ERROR:EDK:546 - Aborting XST flow execution!
-INFO:EDK:2246 - Refer to
-   C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\synthesis\pit_0_wra
-   pper_xst.srp for details
 
 Running NGCBUILD ...
 IPNAME:clock_generator_0_wrapper INSTANCE:clock_generator_0 -
@@ -421,4 +417,5 @@ INFO:EDK:3509 - NCF files should not be modified as they will be regenerated.
    the data/system.ucf file.
 
 Rebuilding cache ...
-ERROR:EDK:440 - platgen failed with errors!
+
+Total run time: 50.00 seconds

@@ -29,7 +29,7 @@ TABLE OF CONTENTS
 ---- Source Parameters
 Input Format                       : MIXED
 Input File Name                    : "axi_intc_0_wrapper_xst.prj"
-Verilog Include Directory          : {"C:\Users\joshuas2\Desktop\427\pcores\" "C:\Users\joshuas2\Downloads\Atlys_BSB_Support_v_3_4\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
+Verilog Include Directory          : {"C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\pcores\" "C:\EE427\Atlys_BSB_Support_v_3_4\Atlys_AXI_BSB_Support\lib\Digilent\pcores\" "C:\Users\superman\Desktop\byu-ee-427-labs\PIT\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\edk_user_repository\MyProcessorIPLib\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxBFMinterface\pcores\" "C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\" }
 
 ---- Target Parameters
 Target Device                      : xc6slx45csg324-3
@@ -428,7 +428,7 @@ Parsing architecture <imp> of entity <intc_core>.
 Parsing VHDL file "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores/axi_intc_v1_01_a/hdl/vhdl/axi_intc.vhd" into library axi_intc_v1_01_a
 Parsing entity <axi_intc>.
 Parsing architecture <imp> of entity <axi_intc>.
-Parsing VHDL file "C:\Users\joshuas2\Desktop\427\hdl\axi_intc_0_wrapper.vhd" into library work
+Parsing VHDL file "C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW\hdl\axi_intc_0_wrapper.vhd" into library work
 Parsing entity <axi_intc_0_wrapper>.
 Parsing architecture <STRUCTURE> of entity <axi_intc_0_wrapper>.
 
@@ -470,7 +470,7 @@ INFO:HDLCompiler:679 - "C:/Xilinx/13.4/ISE_DS/EDK/hw/XilinxProcessorIPLib/pcores
 =========================================================================
 
 Synthesizing Unit <axi_intc_0_wrapper>.
-    Related source file is "c:/users/joshuas2/desktop/427/hdl/axi_intc_0_wrapper.vhd".
+    Related source file is "c:/users/superman/desktop/byu-ee-427-labs/spaceinvadershw/hdl/axi_intc_0_wrapper.vhd".
     Summary:
 	no macro.
 Unit <axi_intc_0_wrapper> synthesized.
@@ -484,8 +484,8 @@ WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/p
         C_HIGHADDR = "01000001001000001111111111111111"
         C_S_AXI_ADDR_WIDTH = 32
         C_S_AXI_DATA_WIDTH = 32
-        C_NUM_INTR_INPUTS = 2
-        C_KIND_OF_INTR = "11111111111111111111111111111110"
+        C_NUM_INTR_INPUTS = 3
+        C_KIND_OF_INTR = "11111111111111111111111111111100"
         C_KIND_OF_EDGE = "11111111111111111111111111111111"
         C_KIND_OF_LVL = "11111111111111111111111111111111"
         C_HAS_IPR = 1
@@ -517,8 +517,8 @@ Unit <axi_intc> synthesized.
 Synthesizing Unit <intc_core>.
     Related source file is "c:/xilinx/13.4/ise_ds/edk/hw/xilinxprocessoriplib/pcores/axi_intc_v1_01_a/hdl/vhdl/intc_core.vhd".
         C_DWIDTH = 32
-        C_NUM_INTR_INPUTS = 2
-        C_KIND_OF_INTR = "11111111111111111111111111111110"
+        C_NUM_INTR_INPUTS = 3
+        C_KIND_OF_INTR = "11111111111111111111111111111100"
         C_KIND_OF_EDGE = "11111111111111111111111111111111"
         C_KIND_OF_LVL = "11111111111111111111111111111111"
         C_HAS_IPR = 1
@@ -531,32 +531,38 @@ Synthesizing Unit <intc_core>.
 WARNING:Xst:647 - Input <Valid_rd<3:5>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <Valid_wr<6:6>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <Valid_wr<1:1>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <Wr_data<31:2>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <Wr_data<31:3>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <mer_int<1>>.
     Found 1-bit register for signal <sie<0>>.
     Found 1-bit register for signal <sie<1>>.
+    Found 1-bit register for signal <sie<2>>.
     Found 1-bit register for signal <cie<0>>.
     Found 1-bit register for signal <cie<1>>.
+    Found 1-bit register for signal <cie<2>>.
     Found 1-bit register for signal <iar<0>>.
     Found 1-bit register for signal <ier<0>>.
     Found 1-bit register for signal <isr<0>>.
     Found 1-bit register for signal <iar<1>>.
     Found 1-bit register for signal <ier<1>>.
     Found 1-bit register for signal <isr<1>>.
+    Found 1-bit register for signal <iar<2>>.
+    Found 1-bit register for signal <ier<2>>.
+    Found 1-bit register for signal <isr<2>>.
     Found 32-bit register for signal <ipr>.
     Found 32-bit register for signal <ivr>.
     Found 1-bit register for signal <hw_intr<0>>.
-    Found 1-bit register for signal <INTR_DETECT_GEN[1].EDGE_DETECT_GEN.intr_p1<1>>.
-    Found 1-bit register for signal <INTR_DETECT_GEN[1].EDGE_DETECT_GEN.intr_p2<1>>.
-    Found 1-bit register for signal <INTR_DETECT_GEN[1].EDGE_DETECT_GEN.intr_d1<1>>.
     Found 1-bit register for signal <hw_intr<1>>.
+    Found 1-bit register for signal <INTR_DETECT_GEN[2].EDGE_DETECT_GEN.intr_p1<2>>.
+    Found 1-bit register for signal <INTR_DETECT_GEN[2].EDGE_DETECT_GEN.intr_p2<2>>.
+    Found 1-bit register for signal <INTR_DETECT_GEN[2].EDGE_DETECT_GEN.intr_d1<2>>.
+    Found 1-bit register for signal <hw_intr<2>>.
     Found 1-bit register for signal <Irq>.
     Found 1-bit register for signal <mer_int<0>>.
-    Found 1-bit register for signal <INTR_DETECT_GEN<1>.EDGE_DETECT_GEN.intr_sync_1>.
-    Found 32-bit 7-to-1 multiplexer for signal <Reg_addr[2]_mer[31]_wide_mux_16_OUT> created at line 749.
+    Found 1-bit register for signal <INTR_DETECT_GEN<2>.EDGE_DETECT_GEN.intr_sync_2>.
+    Found 32-bit 7-to-1 multiplexer for signal <Reg_addr[2]_mer[31]_wide_mux_17_OUT> created at line 749.
     Summary:
-	inferred  83 D-type flip-flop(s).
-	inferred   4 Multiplexer(s).
+	inferred  89 D-type flip-flop(s).
+	inferred   6 Multiplexer(s).
 Unit <intc_core> synthesized.
 
 Synthesizing Unit <axi_lite_ipif>.
@@ -719,13 +725,13 @@ Unit <pselect_f_8> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 41
- 1-bit register                                        : 36
+# Registers                                            : 47
+ 1-bit register                                        : 42
  2-bit register                                        : 2
  32-bit register                                       : 3
-# Multiplexers                                         : 15
- 1-bit 2-to-1 multiplexer                              : 11
- 32-bit 2-to-1 multiplexer                             : 2
+# Multiplexers                                         : 17
+ 1-bit 2-to-1 multiplexer                              : 12
+ 32-bit 2-to-1 multiplexer                             : 3
  32-bit 7-to-1 multiplexer                             : 1
  4-bit 2-to-1 multiplexer                              : 1
 # FSMs                                                 : 1
@@ -736,17 +742,17 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-WARNING:Xst:2404 -  FFs/Latches <ipr<31:2>> (without init value) have a constant value of 0 in block <intc_core>.
+WARNING:Xst:2404 -  FFs/Latches <ipr<31:3>> (without init value) have a constant value of 0 in block <intc_core>.
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Registers                                            : 106
- Flip-Flops                                            : 106
-# Multiplexers                                         : 7
- 1-bit 2-to-1 multiplexer                              : 3
- 32-bit 2-to-1 multiplexer                             : 2
+# Registers                                            : 113
+ Flip-Flops                                            : 113
+# Multiplexers                                         : 9
+ 1-bit 2-to-1 multiplexer                              : 4
+ 32-bit 2-to-1 multiplexer                             : 3
  32-bit 7-to-1 multiplexer                             : 1
  4-bit 2-to-1 multiplexer                              : 1
 # FSMs                                                 : 1
@@ -758,7 +764,6 @@ Macro Statistics
 =========================================================================
 WARNING:Xst:1293 - FF/Latch <s_axi_bresp_i_0> has a constant value of 0 in block <slave_attachment>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <s_axi_rresp_i_0> has a constant value of 0 in block <slave_attachment>. This FF/Latch will be trimmed during the optimization process.
-INFO:Xst:2261 - The FF/Latch <ivr_1> in Unit <intc_core> is equivalent to the following 30 FFs/Latches, which will be removed : <ivr_2> <ivr_3> <ivr_4> <ivr_5> <ivr_6> <ivr_7> <ivr_8> <ivr_9> <ivr_10> <ivr_11> <ivr_12> <ivr_13> <ivr_14> <ivr_15> <ivr_16> <ivr_17> <ivr_18> <ivr_19> <ivr_20> <ivr_21> <ivr_22> <ivr_23> <ivr_24> <ivr_25> <ivr_26> <ivr_27> <ivr_28> <ivr_29> <ivr_30> <ivr_31> 
 Analyzing FSM <MFsm> for best encoding.
 Optimizing FSM <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/FSM_0> on signal <state[1:2]> with user encoding.
 ----------------------
@@ -769,6 +774,7 @@ Optimizing FSM <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/FSM_0> on signal <
  sm_write | 10
  sm_resp  | 11
 ----------------------
+INFO:Xst:2261 - The FF/Latch <ivr_2> in Unit <intc_core> is equivalent to the following 29 FFs/Latches, which will be removed : <ivr_3> <ivr_4> <ivr_5> <ivr_6> <ivr_7> <ivr_8> <ivr_9> <ivr_10> <ivr_11> <ivr_12> <ivr_13> <ivr_14> <ivr_15> <ivr_16> <ivr_17> <ivr_18> <ivr_19> <ivr_20> <ivr_21> <ivr_22> <ivr_23> <ivr_24> <ivr_25> <ivr_26> <ivr_27> <ivr_28> <ivr_29> <ivr_30> <ivr_31> 
 
 Optimizing unit <axi_intc_0_wrapper> ...
 
@@ -780,13 +786,14 @@ Optimizing unit <address_decoder> ...
 
 Optimizing unit <intc_core> ...
 WARNING:Xst:2677 - Node <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/cs_out_i_0> of sequential type is unconnected in block <axi_intc_0_wrapper>.
-INFO:Xst:2261 - The FF/Latch <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31> in Unit <axi_intc_0_wrapper> is equivalent to the following 29 FFs/Latches, which will be removed : <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_30> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_29> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_28> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_27> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_26> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_25> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_24> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_23> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_22> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_21> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_20> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_19>
+INFO:Xst:2261 - The FF/Latch <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31> in Unit <axi_intc_0_wrapper> is equivalent to the following 28 FFs/Latches, which will be removed : <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_30> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_29> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_28> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_27> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_26> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_25> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_24> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_23> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_22> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_21> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_20> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_19>
    <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_18> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_17> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_16> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_15> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_14> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_13> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_12> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_11> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_10> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_9> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_8> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_7> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_6> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_5> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_4>
-   <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_3> <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_2> 
+   <axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_3> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block axi_intc_0_wrapper, actual ratio is 0.
+FlipFlop axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg has been replicated 1 time(s)
 FlipFlop axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd1 has been replicated 1 time(s)
 FlipFlop axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd2 has been replicated 1 time(s)
 
@@ -796,8 +803,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 48
- Flip-Flops                                            : 48
+# Registers                                            : 58
+ Flip-Flops                                            : 58
 
 =========================================================================
 
@@ -820,21 +827,20 @@ Top Level Output File Name         : axi_intc_0_wrapper.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 77
+# BELS                             : 90
 #      GND                         : 1
 #      INV                         : 2
-#      LUT2                        : 7
+#      LUT2                        : 11
 #      LUT3                        : 13
-#      LUT4                        : 10
-#      LUT5                        : 16
-#      LUT6                        : 26
-#      MUXF7                       : 1
+#      LUT4                        : 15
+#      LUT5                        : 18
+#      LUT6                        : 29
 #      VCC                         : 1
-# FlipFlops/Latches                : 48
-#      FD                          : 10
+# FlipFlops/Latches                : 58
+#      FD                          : 12
 #      FDC                         : 1
-#      FDR                         : 24
-#      FDRE                        : 12
+#      FDR                         : 31
+#      FDRE                        : 13
 #      FDS                         : 1
 
 Device utilization summary:
@@ -844,19 +850,19 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              48  out of  54576     0%  
- Number of Slice LUTs:                   74  out of  27288     0%  
-    Number used as Logic:                74  out of  27288     0%  
+ Number of Slice Registers:              58  out of  54576     0%  
+ Number of Slice LUTs:                   88  out of  27288     0%  
+    Number used as Logic:                88  out of  27288     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:     79
-   Number with an unused Flip Flop:      31  out of     79    39%  
-   Number with an unused LUT:             5  out of     79     6%  
-   Number of fully used LUT-FF pairs:    43  out of     79    54%  
-   Number of unique control sets:        12
+ Number of LUT Flip Flop pairs used:     94
+   Number with an unused Flip Flop:      36  out of     94    38%  
+   Number with an unused LUT:             6  out of     94     6%  
+   Number of fully used LUT-FF pairs:    52  out of     94    55%  
+   Number of unique control sets:        15
 
 IO Utilization: 
- Number of IOs:                         151
+ Number of IOs:                         152
  Number of bonded IOBs:                   0  out of    218     0%  
 
 Specific Feature Utilization:
@@ -882,8 +888,8 @@ Clock Information:
 -----------------------------------+----------------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                                      | Load  |
 -----------------------------------+----------------------------------------------------------------------------+-------+
-S_AXI_ACLK                         | NONE(axi_intc_0/ip2bus_rdack_int_d1)                                       | 47    |
-Intr<1>                            | NONE(axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<1>.EDGE_DETECT_GEN.intr_sync_1)| 1     |
+S_AXI_ACLK                         | NONE(axi_intc_0/ip2bus_rdack_int_d1)                                       | 57    |
+Intr<2>                            | NONE(axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<2>.EDGE_DETECT_GEN.intr_sync_2)| 1     |
 -----------------------------------+----------------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -895,8 +901,8 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 2.667ns (Maximum Frequency: 374.918MHz)
-   Minimum input arrival time before clock: 3.029ns
+   Minimum period: 2.668ns (Maximum Frequency: 374.799MHz)
+   Minimum input arrival time before clock: 3.054ns
    Maximum output required time after clock: 0.447ns
    Maximum combinational path delay: No path found
 
@@ -906,32 +912,32 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'S_AXI_ACLK'
-  Clock period: 2.667ns (frequency: 374.918MHz)
-  Total number of paths / destination ports: 257 / 87
+  Clock period: 2.668ns (frequency: 374.799MHz)
+  Total number of paths / destination ports: 311 / 106
 -------------------------------------------------------------------------
-Delay:               2.667ns (Levels of Logic = 2)
-  Source:            axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 (FF)
+Delay:               2.668ns (Levels of Logic = 2)
+  Source:            axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1 (FF)
   Destination:       axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31 (FF)
   Source Clock:      S_AXI_ACLK rising
   Destination Clock: S_AXI_ACLK rising
 
-  Data Path: axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 to axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31
+  Data Path: axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1 to axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDRE:C->Q             5   0.447   1.059  axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6 (axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6)
-     LUT6:I1->O            3   0.203   0.651  axi_intc_0/INTC_CORE_I/Rd_data<18>11 (axi_intc_0/INTC_CORE_I/Rd_data<18>1)
-     LUT5:I4->O            1   0.205   0.000  axi_intc_0/INTC_CORE_I/Rd_data<18>2 (axi_intc_0/read_data<10>)
+     FDRE:C->Q             4   0.447   1.028  axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1 (axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1)
+     LUT6:I1->O            4   0.203   0.684  axi_intc_0/INTC_CORE_I/Mmux_Rd_data1011 (axi_intc_0/INTC_CORE_I/Mmux_Rd_data101)
+     LUT5:I4->O            1   0.205   0.000  axi_intc_0/INTC_CORE_I/Mmux_Rd_data31 (axi_intc_0/read_data<10>)
      FDRE:D                    0.102          axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31
     ----------------------------------------
-    Total                      2.667ns (0.957ns logic, 1.710ns route)
+    Total                      2.668ns (0.957ns logic, 1.711ns route)
                                        (35.9% logic, 64.1% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'S_AXI_ACLK'
-  Total number of paths / destination ports: 245 / 66
+  Total number of paths / destination ports: 278 / 83
 -------------------------------------------------------------------------
-Offset:              3.029ns (Levels of Logic = 3)
+Offset:              3.054ns (Levels of Logic = 3)
   Source:            S_AXI_ARVALID (PAD)
   Destination:       axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_1 (FF)
   Destination Clock: S_AXI_ACLK rising
@@ -940,29 +946,29 @@ Offset:              3.029ns (Levels of Logic = 3)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT3:I0->O           13   0.205   1.277  axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_bus2ip_addr_i31 (axi_intc_0/bus2ip_addr<2>)
+     LUT3:I0->O           14   0.205   1.302  axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_bus2ip_addr_i31 (axi_intc_0/bus2ip_addr<2>)
      LUT5:I0->O            1   0.203   0.808  axi_intc_0/INTC_CORE_I/Mmux_Rd_data21 (axi_intc_0/INTC_CORE_I/Mmux_Rd_data2)
      LUT5:I2->O            1   0.205   0.000  axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0_dpot (axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0_dpot)
      FDRE:D                    0.102          axi_intc_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0
     ----------------------------------------
-    Total                      3.029ns (0.944ns logic, 2.085ns route)
-                                       (31.2% logic, 68.8% route)
+    Total                      3.054ns (0.944ns logic, 2.110ns route)
+                                       (30.9% logic, 69.1% route)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'Intr<1>'
+Timing constraint: Default OFFSET IN BEFORE for Clock 'Intr<2>'
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
 Offset:              1.421ns (Levels of Logic = 1)
   Source:            S_AXI_ARESETN (PAD)
-  Destination:       axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<1>.EDGE_DETECT_GEN.intr_sync_1 (FF)
-  Destination Clock: Intr<1> rising
+  Destination:       axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<2>.EDGE_DETECT_GEN.intr_sync_2 (FF)
+  Destination Clock: Intr<2> rising
 
-  Data Path: S_AXI_ARESETN to axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<1>.EDGE_DETECT_GEN.intr_sync_1
+  Data Path: S_AXI_ARESETN to axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<2>.EDGE_DETECT_GEN.intr_sync_2
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT2:I0->O            4   0.203   0.683  axi_intc_0/INTC_CORE_I/Rst_iar[1]_OR_27_o1 (axi_intc_0/INTC_CORE_I/Rst_iar[1]_OR_27_o)
-     FDC:CLR                   0.430          axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<1>.EDGE_DETECT_GEN.intr_sync_1
+     LUT2:I0->O            4   0.203   0.683  axi_intc_0/INTC_CORE_I/Rst_iar[2]_OR_32_o1 (axi_intc_0/INTC_CORE_I/Rst_iar[2]_OR_32_o)
+     FDC:CLR                   0.430          axi_intc_0/INTC_CORE_I/INTR_DETECT_GEN<2>.EDGE_DETECT_GEN.intr_sync_2
     ----------------------------------------
     Total                      1.421ns (0.738ns logic, 0.683ns route)
                                        (52.0% logic, 48.0% route)
@@ -990,7 +996,7 @@ Offset:              0.447ns (Levels of Logic = 0)
 Cross Clock Domains Report:
 --------------------------
 
-Clock to Setup on destination clock Intr<1>
+Clock to Setup on destination clock Intr<2>
 ---------------+---------+---------+---------+---------+
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
@@ -1003,19 +1009,19 @@ Clock to Setup on destination clock S_AXI_ACLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-Intr<1>        |    1.128|         |         |         |
-S_AXI_ACLK     |    2.667|         |         |         |
+Intr<2>        |    1.128|         |         |         |
+S_AXI_ACLK     |    2.668|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 7.69 secs
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 6.88 secs
  
 --> 
 
-Total memory usage is 277312 kilobytes
+Total memory usage is 283016 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   21 (   0 filtered)

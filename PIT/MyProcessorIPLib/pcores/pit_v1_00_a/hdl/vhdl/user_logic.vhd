@@ -54,8 +54,11 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-library proc_common_v3_00_a;
-use proc_common_v3_00_a.proc_common_pkg.all;
+
+----------------------------------------------------------------------------------------------------------------------------
+-- uncomment the next two files
+--library proc_common_v3_00_a;
+--use proc_common_v3_00_a.proc_common_pkg.all;
 
 -- DO NOT EDIT ABOVE THIS LINE --------------------
 
@@ -235,7 +238,7 @@ begin
 					-- What happens when we hit 0?
 						if(slv_reg0 = "00000000000000000000000000000000") then
 							-- we either reload or nothing
-							if(slv_reg2(0) = '1') then
+							if(slv_reg2(2) = '1') then
 								-- we reload!
 								slv_reg0 <= slv_reg1;
 							else
@@ -251,7 +254,7 @@ begin
 							slv_reg3(0) <= '0';
 						end if;
 						
-						slv_reg3(31 downto 1) <= '1010101010101010101010101010101';
+						slv_reg3(31 downto 1) <= "1010101010101010101010101010101";
 						
         end case;
       end if;

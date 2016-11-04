@@ -1,0 +1,42 @@
+
+**** Build of configuration Debug for project Lab6 ****
+
+make all 
+Building file: ../src/pit.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../lab6_bsp/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/pit.d" -MT"src/pit.d" -o"src/pit.o" "../src/pit.c"
+Finished building: ../src/pit.c
+' '
+Building file: ../src/spaceInvadersRUN.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../lab6_bsp/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/spaceInvadersRUN.d" -MT"src/spaceInvadersRUN.d" -o"src/spaceInvadersRUN.o" "../src/spaceInvadersRUN.c"
+../src/spaceInvadersRUN.c: In function 'timer_interrupt_handler':
+../src/spaceInvadersRUN.c:107: warning: implicit declaration of function 'rand'
+../src/spaceInvadersRUN.c: In function 'main':
+../src/spaceInvadersRUN.c:365: warning: implicit declaration of function 'srand'
+Finished building: ../src/spaceInvadersRUN.c
+' '
+Building target: Lab6.elf
+Invoking: MicroBlaze gcc linker
+mb-gcc -Wl,-T -Wl,../src/lscript.ld -L../../lab6_bsp/microblaze_0/lib -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -o"Lab6.elf"  ./src/aliens.o ./src/bunkers.o ./src/interface.o ./src/mother_ship.o ./src/pit.o ./src/platform.o ./src/spaceInvadersRUN.o ./src/tank.o ./src/util.o  ./src/sound/sound.o ./src/sound/sound_alien1.o ./src/sound/sound_alien2.o ./src/sound/sound_alien3.o ./src/sound/sound_alien4.o ./src/sound/sound_alienKill.o ./src/sound/sound_explosion.o ./src/sound/sound_motherShipHigh.o ./src/sound/sound_motherShipLow.o ./src/sound/sound_tank.o ./src/sound/xac97_l.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: Lab6.elf
+' '
+Invoking: MicroBlaze Print Size
+mb-size Lab6.elf  |tee "Lab6.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  62620	 193572	   6620	 262812	  4029c	Lab6.elf
+Finished building: Lab6.elf.size
+' '
+Invoking: Xilinx ELF Check
+elfcheck Lab6.elf -hw ../../SpaceInvaderTestHW2_hw_platform/system.xml -pe microblaze_0  |tee "Lab6.elf.elfcheck"
+elfcheck
+Xilinx EDK 13.4 Build EDK_O.87xd
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
+
+Command Line: elfcheck -hw ../../SpaceInvaderTestHW2_hw_platform/system.xml -pe
+microblaze_0 Lab6.elf 
+
+ELF file	: Lab6.elf
+elfcheck passed.
+Finished building: Lab6.elf.elfcheck
+' '

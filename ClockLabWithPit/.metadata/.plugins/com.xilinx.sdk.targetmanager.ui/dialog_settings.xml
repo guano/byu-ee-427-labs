@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="C:\Users\superman\Desktop\byu-ee-427-labs-master\ClockLabWithPit\RealTimeClockExp2_hw_platform\system.bit" key="RealTimeClockExp2_hw_platform-bitFile"/>
+	<item value="C:\Users\superman\Desktop\byu-ee-427-labs-master\ClockLabWithPit\RealTimeClockExp2_hw_platform\system_bd.bmm" key="RealTimeClockExp2_hw_platform-bmmFile"/>
+	<item value="bootloop" key="RealTimeClockExp2_hw_platform-microblaze_0-initElf"/>
+</section>

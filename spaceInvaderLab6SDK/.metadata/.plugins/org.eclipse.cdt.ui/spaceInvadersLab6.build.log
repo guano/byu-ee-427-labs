@@ -1,0 +1,17 @@
+
+**** Build of configuration Debug for project spaceInvadersLab6 ****
+
+make all 
+Building file: ../src/aliens.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../spaceInvadersLab4SDK_BSP/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/aliens.d" -MT"src/aliens.d" -o"src/aliens.o" "../src/aliens.c"
+../src/aliens.c:8:25: error: xparameters.h: No such file or directory
+../src/aliens.c:10:17: error: xio.h: No such file or directory
+../src/aliens.c: In function 'aliens_left':
+../src/aliens.c:328: warning: implicit declaration of function 'sound_init_alien1'
+../src/aliens.c:329: warning: implicit declaration of function 'sound_init_alien2'
+../src/aliens.c:335: warning: implicit declaration of function 'sound_init_alien3'
+../src/aliens.c:336: warning: implicit declaration of function 'sound_init_alien4'
+../src/aliens.c: In function 'aliens_kill':
+../src/aliens.c:600: warning: implicit declaration of function 'rand'
+make: *** [src/aliens.o] Error 1

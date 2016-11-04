@@ -225,8 +225,10 @@ begin
             end loop;
           when others => 
 					
+					--------------------------------------------------------------------------------------------------
+					-- Begin custom code for our PIT Timer
 					
-					-- decrement? or no?
+					-- decrement? or no? This is based on bit 0 of our control register
 						if(slv_reg2(0) = '1') then
 							-- We allow it to decrement
 							slv_reg0 <= slv_reg0 - 1;
@@ -235,7 +237,7 @@ begin
 							slv_reg0 <= slv_reg0;
 						end if;
 						
-					-- What happens when we hit 0?
+					-- What happens when we hit 0? This is based on but 2 of our control register
 						if(slv_reg0 = "00000000000000000000000000000000") then
 							-- we either reload or nothing
 							if(slv_reg2(2) = '1') then
@@ -248,13 +250,19 @@ begin
 						end if;
 						
 					-- make an interrupt if we ever hit 1. This way we can hold at zero without generating interrupts
+					-- This is based on but 1 of our control register
+					-- Notice the interrupt is stored in the LSB of reg3. The real interrupt signal will map to this at the end.
 						if((slv_reg0 = "00000000000000000000000000000001") and (slv_reg2(1) = '1')) then
 							slv_reg3(0) <= '1';
 						else
 							slv_reg3(0) <= '0';
 						end if;
 						
+					-- A custom value that reg3 should always be held at for debugging purposes (except the LSB; that is the interrupt)
 						slv_reg3(31 downto 1) <= "1010101010101010101010101010101";
+						
+						-- End custom code for our PIT Timer
+						------------------------------------------------------------------------------------------------------
 						
         end case;
       end if;
@@ -285,8 +293,10 @@ begin
   IP2Bus_RdAck <= slv_read_ack;
   IP2Bus_Error <= '0';
 	
-	
+	-----------------------------------------------------------------------------------------
 	-- The interrupt port is always the LSB of slv reg 3 :)
 	myinterrupt <= slv_reg3(0);
+	--
+	--------------------------------------------------------------------------------------------
 
 end IMP;

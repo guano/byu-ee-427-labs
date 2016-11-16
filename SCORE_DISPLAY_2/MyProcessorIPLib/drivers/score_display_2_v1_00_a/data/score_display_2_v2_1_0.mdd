@@ -1,0 +1,15 @@
+##############################################################################
+## Filename:          C:\Users\superman\Desktop\byu-ee-427-labs\SCORE_DISPLAY_2\MyProcessorIPLib/drivers/score_display_2_v1_00_a/data/score_display_2_v2_1_0.mdd
+## Description:       Microprocessor Driver Definition
+## Date:              Tue Nov 15 17:51:08 2016 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+OPTION psf_version = 2.1.0;
+
+BEGIN DRIVER score_display_2
+
+  OPTION supported_peripherals = (score_display_2);
+  OPTION depends = (common_v1_00_a);
+  OPTION copyfiles = all;
+
+END DRIVER

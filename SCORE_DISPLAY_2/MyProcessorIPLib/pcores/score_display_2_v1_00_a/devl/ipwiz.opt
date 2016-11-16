@@ -1,0 +1,10 @@
+-batch 
+-create score_display_2 
+-ver 1.00.a 
+-dir "C:\Users\superman\Desktop\byu-ee-427-labs\SCORE_DISPLAY_2\MyProcessorIPLib" 
+-lang vhdl 
+-bus axi4lite s 
+-reg 8 
+-xps 
+-bfmsim all
+-driver 

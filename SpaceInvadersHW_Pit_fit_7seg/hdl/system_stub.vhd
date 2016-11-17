@@ -31,9 +31,6 @@ entity system_stub is
     RS232_Uart_1_sin : in std_logic;
     RESET : in std_logic;
     GCLK : in std_logic;
-    Digilent_QuadSPI_Cntlr_C_pin : out std_logic;
-    Digilent_QuadSPI_Cntlr_S_pin : out std_logic;
-    Digilent_QuadSPI_Cntlr_DQ : inout std_logic_vector(3 downto 0);
     axi4lite_0_M_AXI_ACLK_pin : in std_logic_vector(2 downto 0);
     axi_hdmi_0_TMDS_RX_CLK_P_pin : in std_logic;
     axi_hdmi_0_TMDS_RX_CLK_N_pin : in std_logic;
@@ -58,7 +55,20 @@ entity system_stub is
     axi_ac97_0_Sync_pin : out std_logic;
     axi_ac97_0_SData_Out_pin : out std_logic;
     axi_ac97_0_AC97Reset_n_pin : out std_logic;
-    Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4)
+    Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
+    score_display_2_0_digit_0_pin : out std_logic;
+    score_display_2_0_digit_1_pin : out std_logic;
+    score_display_2_0_digit_2_pin : out std_logic;
+    score_display_2_0_digit_3_pin : out std_logic;
+    score_display_2_0_digit_4_pin : out std_logic;
+    score_display_2_0_digit_5_pin : out std_logic;
+    score_display_2_0_seg_a_pin : out std_logic;
+    score_display_2_0_seg_b_pin : out std_logic;
+    score_display_2_0_seg_c_pin : out std_logic;
+    score_display_2_0_seg_d_pin : out std_logic;
+    score_display_2_0_seg_e_pin : out std_logic;
+    score_display_2_0_seg_f_pin : out std_logic;
+    score_display_2_0_seg_g_pin : out std_logic
   );
 end system_stub;
 
@@ -88,9 +98,6 @@ architecture STRUCTURE of system_stub is
       RS232_Uart_1_sin : in std_logic;
       RESET : in std_logic;
       GCLK : in std_logic;
-      Digilent_QuadSPI_Cntlr_C_pin : out std_logic;
-      Digilent_QuadSPI_Cntlr_S_pin : out std_logic;
-      Digilent_QuadSPI_Cntlr_DQ : inout std_logic_vector(3 downto 0);
       axi4lite_0_M_AXI_ACLK_pin : in std_logic_vector(2 downto 0);
       axi_hdmi_0_TMDS_RX_CLK_P_pin : in std_logic;
       axi_hdmi_0_TMDS_RX_CLK_N_pin : in std_logic;
@@ -115,7 +122,20 @@ architecture STRUCTURE of system_stub is
       axi_ac97_0_Sync_pin : out std_logic;
       axi_ac97_0_SData_Out_pin : out std_logic;
       axi_ac97_0_AC97Reset_n_pin : out std_logic;
-      Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4)
+      Push_Buttons_5Bits_TRI_I : in std_logic_vector(0 to 4);
+      score_display_2_0_digit_0_pin : out std_logic;
+      score_display_2_0_digit_1_pin : out std_logic;
+      score_display_2_0_digit_2_pin : out std_logic;
+      score_display_2_0_digit_3_pin : out std_logic;
+      score_display_2_0_digit_4_pin : out std_logic;
+      score_display_2_0_digit_5_pin : out std_logic;
+      score_display_2_0_seg_a_pin : out std_logic;
+      score_display_2_0_seg_b_pin : out std_logic;
+      score_display_2_0_seg_c_pin : out std_logic;
+      score_display_2_0_seg_d_pin : out std_logic;
+      score_display_2_0_seg_e_pin : out std_logic;
+      score_display_2_0_seg_f_pin : out std_logic;
+      score_display_2_0_seg_g_pin : out std_logic
     );
   end component;
 
@@ -148,9 +168,6 @@ begin
       RS232_Uart_1_sin => RS232_Uart_1_sin,
       RESET => RESET,
       GCLK => GCLK,
-      Digilent_QuadSPI_Cntlr_C_pin => Digilent_QuadSPI_Cntlr_C_pin,
-      Digilent_QuadSPI_Cntlr_S_pin => Digilent_QuadSPI_Cntlr_S_pin,
-      Digilent_QuadSPI_Cntlr_DQ => Digilent_QuadSPI_Cntlr_DQ,
       axi4lite_0_M_AXI_ACLK_pin => axi4lite_0_M_AXI_ACLK_pin,
       axi_hdmi_0_TMDS_RX_CLK_P_pin => axi_hdmi_0_TMDS_RX_CLK_P_pin,
       axi_hdmi_0_TMDS_RX_CLK_N_pin => axi_hdmi_0_TMDS_RX_CLK_N_pin,
@@ -175,7 +192,20 @@ begin
       axi_ac97_0_Sync_pin => axi_ac97_0_Sync_pin,
       axi_ac97_0_SData_Out_pin => axi_ac97_0_SData_Out_pin,
       axi_ac97_0_AC97Reset_n_pin => axi_ac97_0_AC97Reset_n_pin,
-      Push_Buttons_5Bits_TRI_I => Push_Buttons_5Bits_TRI_I
+      Push_Buttons_5Bits_TRI_I => Push_Buttons_5Bits_TRI_I,
+      score_display_2_0_digit_0_pin => score_display_2_0_digit_0_pin,
+      score_display_2_0_digit_1_pin => score_display_2_0_digit_1_pin,
+      score_display_2_0_digit_2_pin => score_display_2_0_digit_2_pin,
+      score_display_2_0_digit_3_pin => score_display_2_0_digit_3_pin,
+      score_display_2_0_digit_4_pin => score_display_2_0_digit_4_pin,
+      score_display_2_0_digit_5_pin => score_display_2_0_digit_5_pin,
+      score_display_2_0_seg_a_pin => score_display_2_0_seg_a_pin,
+      score_display_2_0_seg_b_pin => score_display_2_0_seg_b_pin,
+      score_display_2_0_seg_c_pin => score_display_2_0_seg_c_pin,
+      score_display_2_0_seg_d_pin => score_display_2_0_seg_d_pin,
+      score_display_2_0_seg_e_pin => score_display_2_0_seg_e_pin,
+      score_display_2_0_seg_f_pin => score_display_2_0_seg_f_pin,
+      score_display_2_0_seg_g_pin => score_display_2_0_seg_g_pin
     );
 
 end architecture STRUCTURE;

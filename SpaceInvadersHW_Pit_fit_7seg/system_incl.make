@@ -131,7 +131,9 @@ pcores/axi_ac97_v1_00_a/hdl/vhdl/opb_ac97.vhd \
 pcores/axi_ac97_v1_00_a/hdl/vhdl/user_logic.vhd \
 pcores/axi_ac97_v1_00_a/hdl/vhdl/axi_ac97.vhd \
 C:/Users/superman/Desktop/byu-ee-427-labs/PIT/MyProcessorIPLib/pcores/pit_v1_00_a/hdl/vhdl/user_logic.vhd \
-C:/Users/superman/Desktop/byu-ee-427-labs/PIT/MyProcessorIPLib/pcores/pit_v1_00_a/hdl/vhdl/pit.vhd
+C:/Users/superman/Desktop/byu-ee-427-labs/PIT/MyProcessorIPLib/pcores/pit_v1_00_a/hdl/vhdl/pit.vhd \
+C:/Users/superman/Desktop/byu-ee-427-labs/SCORE_DISPLAY_2/MyProcessorIPLib/pcores/score_display_2_v1_00_a/hdl/vhdl/user_logic.vhd \
+C:/Users/superman/Desktop/byu-ee-427-labs/SCORE_DISPLAY_2/MyProcessorIPLib/pcores/score_display_2_v1_00_a/hdl/vhdl/score_display_2.vhd
 
 WRAPPER_NGC_FILES = implementation/proc_sys_reset_0_wrapper.ngc \
 implementation/microblaze_0_ilmb_wrapper.ngc \
@@ -150,11 +152,11 @@ implementation/axi4lite_0_wrapper.ngc \
 implementation/axi4_0_wrapper.ngc \
 implementation/rs232_uart_1_wrapper.ngc \
 implementation/mcb_ddr2_wrapper.ngc \
-implementation/digilent_quadspi_cntlr_wrapper.ngc \
 implementation/axi_intc_0_wrapper.ngc \
 implementation/axi_timer_0_wrapper.ngc \
 implementation/fit_timer_0_wrapper.ngc \
-implementation/pit_0_wrapper.ngc
+implementation/pit_0_wrapper.ngc \
+implementation/score_display_2_0_wrapper.ngc
 
 POSTSYN_NETLIST = implementation/$(SYSTEM).ngc
 

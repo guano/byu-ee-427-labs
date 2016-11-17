@@ -41,7 +41,7 @@ Timing constraint: PATH
 Timing constraint: PATH 
 "TS_axi_vdma_0_from_m_axi_mm2s_aclk_to_s_axi_lite_aclk_path" TIG;
 
- 620459 paths analyzed, 32619 endpoints analyzed, 0 failing endpoints
+ 607271 paths analyzed, 31524 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
 --------------------------------------------------------------------------------
 
@@ -150,7 +150,7 @@ For more information, see From:To (Multicycle) Analysis in the Timing Closure Us
 
  393 paths analyzed, 393 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors)
- Maximum delay is   5.426ns.
+ Maximum delay is   5.420ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -191,7 +191,7 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
  61 paths analyzed, 59 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   7.311ns.
+ Minimum period is   5.990ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -220,7 +220,7 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
  83 paths analyzed, 83 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   4.591ns.
+ Minimum period is   5.037ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -235,7 +235,7 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
  7014 paths analyzed, 1459 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   6.192ns.
+ Minimum period is   6.131ns.
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -264,16 +264,16 @@ Derived Constraints for TS_sys_clk_pin
 | TS_clk_600_0000MHz180PLL0_nobu|      1.667ns|      1.499ns|          N/A|            0|            0|            0|            0|
 | f                             |             |             |             |             |             |             |             |
 | TS_clk_600_0000MHzPLL0_nobuf  |      1.667ns|      1.499ns|          N/A|            0|            0|            0|            0|
-| TS_clock_generator_0_clock_gen|     10.000ns|      7.311ns|      6.831ns|            0|            0|           61|         7097|
+| TS_clock_generator_0_clock_gen|     10.000ns|      5.990ns|      7.495ns|            0|            0|           61|         7097|
 | erator_0_SIG_PLL0_CLKOUT2     |             |             |             |             |             |             |             |
-|  TS_axi_hdmi_0_axi_hdmi_0_USE_|     13.441ns|      5.000ns|      9.182ns|            0|            0|            0|         7097|
+|  TS_axi_hdmi_0_axi_hdmi_0_USE_|     13.441ns|      5.000ns|     10.074ns|            0|            0|            0|         7097|
 |  HDMI_OUT_Inst_AxiHDMITransmit|             |             |             |             |             |             |             |
 |  ter_Inst_DynClkGen_DcmClkO   |             |             |             |             |             |             |             |
-|   TS_axi_hdmi_0_axi_hdmi_0_USE|      6.720ns|      4.591ns|          N/A|            0|            0|           83|            0|
+|   TS_axi_hdmi_0_axi_hdmi_0_USE|      6.720ns|      5.037ns|          N/A|            0|            0|           83|            0|
 |   _HDMI_OUT_Inst_AxiHDMITransm|             |             |             |             |             |             |             |
 |   itter_Inst_DynClkGen_PllOut_|             |             |             |             |             |             |             |
 |   x2                          |             |             |             |             |             |             |             |
-|   TS_axi_hdmi_0_axi_hdmi_0_USE|     13.441ns|      6.192ns|          N/A|            0|            0|         7014|            0|
+|   TS_axi_hdmi_0_axi_hdmi_0_USE|     13.441ns|      6.131ns|          N/A|            0|            0|         7014|            0|
 |   _HDMI_OUT_Inst_AxiHDMITransm|             |             |             |             |             |             |             |
 |   itter_Inst_DynClkGen_PllOut_|             |             |             |             |             |             |             |
 |   x1                          |             |             |             |             |             |             |             |
@@ -295,7 +295,7 @@ Clock to Setup on destination clock GCLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-GCLK           |   13.898|    5.770|    6.075|         |
+GCLK           |   12.067|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 
@@ -304,21 +304,21 @@ Timing summary:
 
 Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
 
-Constraints cover 978376 paths, 0 nets, and 39558 connections
+Constraints cover 965188 paths, 0 nets, and 38122 connections
 
 Design statistics:
-   Minimum period:   7.311ns   (Maximum frequency: 136.780MHz)
-   Maximum path delay from/to any node:   5.426ns
+   Minimum period:   6.131ns   (Maximum frequency: 163.106MHz)
+   Maximum path delay from/to any node:   5.420ns
 
 
-Analysis completed Fri Nov 04 14:02:59 2016 
+Analysis completed Wed Nov 16 17:18:50 2016 
 --------------------------------------------------------------------------------
 
 Trace Settings:
 -------------------------
 Trace Settings 
 
-Peak Memory Usage: 483 MB
+Peak Memory Usage: 478 MB
 
 
 

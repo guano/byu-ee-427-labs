@@ -1,12 +1,6 @@
 #
 # pin constraints
 #
-NET Digilent_QuadSPI_Cntlr_C_pin LOC = "R15"  |  IOSTANDARD = "LVCMOS33" | PULLUP; 
-NET Digilent_QuadSPI_Cntlr_DQ[0] LOC = "T13"  |  IOSTANDARD = "LVCMOS33";
-NET Digilent_QuadSPI_Cntlr_DQ[1] LOC = "R13"  |  IOSTANDARD = "LVCMOS33";
-NET Digilent_QuadSPI_Cntlr_DQ[2] LOC = "T14"  |  IOSTANDARD = "LVCMOS33";
-NET Digilent_QuadSPI_Cntlr_DQ[3] LOC = "V14"  |  IOSTANDARD = "LVCMOS33";
-NET Digilent_QuadSPI_Cntlr_S_pin LOC = "V3"  |  IOSTANDARD = "LVCMOS33";
 NET GCLK LOC = "L15"  |  IOSTANDARD = "LVCMOS33";
 NET RESET LOC = "T15"  |  IOSTANDARD = "LVCMOS33"  |  TIG;
 NET RS232_Uart_1_sin LOC = "A16"  |  IOSTANDARD = "LVCMOS33";
@@ -22,6 +16,27 @@ NET Push_Buttons_5Bits_TRI_I[1] LOC = "P4"  |  IOSTANDARD = "LVCMOS18";
 NET Push_Buttons_5Bits_TRI_I[2] LOC = "P3"  |  IOSTANDARD = "LVCMOS18";
 NET Push_Buttons_5Bits_TRI_I[3] LOC = "F6"  |  IOSTANDARD = "LVCMOS18";
 NET Push_Buttons_5Bits_TRI_I[4] LOC = "F5"  |  IOSTANDARD = "LVCMOS18";
+
+# 7 segment outputs
+NET score_display_2_0_seg_a_pin LOC = "U16"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L2P_CMPCLK,        	Sch name = EXP-IO1_P
+NET score_display_2_0_seg_b_pin LOC = "U15"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = *IO_L5P,        		Sch name = EXP-IO2_P
+NET score_display_2_0_seg_f_pin LOC = "U13"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L14P_D11,        	Sch name = EXP-IO3_P
+NET score_display_2_0_seg_e_pin LOC = "M11"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = *IO_L15P,        		Sch name = EXP-IO4_P
+NET score_display_2_0_seg_d_pin LOC = "R11"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L16P,        		Sch name = EXP-IO5_P
+ 
+NET score_display_2_0_digit_5_pin LOC = "U11"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L23P,        		Sch name = EXP-IO9_P
+NET score_display_2_0_digit_4_pin LOC = "R10"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L29P_GCLK3,        	Sch name = EXP-IO10_P
+NET score_display_2_0_digit_3_pin LOC = "U10"  |  IOSTANDARD = LVCMOS33; # Bank = 2,  Pin name = IO_L30P_GCLK1_D13,      Sch name = EXP-IO11_P
+NET score_display_2_0_digit_2_pin LOC = "R8"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L31P_GCLK31_D14,     Sch name = EXP-IO12_P
+NET score_display_2_0_digit_1_pin LOC = "M8"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = *IO_L40P,        		Sch name = EXP-IO13_P
+NET score_display_2_0_digit_0_pin LOC = "U8"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L41P,        		Sch name = EXP-IO14_P
+
+NET score_display_2_0_seg_g_pin LOC = "U7"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L43P,        		Sch name = EXP-IO15_P
+NET score_display_2_0_seg_c_pin LOC = "N7"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = *IO_L44P,        		Sch name = EXP-IO16_P
+ 
+
+
+
 #
 # additional constraints
 #

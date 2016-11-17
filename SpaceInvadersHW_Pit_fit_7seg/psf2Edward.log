@@ -3,9 +3,6 @@ WARNING:EDK:3605 - Use of the repository located at
    (equivalent of $XILINX_EDK/../edk_user_repository) is now deprecated. 
    It is recommended that you use Global SearchPath preference to specify search
    paths that apply to all the projects.
-WARNING:EDK:2418 - Specified path
-   'C:\Users\superman\Desktop\db\space_invaders\user_hardware\' is not a
-   directory!
 
 Checking platform configuration ...
 IPNAME: lmb_v10, INSTANCE: microblaze_0_ilmb - 1 master(s) : 1 slave(s) 
@@ -20,8 +17,8 @@ WARNING:EDK:4180 - PORT: bscan_tdo1, CONNECTOR: bscan_tdo1 - No driver found.
    _v2_1_0.mpd line 239 
 WARNING:EDK:4181 - PORT: axi4lite_0_M_AXI_ACLK_pin, CONNECTOR: axi4lite_0_M_ACLK
    - floating connection -
-   C:\Users\superman\Desktop\okazaki\the_best_hardware\SpaceInvaderTestHW2\syste
-   m.mhs line 39 
+   C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW_Pit_fit_7seg\system
+   .mhs line 36 
 WARNING:EDK:4181 - PORT: bscan_tdi, CONNECTOR: bscan_tdi - floating connection -
    C:\Xilinx\13.4\ISE_DS\EDK\hw\XilinxProcessorIPLib\pcores\mdm_v2_00_b\data\mdm
    _v2_1_0.mpd line 232 
@@ -63,8 +60,8 @@ WARNING:EDK:4181 - PORT: s2mm_prmry_reset_out_n, CONNECTOR: S2MM_RESET_OUT_N -
    a\axi_vdma_v2_1_0.mpd line 224 
 WARNING:EDK:4181 - PORT: M_AXIS_S2MM_ACLK, CONNECTOR: M_AXIS_S2MM_ACLK_int -
    floating connection -
-   C:\Users\superman\Desktop\okazaki\the_best_hardware\SpaceInvaderTestHW2\syste
-   m.mhs line 246 
+   C:\Users\superman\Desktop\byu-ee-427-labs\SpaceInvadersHW_Pit_fit_7seg\system
+   .mhs line 256 
 
 Performing Clock DRCs...
 

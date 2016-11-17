@@ -162,9 +162,108 @@ architecture IMP of user_logic is
   signal slv_read_ack                   : std_logic;
   signal slv_write_ack                  : std_logic;
 
+	signal counter: std_logic_vector(2 downto 0) := "000";	-- should work
+	signal current_register: std_logic_vector(31 downto 0);
+	signal digit_out: std_logic_vector(5 downto 0);
+	signal seg: std_logic_vector(6 downto 0);
 begin
 
   --USER logic implementation added here
+	
+		digit_0 <= not digit_out(0);
+		digit_1 <= not digit_out(1);
+		digit_2 <= not digit_out(2);
+		digit_3 <= not digit_out(3);
+		digit_4 <= not digit_out(4);
+		digit_5 <= not digit_out(5);
+		
+		seg_a <= not seg(0);
+		seg_b <= not seg(1);
+		seg_c <= not seg(2);
+		seg_d <= not seg(3);
+		seg_e <= not seg(4);
+		seg_f <= not seg(5);
+		seg_g <= not seg(6);
+		
+	with counter select current_register <=
+		slv_reg0 when "000",
+		slv_reg1 when "001",
+		slv_reg2 when "010",
+		slv_reg3 when "011",
+		slv_reg4 when "100",
+		slv_reg5 when "101",
+		slv_reg6 when others;	-- Error, should never happen
+		
+	-- Digit out is 1-hot encoded
+	-- (well, not really, but if the digits are all different it is)
+	with counter select digit_out <=
+		"000001" when "000",	-- Digit 0
+		"000010" when "001",	-- Digit 1
+		"000100" when "010",	-- Digit 2
+		"001000" when "011",	-- Digit 3
+		"010000" when "100",	-- Digit 4
+		"100000" when "101",	-- Digit 5
+		"111111" when others;	-- This should never happen
+
+	-- The binary is arranged in
+	-- A B C D E F G in seg
+	-- In current_register it is whatever is in the register.
+	with current_register select seg <=
+	
+	"1111110" when "00000000000000000000000000000000",	-- 0
+	"0110000" when "00000000000000000000000000000001",	-- 1
+	"0100100" when "00000000000000000000000000000010",	-- 2
+	"1111001" when "00000000000000000000000000000011",	-- 3
+	"0110011" when "00000000000000000000000000000100",	-- 4
+	"1011011" when "00000000000000000000000000000101",	-- 5
+	"1011111" when "00000000000000000000000000000110",	-- 6
+	"1110000" when "00000000000000000000000000000111",	-- 7
+	"1111111" when "00000000000000000000000000001000",	-- 8
+	"1110011" when "00000000000000000000000000001001",	-- 9
+
+	"1110111" when "00000000000000000000000000001010",	-- a
+	"0011111" when "00000000000000000000000000001011",	-- b
+	"0001101" when "00000000000000000000000000001100",	-- c
+	"0111101" when "00000000000000000000000000001101",	-- d
+	"1001111" when "00000000000000000000000000001110",	-- e
+	"1000111" when "00000000000000000000000000001111",	-- f
+	"1111011" when "00000000000000000000000000010000",	-- g
+	"0010111" when "00000000000000000000000000010010",	-- h
+	"0110000" when "00000000000000000000000000010011",	-- i
+	"0111100" when "00000000000000000000000000010100",	-- j
+	"0010111" when "00000000000000000000000000010101",	-- k
+	"0001110" when "00000000000000000000000000010110",	-- l
+	"0010101" when "00000000000000000000000000010111",	-- m
+	"0010110" when "00000000000000000000000000011000",	-- n
+	"1111110" when "00000000000000000000000000011001",	-- o
+	"1100111" when "00000000000000000000000000011010",	-- p
+	"0011101" when "00000000000000000000000000011011",	-- q
+	"0000101" when "00000000000000000000000000011100",	-- r
+	"1011011" when "00000000000000000000000000011101",	-- s
+	"1000110" when "00000000000000000000000000011110",	-- t
+	"0011100" when "00000000000000000000000000011111",	-- u
+	"0011100" when "00000000000000000000000000100000",	-- v
+	"0011100" when "00000000000000000000000000100001",	-- w
+	"0110111" when "00000000000000000000000000100010",	-- x
+	"0110011" when "00000000000000000000000000100011",	-- y
+	"1101101" when "00000000000000000000000000100100",	-- z
+	
+	"0001000" when "00000000000000000000000000100101", -- _
+	"0000000" when "11111111111111111111111111111111", -- ' '
+	"0111111" when others; -- displays a '-' on error
+	
+	
+	process(Bus2IP_Clk)
+	begin
+	--finish the clock ticking.
+		if(Bus2IP_Clk'EVENT and Bus2IP_Clk = '1') then
+			if(counter = "101") then
+				counter <= "000";
+			else
+				counter <= counter + 1;
+			end if;
+		end if;
+	end process;
 
   ------------------------------------------
   -- Example code to read/write user logic slave model s/w accessible registers

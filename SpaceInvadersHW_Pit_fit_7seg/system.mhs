@@ -33,9 +33,6 @@
  PORT RS232_Uart_1_sin = RS232_Uart_1_sin, DIR = I
  PORT RESET = RESET, DIR = I, SIGIS = RST, RST_POLARITY = 0
  PORT GCLK = GCLK, DIR = I, SIGIS = CLK, CLK_FREQ = 100000000
- PORT Digilent_QuadSPI_Cntlr_C_pin = Digilent_QuadSPI_Cntlr_C, DIR = O
- PORT Digilent_QuadSPI_Cntlr_S_pin = Digilent_QuadSPI_Cntlr_S, DIR = O
- PORT Digilent_QuadSPI_Cntlr_DQ = Digilent_QuadSPI_Cntlr_DQ, DIR = IO, VEC = [3:0]
  PORT axi4lite_0_M_AXI_ACLK_pin = axi4lite_0_M_ACLK, DIR = I, VEC = [2:0], SIGIS = CLK
  PORT axi_hdmi_0_TMDS_RX_CLK_P_pin = axi_hdmi_0_TMDS_RX_CLK_P, DIR = I
  PORT axi_hdmi_0_TMDS_RX_CLK_N_pin = axi_hdmi_0_TMDS_RX_CLK_N, DIR = I
@@ -61,6 +58,19 @@
  PORT axi_ac97_0_SData_Out_pin = axi_ac97_0_SData_Out, DIR = O
  PORT axi_ac97_0_AC97Reset_n_pin = axi_ac97_0_AC97Reset_n, DIR = O
  PORT Push_Buttons_5Bits_TRI_I = Push_Buttons_5Bits_TRI_I, DIR = I, VEC = [0:4]
+ PORT score_display_2_0_digit_0_pin = score_display_2_0_digit_0, DIR = O
+ PORT score_display_2_0_digit_1_pin = score_display_2_0_digit_1, DIR = O
+ PORT score_display_2_0_digit_2_pin = score_display_2_0_digit_2, DIR = O
+ PORT score_display_2_0_digit_3_pin = score_display_2_0_digit_3, DIR = O
+ PORT score_display_2_0_digit_4_pin = score_display_2_0_digit_4, DIR = O
+ PORT score_display_2_0_digit_5_pin = score_display_2_0_digit_5, DIR = O
+ PORT score_display_2_0_seg_a_pin = score_display_2_0_seg_a, DIR = O
+ PORT score_display_2_0_seg_b_pin = score_display_2_0_seg_b, DIR = O
+ PORT score_display_2_0_seg_c_pin = score_display_2_0_seg_c, DIR = O
+ PORT score_display_2_0_seg_d_pin = score_display_2_0_seg_d, DIR = O
+ PORT score_display_2_0_seg_e_pin = score_display_2_0_seg_e, DIR = O
+ PORT score_display_2_0_seg_f_pin = score_display_2_0_seg_f, DIR = O
+ PORT score_display_2_0_seg_g_pin = score_display_2_0_seg_g, DIR = O
 
 
 BEGIN proc_sys_reset
@@ -340,18 +350,6 @@ BEGIN axi_s6_ddrx
  PORT PLL_LOCK = proc_sys_reset_0_Dcm_locked
 END
 
-BEGIN d_qspi_axi
- PARAMETER INSTANCE = Digilent_QuadSPI_Cntlr
- PARAMETER HW_VER = 1.00.a
- PARAMETER C_BASEADDR = 0x7e400000
- PARAMETER C_HIGHADDR = 0x7e40ffff
- BUS_INTERFACE S_AXI = axi4lite_0
- PORT S_AXI_ACLK = clk_100_0000MHzPLL0
- PORT C = Digilent_QuadSPI_Cntlr_C
- PORT S = Digilent_QuadSPI_Cntlr_S
- PORT DQ = Digilent_QuadSPI_Cntlr_DQ
-END
-
 BEGIN axi_intc
  PARAMETER INSTANCE = axi_intc_0
  PARAMETER HW_VER = 1.01.a
@@ -389,5 +387,27 @@ BEGIN pit
  BUS_INTERFACE S_AXI = axi4lite_0
  PORT S_AXI_ACLK = clk_100_0000MHzPLL0
  PORT myinterrupt = pit_0_myinterrupt
+END
+
+BEGIN score_display_2
+ PARAMETER INSTANCE = score_display_2_0
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0x72400000
+ PARAMETER C_HIGHADDR = 0x7240ffff
+ BUS_INTERFACE S_AXI = axi4lite_0
+ PORT S_AXI_ACLK = clk_100_0000MHzPLL0
+ PORT digit_0 = score_display_2_0_digit_0
+ PORT digit_1 = score_display_2_0_digit_1
+ PORT digit_2 = score_display_2_0_digit_2
+ PORT digit_3 = score_display_2_0_digit_3
+ PORT digit_4 = score_display_2_0_digit_4
+ PORT digit_5 = score_display_2_0_digit_5
+ PORT seg_a = score_display_2_0_seg_a
+ PORT seg_b = score_display_2_0_seg_b
+ PORT seg_c = score_display_2_0_seg_c
+ PORT seg_d = score_display_2_0_seg_d
+ PORT seg_e = score_display_2_0_seg_e
+ PORT seg_f = score_display_2_0_seg_f
+ PORT seg_g = score_display_2_0_seg_g
 END
 

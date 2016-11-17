@@ -11,8 +11,8 @@ Rasterizing clock_generator_0.jpg.....
 Rasterizing axi_vdma_0.jpg.....
 org.apache.batik.transcoder.TranscoderException: nul
 Enclosed Exception
-file:/C:/Users/superman/Desktop/okazaki/the_best_hardware/SpaceInvaderTestHW2/__
-xps/.dswkshop/axi_vdma_0.svg:-
+file:/C:/Users/superman/Desktop/byu-ee-427-labs/SpaceInvadersHW_Pit_fit_7seg/__x
+ps/.dswkshop/axi_vdma_0.svg:-
 Cannot find the referenced element
 "#AXIS_busconn_INITIATOR
 specified on the element <use> - may be a problem of id

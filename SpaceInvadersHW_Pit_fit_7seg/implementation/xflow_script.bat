@@ -6,7 +6,7 @@
 @REM #
 @REM # Command line for ngdbuild
 @REM #
-ngdbuild -p xc6slx45csg324-3 -nt timestamp -bm system.bmm "C:/Users/superman/Desktop/okazaki/the_best_hardware/SpaceInvaderTestHW2/implementation/system.ngc" -uc system.ucf system.ngd 
+ngdbuild -p xc6slx45csg324-3 -nt timestamp -bm system.bmm "C:/Users/superman/Desktop/byu-ee-427-labs/SpaceInvadersHW_Pit_fit_7seg/implementation/system.ngc" -uc system.ucf system.ngd 
 
 @REM #
 @REM # Command line for map

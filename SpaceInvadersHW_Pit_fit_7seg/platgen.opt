@@ -5,11 +5,13 @@ vhdl
 -intstyle
 default
 -lp
+C:/Users/superman/Desktop/byu-ee-427-labs/PIT/
+-lp
 C:/EE427/Atlys_BSB_Support_v_3_4/Atlys_AXI_BSB_Support/lib/
 -lp
-C:/Users/superman/Desktop/byu-ee-427-labs-master/PIT/
+C:/Users/superman/Desktop/byu-ee-427-labs/SCORE_DISPLAY/
 -lp
-C:/Users/superman/Desktop/db/space_invaders/user_hardware
+C:/Users/superman/Desktop/byu-ee-427-labs/SCORE_DISPLAY_2/
 -msg
 __xps/ise/xmsgprops.lst
 system.mhs

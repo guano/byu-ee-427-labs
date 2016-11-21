@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map O.87xd on Wed Nov 16 17:17:26 2016
+// Written by: Map O.87xd on Mon Nov 21 12:38:03 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -55,11 +55,11 @@ COMP "Push_Buttons_5Bits_TRI_I<4>" LOCATE = SITE "F5" LEVEL 1;
 COMP "RS232_Uart_1_sin" LOCATE = SITE "A16" LEVEL 1;
 COMP "score_display_2_0_seg_a_pin" LOCATE = SITE "U16" LEVEL 1;
 COMP "score_display_2_0_seg_b_pin" LOCATE = SITE "U15" LEVEL 1;
-COMP "score_display_2_0_seg_c_pin" LOCATE = SITE "N7" LEVEL 1;
+COMP "score_display_2_0_seg_c_pin" LOCATE = SITE "N10" LEVEL 1;
 COMP "score_display_2_0_seg_d_pin" LOCATE = SITE "R11" LEVEL 1;
 COMP "score_display_2_0_seg_e_pin" LOCATE = SITE "M11" LEVEL 1;
 COMP "score_display_2_0_seg_f_pin" LOCATE = SITE "U13" LEVEL 1;
-COMP "score_display_2_0_seg_g_pin" LOCATE = SITE "U7" LEVEL 1;
+COMP "score_display_2_0_seg_g_pin" LOCATE = SITE "T12" LEVEL 1;
 COMP "mcbx_dram_addr<10>" LOCATE = SITE "F4" LEVEL 1;
 COMP "mcbx_dram_addr<11>" LOCATE = SITE "D3" LEVEL 1;
 COMP "mcbx_dram_addr<12>" LOCATE = SITE "G6" LEVEL 1;
@@ -11384,19 +11384,19 @@ TIMEGRP m_axi_mm2s_aclk = PIN
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_2"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_2"
-        BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_3"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_1"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_3"
         BEL
@@ -11407,8 +11407,6 @@ TIMEGRP m_axi_mm2s_aclk = PIN
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_7"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_1"
         BEL
@@ -23130,19 +23128,19 @@ TIMEGRP s_axi_lite_aclk = PIN
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_2"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_2"
-        BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_3"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_1"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_3"
         BEL
@@ -23153,8 +23151,6 @@ TIMEGRP s_axi_lite_aclk = PIN
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_7"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_1"
         BEL
@@ -34877,19 +34873,19 @@ TIMEGRP globclk = PIN
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_2"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_2"
-        BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_3"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_1"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_3"
         BEL
@@ -34900,8 +34896,6 @@ TIMEGRP globclk = PIN
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_7"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_1"
         BEL
@@ -46642,19 +46636,19 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT2 = PIN
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_2"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_2"
-        BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_3"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2_1"
         BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
+        BEL
+        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_3"
         BEL
@@ -46665,8 +46659,6 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT2 = PIN
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_6"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_7"
-        BEL
-        "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_2"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg_1"
         BEL

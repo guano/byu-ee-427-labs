@@ -170,21 +170,22 @@ begin
 
   --USER logic implementation added here
 	
-		digit_0 <= not digit_out(0);
-		digit_1 <= not digit_out(1);
-		digit_2 <= not digit_out(2);
-		digit_3 <= not digit_out(3);
-		digit_4 <= not digit_out(4);
-		digit_5 <= not digit_out(5);
+		digit_0 <= digit_out(0);
+		digit_1 <= digit_out(1);
+		digit_2 <= digit_out(2);
+		digit_3 <= digit_out(3);
+		digit_4 <= digit_out(4);
+		digit_5 <= digit_out(5);
 		
-		seg_a <= not seg(0);
-		seg_b <= not seg(1);
-		seg_c <= not seg(2);
-		seg_d <= not seg(3);
-		seg_e <= not seg(4);
-		seg_f <= not seg(5);
-		seg_g <= not seg(6);
-		
+		seg_a <=  seg(6);
+		seg_b <=  seg(5);
+		seg_c <=  seg(4);
+		seg_d <=  seg(3);
+		seg_e <=  seg(2);
+		seg_f <=  seg(1);
+		seg_g <=  seg(0);
+	
+--current_register <=	slv_reg0;
 	with counter select current_register <=
 		slv_reg0 when "000",
 		slv_reg1 when "001",
@@ -203,16 +204,18 @@ begin
 		"001000" when "011",	-- Digit 3
 		"010000" when "100",	-- Digit 4
 		"100000" when "101",	-- Digit 5
-		"111111" when others;	-- This should never happen
+		"111000" when others;	-- This should never happen
+--		digit_out <= "111000";
+
 
 	-- The binary is arranged in
 	-- A B C D E F G in seg
 	-- In current_register it is whatever is in the register.
-	with current_register select seg <=
-	
+	--seg <= current_register(6 downto 0);	-- with 2^7, 64 different combinations.
+with current_register select seg <=	
 	"1111110" when "00000000000000000000000000000000",	-- 0
 	"0110000" when "00000000000000000000000000000001",	-- 1
-	"0100100" when "00000000000000000000000000000010",	-- 2
+	"1101101" when "00000000000000000000000000000010",	-- 2
 	"1111001" when "00000000000000000000000000000011",	-- 3
 	"0110011" when "00000000000000000000000000000100",	-- 4
 	"1011011" when "00000000000000000000000000000101",	-- 5
@@ -228,6 +231,7 @@ begin
 	"1001111" when "00000000000000000000000000001110",	-- e
 	"1000111" when "00000000000000000000000000001111",	-- f
 	"1111011" when "00000000000000000000000000010000",	-- g
+---------------------- 11 is missing
 	"0010111" when "00000000000000000000000000010010",	-- h
 	"0110000" when "00000000000000000000000000010011",	-- i
 	"0111100" when "00000000000000000000000000010100",	-- j
@@ -248,7 +252,7 @@ begin
 	"0110011" when "00000000000000000000000000100011",	-- y
 	"1101101" when "00000000000000000000000000100100",	-- z
 	
-	"0001000" when "00000000000000000000000000100101", -- _
+	"0000001" when "00000000000000000000000000100101", -- _
 	"0000000" when "11111111111111111111111111111111", -- ' '
 	"0111111" when others; -- displays a '-' on error
 	
@@ -264,6 +268,8 @@ begin
 			end if;
 		end if;
 	end process;
+
+
 
   ------------------------------------------
   -- Example code to read/write user logic slave model s/w accessible registers

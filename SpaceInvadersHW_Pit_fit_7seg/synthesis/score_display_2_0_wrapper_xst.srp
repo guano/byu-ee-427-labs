@@ -680,9 +680,9 @@ WARNING:Xst:37 - Detected unknown constraint/property "sigis". This constraint/p
     Found 32-bit register for signal <slv_reg6>.
     Found 32-bit register for signal <slv_reg7>.
     Found 3-bit register for signal <counter>.
-    Found 3-bit adder for signal <counter[2]_GND_24_o_add_43_OUT> created at line 263.
+    Found 3-bit adder for signal <counter[2]_GND_24_o_add_43_OUT> created at line 267.
     Found 8x6-bit Read Only RAM for signal <digit_out>
-    Found 32-bit 7-to-1 multiplexer for signal <current_register> created at line 188.
+    Found 32-bit 7-to-1 multiplexer for signal <current_register> created at line 189.
     Summary:
 	inferred   1 RAM(s).
 	inferred   1 Adder/Subtractor(s).
@@ -788,7 +788,7 @@ Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 0) on block score_display_2_0_wrapper, actual ratio is 1.
 FlipFlop score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/Bus_RNW_reg has been replicated 4 time(s)
 FlipFlop score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1 has been replicated 2 time(s)
-FlipFlop score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2 has been replicated 2 time(s)
+FlipFlop score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -796,8 +796,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 317
- Flip-Flops                                            : 317
+# Registers                                            : 316
+ Flip-Flops                                            : 316
 
 =========================================================================
 
@@ -820,18 +820,18 @@ Top Level Output File Name         : score_display_2_0_wrapper.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 378
+# BELS                             : 373
 #      GND                         : 1
 #      INV                         : 3
-#      LUT2                        : 9
+#      LUT2                        : 10
 #      LUT3                        : 43
-#      LUT4                        : 54
-#      LUT5                        : 59
-#      LUT6                        : 205
-#      MUXF7                       : 3
+#      LUT4                        : 48
+#      LUT5                        : 55
+#      LUT6                        : 210
+#      MUXF7                       : 2
 #      VCC                         : 1
-# FlipFlops/Latches                : 317
-#      FD                          : 18
+# FlipFlops/Latches                : 316
+#      FD                          : 17
 #      FDR                         : 11
 #      FDRE                        : 288
 
@@ -842,15 +842,15 @@ Selected Device : 6slx45csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             317  out of  54576     0%  
- Number of Slice LUTs:                  373  out of  27288     1%  
-    Number used as Logic:               373  out of  27288     1%  
+ Number of Slice Registers:             316  out of  54576     0%  
+ Number of Slice LUTs:                  369  out of  27288     1%  
+    Number used as Logic:               369  out of  27288     1%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    529
-   Number with an unused Flip Flop:     212  out of    529    40%  
-   Number with an unused LUT:           156  out of    529    29%  
-   Number of fully used LUT-FF pairs:   161  out of    529    30%  
+ Number of LUT Flip Flop pairs used:    525
+   Number with an unused Flip Flop:     209  out of    525    39%  
+   Number with an unused LUT:           156  out of    525    29%  
+   Number of fully used LUT-FF pairs:   160  out of    525    30%  
    Number of unique control sets:        13
 
 IO Utilization: 
@@ -880,7 +880,7 @@ Clock Information:
 -----------------------------------+--------------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                                    | Load  |
 -----------------------------------+--------------------------------------------------------------------------+-------+
-S_AXI_ACLK                         | NONE(score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd1)| 317   |
+S_AXI_ACLK                         | NONE(score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/state_FSM_FFd1)| 316   |
 -----------------------------------+--------------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -892,9 +892,9 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 5.244ns (Maximum Frequency: 190.689MHz)
-   Minimum input arrival time before clock: 2.885ns
-   Maximum output required time after clock: 12.523ns
+   Minimum period: 5.260ns (Maximum Frequency: 190.104MHz)
+   Minimum input arrival time before clock: 2.829ns
+   Maximum output required time after clock: 13.723ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -903,55 +903,55 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'S_AXI_ACLK'
-  Clock period: 5.244ns (frequency: 190.689MHz)
-  Total number of paths / destination ports: 5851 / 391
+  Clock period: 5.260ns (frequency: 190.104MHz)
+  Total number of paths / destination ports: 5813 / 390
 -------------------------------------------------------------------------
-Delay:               5.244ns (Levels of Logic = 4)
-  Source:            score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0 (FF)
+Delay:               5.260ns (Levels of Logic = 4)
+  Source:            score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 (FF)
   Destination:       score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31 (FF)
   Source Clock:      S_AXI_ACLK rising
   Destination Clock: S_AXI_ACLK rising
 
-  Data Path: score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0 to score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31
+  Data Path: score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 to score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_31
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              14   0.447   1.062  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_0)
-     LUT5:I3->O            5   0.203   0.715  score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_85_o<7>11 (score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_85_o<7>1)
-     LUT6:I5->O           32   0.205   1.520  score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_89_o<7>1 (score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_89_o)
-     LUT6:I3->O            1   0.205   0.580  score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data110 (score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data1)
-     LUT4:I3->O            1   0.205   0.000  score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data113 (score_display_2_0/user_IP2Bus_Data<0>)
+     FD:C->Q              19   0.447   1.300  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_5)
+     LUT5:I2->O            2   0.205   0.617  score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_83_o<7>11 (score_display_2_0/USER_LOGIC_I/GND_24_o_slv_reg_read_sel[7]_equal_83_o<7>1)
+     LUT6:I5->O           32   0.205   1.292  score_display_2_0/USER_LOGIC_I/PWR_24_o_slv_reg_read_sel[7]_equal_82_o<7>1 (score_display_2_0/USER_LOGIC_I/PWR_24_o_slv_reg_read_sel[7]_equal_82_o)
+     LUT6:I5->O            1   0.205   0.684  score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data110 (score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data1)
+     LUT4:I2->O            1   0.203   0.000  score_display_2_0/USER_LOGIC_I/Mmux_IP2Bus_Data113 (score_display_2_0/user_IP2Bus_Data<0>)
      FDRE:D                    0.102          score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0
     ----------------------------------------
-    Total                      5.244ns (1.367ns logic, 3.877ns route)
-                                       (26.1% logic, 73.9% route)
+    Total                      5.260ns (1.367ns logic, 3.893ns route)
+                                       (26.0% logic, 74.0% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'S_AXI_ACLK'
-  Total number of paths / destination ports: 730 / 534
+  Total number of paths / destination ports: 714 / 533
 -------------------------------------------------------------------------
-Offset:              2.885ns (Levels of Logic = 3)
+Offset:              2.829ns (Levels of Logic = 3)
   Source:            S_AXI_ARVALID (PAD)
-  Destination:       score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1 (FF)
+  Destination:       score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2 (FF)
   Destination Clock: S_AXI_ACLK rising
 
-  Data Path: S_AXI_ARVALID to score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1
+  Data Path: S_AXI_ARVALID to score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_2
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     LUT5:I0->O           19   0.203   1.072  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_start11 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/start)
-     LUT6:I5->O            3   0.205   0.755  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_expnd_i<1>1 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_expnd_i<1>)
-     LUT4:I2->O            1   0.203   0.000  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1_rstpot (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1_rstpot)
-     FD:D                      0.102          score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_1
+     LUT5:I0->O           18   0.203   1.050  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/Mmux_start11 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/start)
+     LUT6:I5->O            2   0.205   0.721  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_expnd_i<1>1 (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_expnd_i<1>)
+     LUT4:I2->O            2   0.203   0.000  score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_rstpot (score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1_rstpot)
+     FD:D                      0.102          score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/I_DECODER/ce_out_i_1
     ----------------------------------------
-    Total                      2.885ns (1.058ns logic, 1.827ns route)
-                                       (36.7% logic, 63.3% route)
+    Total                      2.829ns (1.058ns logic, 1.771ns route)
+                                       (37.4% logic, 62.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'S_AXI_ACLK'
-  Total number of paths / destination ports: 49983 / 50
+  Total number of paths / destination ports: 63691 / 50
 -------------------------------------------------------------------------
-Offset:              12.523ns (Levels of Logic = 10)
+Offset:              13.723ns (Levels of Logic = 11)
   Source:            score_display_2_0/USER_LOGIC_I/counter_0 (FF)
   Destination:       seg_d (PAD)
   Source Clock:      S_AXI_ACLK rising
@@ -964,16 +964,17 @@ Offset:              12.523ns (Levels of Logic = 10)
      LUT6:I0->O            1   0.203   0.684  score_display_2_0/USER_LOGIC_I/Mmux_current_register51 (score_display_2_0/USER_LOGIC_I/Mmux_current_register5)
      LUT3:I1->O            2   0.203   0.981  score_display_2_0/USER_LOGIC_I/Mmux_current_register53 (score_display_2_0/USER_LOGIC_I/current_register<13>)
      LUT6:I0->O            1   0.203   0.944  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>12 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>12)
-     LUT6:I0->O            3   0.203   1.015  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>15 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>1)
-     LUT6:I0->O           20   0.203   1.340  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_11_o<31>11 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_11_o<31>1)
-     LUT5:I1->O            3   0.203   0.755  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_9_o<31>1 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_9_o)
-     LUT4:I2->O            1   0.203   0.808  score_display_2_0/USER_LOGIC_I/seg_c11 (score_display_2_0/USER_LOGIC_I/seg_c11)
-     LUT4:I1->O            2   0.205   0.617  score_display_2_0/USER_LOGIC_I/seg_c17 (score_display_2_0/USER_LOGIC_I/seg_c1)
-     LUT5:I4->O            1   0.205   0.827  score_display_2_0/USER_LOGIC_I/seg_d_SW0 (N12)
-     LUT6:I2->O            0   0.203   0.000  score_display_2_0/USER_LOGIC_I/seg_d (seg_d)
+     LUT6:I0->O            9   0.203   1.194  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>15 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>1)
+     LUT6:I0->O           14   0.203   1.302  score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>21 (score_display_2_0/USER_LOGIC_I/GND_24_o_current_register[31]_equal_10_o<31>2)
+     LUT6:I1->O            3   0.203   0.651  score_display_2_0/USER_LOGIC_I/seg<7>21 (score_display_2_0/USER_LOGIC_I/seg<7>2)
+     LUT6:I5->O            2   0.205   0.981  score_display_2_0/USER_LOGIC_I/out31 (score_display_2_0/USER_LOGIC_I/out3)
+     LUT6:I0->O            2   0.203   0.617  score_display_2_0/USER_LOGIC_I/out10 (score_display_2_0/USER_LOGIC_I/out10)
+     LUT2:I1->O            3   0.205   0.651  score_display_2_0/USER_LOGIC_I/out12 (score_display_2_0/USER_LOGIC_I/n0053)
+     LUT6:I5->O            2   0.205   0.961  score_display_2_0/USER_LOGIC_I/seg<3>13 (score_display_2_0/USER_LOGIC_I/seg<3>1)
+     LUT6:I1->O            0   0.203   0.000  score_display_2_0/USER_LOGIC_I/seg<4>2 (seg_d)
     ----------------------------------------
-    Total                     12.523ns (2.481ns logic, 10.042ns route)
-                                       (19.8% logic, 80.2% route)
+    Total                     13.723ns (2.686ns logic, 11.037ns route)
+                                       (19.6% logic, 80.4% route)
 
 =========================================================================
 
@@ -985,14 +986,14 @@ Clock to Setup on destination clock S_AXI_ACLK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-S_AXI_ACLK     |    5.244|         |         |         |
+S_AXI_ACLK     |    5.260|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 9.00 secs
-Total CPU time to Xst completion: 9.03 secs
+Total CPU time to Xst completion: 9.56 secs
  
 --> 
 

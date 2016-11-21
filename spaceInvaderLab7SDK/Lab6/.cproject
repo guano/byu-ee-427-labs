@@ -91,11 +91,11 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="xilinx.gnu.mb.exe.debug.1639083041.699375616" name="spaceInvadersRUN.c" rcbsApplicability="disable" resourcePath="src/spaceInvadersRUN.c" toolsToInvoke="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555.1835816704">
-						<tool id="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555.1835816704" name="MicroBlaze gcc compiler" superClass="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555"/>
+					<fileInfo id="xilinx.gnu.mb.exe.debug.1639083041.481437716" name="tank.c" rcbsApplicability="disable" resourcePath="src/tank.c" toolsToInvoke="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555.239166359">
+						<tool id="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555.239166359" name="MicroBlaze gcc compiler" superClass="xilinx.gnu.mb.c.toolchain.compiler.debug.19867555"/>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="src/spaceInvadersRUN.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/tank.c|src/mother_ship.c|src/aliens.c|src/sound|src/spaceInvadersRUN.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

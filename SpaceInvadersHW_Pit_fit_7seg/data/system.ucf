@@ -31,8 +31,8 @@ NET score_display_2_0_digit_2_pin LOC = "R8"  |  IOSTANDARD = LVCMOS33;  # Bank 
 NET score_display_2_0_digit_1_pin LOC = "M8"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = *IO_L40P,        		Sch name = EXP-IO13_P
 NET score_display_2_0_digit_0_pin LOC = "U8"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L41P,        		Sch name = EXP-IO14_P
 
-NET score_display_2_0_seg_g_pin LOC = "U7"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L43P,        		Sch name = EXP-IO15_P
-NET score_display_2_0_seg_c_pin LOC = "N7"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = *IO_L44P,        		Sch name = EXP-IO16_P
+NET score_display_2_0_seg_g_pin LOC = "T12"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = IO_L43P,        		Sch name = EXP-IO15_P
+NET score_display_2_0_seg_c_pin LOC = "N10"  |  IOSTANDARD = LVCMOS33;  # Bank = 2,  Pin name = *IO_L44P,        		Sch name = EXP-IO16_P
  
 
 

@@ -94,12 +94,45 @@ int main(){
 	SCORE_DISPLAY_2_SelfTest(XPAR_SCORE_DISPLAY_2_0_BASEADDR);
 
 	xil_printf("now doing other tests >:)\n\r");
-	SCORE_DISPLAY_2_mWriteSlaveReg0(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
-	SCORE_DISPLAY_2_mWriteSlaveReg1(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
-	SCORE_DISPLAY_2_mWriteSlaveReg2(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
-	SCORE_DISPLAY_2_mWriteSlaveReg3(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
-	SCORE_DISPLAY_2_mWriteSlaveReg4(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
-	SCORE_DISPLAY_2_mWriteSlaveReg5(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 2);
+	SCORE_DISPLAY_2_mWriteSlaveReg0(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+	SCORE_DISPLAY_2_mWriteSlaveReg1(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+	SCORE_DISPLAY_2_mWriteSlaveReg2(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+	SCORE_DISPLAY_2_mWriteSlaveReg3(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+	SCORE_DISPLAY_2_mWriteSlaveReg4(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+	SCORE_DISPLAY_2_mWriteSlaveReg5(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 9);
+
+	int i = 0;
+	while(1){
+		char input = getchar();
+		if (input == '0')
+			i--;
+		else if(input == '1')
+			i++;
+		else if(input == '2')
+			i = i<<1;
+		else if(input == '3')
+			i = i>>1;
+		else if(input == '7')
+			SCORE_DISPLAY_2_mWriteSlaveReg5(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else if(input == '8')
+			SCORE_DISPLAY_2_mWriteSlaveReg4(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else if(input == '9')
+			SCORE_DISPLAY_2_mWriteSlaveReg3(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else if(input == '4')
+			SCORE_DISPLAY_2_mWriteSlaveReg2(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else if(input == '5')
+			SCORE_DISPLAY_2_mWriteSlaveReg1(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else if(input == '6')
+			SCORE_DISPLAY_2_mWriteSlaveReg0(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, i);
+		else
+			xil_printf("only supports input of 1 and o\n\r");
+
+
+//		long y;
+//		for(y = 0;y<4000000;y++);	// long delay
+		xil_printf("changing the thing: %x\n\r", i);
+//		i = (i>=32)? 0 : i+1 ;
+	}
 
 	return 0;
 }

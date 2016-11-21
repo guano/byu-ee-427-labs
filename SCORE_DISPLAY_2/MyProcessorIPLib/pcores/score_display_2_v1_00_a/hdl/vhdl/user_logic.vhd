@@ -162,13 +162,14 @@ architecture IMP of user_logic is
   signal slv_read_ack                   : std_logic;
   signal slv_write_ack                  : std_logic;
 
-	signal counter: std_logic_vector(2 downto 0) := "000";	-- should work
+	signal counter: std_logic_vector(15 downto 0) := "0000000000000000";	-- should work
 	signal current_register: std_logic_vector(31 downto 0);
 	signal digit_out: std_logic_vector(5 downto 0);
 	signal seg: std_logic_vector(6 downto 0);
 begin
 
-  --USER logic implementation added here
+  --------------------------------------------------------------------------
+	-- Begin logic required for 7 segment display
 	
 		digit_0 <= digit_out(0);
 		digit_1 <= digit_out(1);
@@ -186,7 +187,7 @@ begin
 		seg_g <=  seg(0);
 	
 --current_register <=	slv_reg0;
-	with counter select current_register <=
+	with counter(15 downto 13) select current_register <=
 		slv_reg0 when "000",
 		slv_reg1 when "001",
 		slv_reg2 when "010",
@@ -197,14 +198,14 @@ begin
 		
 	-- Digit out is 1-hot encoded
 	-- (well, not really, but if the digits are all different it is)
-	with counter select digit_out <=
+	with counter(15 downto 13) select digit_out <=
 		"000001" when "000",	-- Digit 0
 		"000010" when "001",	-- Digit 1
 		"000100" when "010",	-- Digit 2
 		"001000" when "011",	-- Digit 3
 		"010000" when "100",	-- Digit 4
 		"100000" when "101",	-- Digit 5
-		"111000" when others;	-- This should never happen
+		"000000" when others;	-- This should never happen
 --		digit_out <= "111000";
 
 
@@ -261,13 +262,18 @@ with current_register select seg <=
 	begin
 	--finish the clock ticking.
 		if(Bus2IP_Clk'EVENT and Bus2IP_Clk = '1') then
-			if(counter = "101") then
-				counter <= "000";
-			else
-				counter <= counter + 1;
-			end if;
+			--if(counter = "101") then
+				--counter <= "000";
+			--else
+				--counter <= counter + 1;
+			--end if;
+			counter <= counter + 1;
 		end if;
 	end process;
+	
+	  
+	-- End logic required for 7 segment display
+	--------------------------------------------------------------------------
 
 
 

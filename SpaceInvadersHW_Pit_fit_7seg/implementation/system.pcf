@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map O.87xd on Mon Nov 21 12:38:03 2016
+// Written by: Map O.87xd on Mon Nov 21 15:08:37 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -11676,6 +11676,19 @@ TIMEGRP m_axi_mm2s_aclk = PIN
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_0" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_1" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_2" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_3" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_4" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_5" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_6" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_7" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_8" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_9" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_10" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_11" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_12" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_13" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_14" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_15" BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_1"
@@ -23420,6 +23433,19 @@ TIMEGRP s_axi_lite_aclk = PIN
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_0" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_1" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_2" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_3" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_4" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_5" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_6" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_7" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_8" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_9" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_10" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_11" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_12" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_13" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_14" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_15" BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_1"
@@ -35165,6 +35191,19 @@ TIMEGRP globclk = PIN
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_0" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_1" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_2" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_3" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_4" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_5" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_6" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_7" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_8" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_9" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_10" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_11" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_12" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_13" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_14" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_15" BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_1"
@@ -46928,6 +46967,19 @@ TIMEGRP clock_generator_0_clock_generator_0_SIG_PLL0_CLKOUT2 = PIN
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_0" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_1" BEL
         "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_2" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_3" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_4" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_5" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_6" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_7" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_8" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_9" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_10" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_11" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_12" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_13" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_14" BEL
+        "score_display_2_0/score_display_2_0/USER_LOGIC_I/counter_15" BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_0"
         BEL
         "score_display_2_0/score_display_2_0/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/s_axi_rdata_i_1"

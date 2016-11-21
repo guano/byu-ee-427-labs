@@ -11,10 +11,12 @@
 #include "xparameters.h"
 //#include "xaxivdma.h"
 #include "xio.h"
-#include "time.h"
+//#include "time.h"
 #include "unistd.h"
 #include "util.h"
 #include "interface.h"
+#include "score_display_2.h"
+
 #define WORDS_HEIGHT 5		// height of score and lives
 #define TANK_HEIGHT 8		// our tank is 8 high
 #define GAME_X 320			// How wide our game screen is
@@ -210,6 +212,8 @@ void interface_increment_score(uint32_t value){
 		number = number / divide;			// convert to a single digit value
 		temp_score = temp_score - number;	// update the temporary score
 		interface_digit(number,digit_loc); 	// print to screen
+		xil_printf("printing %d to digit %d\n\r", number, i);
+		SCORE_DISPLAY_2_mWriteReg(XPAR_SCORE_DISPLAY_2_0_BASEADDR, i*4, number);
 
 		digit_loc -= INTERFACE_COL_OFFSET;	// update to the next digit column location
 		divide *= INTERFACE_DIGIT_MOD;   // increment the number we divide by
@@ -281,6 +285,13 @@ void interface_init_board(uint32_t * framePointer){
 	interface_draw_line();			// Draw the line at the bottom
 	interface_draw_tanks();			// Draw our extra lives
 	interface_init_numbers();		// Make numbers good
+
+	SCORE_DISPLAY_2_mWriteSlaveReg0(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
+	SCORE_DISPLAY_2_mWriteSlaveReg1(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
+	SCORE_DISPLAY_2_mWriteSlaveReg2(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
+	SCORE_DISPLAY_2_mWriteSlaveReg3(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
+	SCORE_DISPLAY_2_mWriteSlaveReg4(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
+	SCORE_DISPLAY_2_mWriteSlaveReg5(XPAR_SCORE_DISPLAY_2_0_BASEADDR, 0, 0);
 }
 
 

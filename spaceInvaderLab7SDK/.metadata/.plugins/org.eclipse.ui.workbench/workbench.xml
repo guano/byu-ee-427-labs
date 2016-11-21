@@ -36,29 +36,34 @@
 <part id="2"/>
 <part id="3"/>
 <part id="4"/>
+<part id="5"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="spaceInvadersRUN.c" partName="spaceInvadersRUN.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/spaceInvadersRUN.c" title="spaceInvadersRUN.c" tooltip="Lab6/src/spaceInvadersRUN.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/spaceInvadersRUN.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="23" selectionOffset="8234" selectionTopPixel="1019"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2478" selectionTopPixel="1019"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="xparameters.h" partName="xparameters.h" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/lab6_bsp/microblaze_0/include/xparameters.h" title="xparameters.h" tooltip="lab6_bsp/microblaze_0/include/xparameters.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/lab6_bsp/microblaze_0/include/xparameters.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="31" selectionOffset="4669" selectionTopPixel="1938"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2_selftest.c" partName="score_display_2_selftest.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/score_display_2_selftest.c" title="score_display_2_selftest.c" tooltip="Lab6/src/score_display_2_selftest.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2_selftest.c" partName="score_display_2_selftest.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/score_display_2_selftest.c" title="score_display_2_selftest.c" tooltip="Lab6/src/score_display_2_selftest.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/score_display_2_selftest.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4695" selectionTopPixel="1647"/>
+<editorState selectionHorizontalPixel="0" selectionLength="31" selectionOffset="4085" selectionTopPixel="1647"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" partName="interface.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/interface.c" title="interface.c" tooltip="Lab6/src/interface.c" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" partName="interface.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/interface.c" title="interface.c" tooltip="Lab6/src/interface.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/interface.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="8893" selectionTopPixel="3315"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="10311" selectionTopPixel="2973"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="interface.h" partName="interface.h" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/interface.h" title="interface.h" tooltip="Lab6/src/interface.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/interface.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="327" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2.h" partName="score_display_2.h" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/score_display_2.h" title="score_display_2.h" tooltip="Lab6/src/score_display_2.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/score_display_2.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="55" selectionOffset="2831" selectionTopPixel="102"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="sound.c" partName="sound.c" path="C:/Users/superman/Desktop/byu-ee-427-labs/spaceInvaderLab7SDK/Lab6/src/sound/sound.c" title="sound.c" tooltip="Lab6/src/sound/sound.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lab6/src/sound/sound.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -218,12 +223,6 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/spaceInvadersRUN.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/pit.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/pit.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab6_bsp/microblaze_0/include/xparameters.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/pit.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/spaceInvadersRUN.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/lab6_bsp/microblaze_0/include/xparameters.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/score_display_2_selftest.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/score_display_2.h"/>
@@ -231,156 +230,161 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/spaceInvadersRUN.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/interface.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/interface.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/score_display_2.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/interface.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/interface.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/sound/sound.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/Lab6/src/spaceInvadersRUN.c"/>
 </editors>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="13668" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="2" y="0"/>
-</item>
-<item historyLabel="pit.h" index="1">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="pit.c" index="2">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="pit.h" index="1">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="2" y="0"/>
-</item>
-<item historyLabel="pit.h" index="1">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="236" y="0"/>
-</item>
-<item historyLabel="pit.h" index="1">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="0">
-<position info="not_deleted" x="236" y="0"/>
-</item>
-<item historyLabel="pit.h" index="1">
-<position info="not_deleted" x="459" y="0"/>
-</item>
-<item historyLabel="xparameters.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="xparameters.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="pit.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="xparameters.h" index="3">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="spaceInvadersRUN.c" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="xparameters.h" index="6">
-<position info="not_deleted" x="4609" y="154"/>
-</item>
-<item historyLabel="score_display_2_selftest.c" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="score_display_2.h" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="score_display_2_selftest.c" index="7">
-<position info="not_deleted" x="2317" y="28"/>
-</item>
-<item historyLabel="score_display_2.h" index="8">
-<position info="not_deleted" x="785" y="0"/>
-</item>
-<item historyLabel="score_display_2_selftest.c" index="7">
-<position info="not_deleted" x="2317" y="28"/>
-</item>
-<item historyLabel="score_display_2_selftest.c" index="7">
-<position info="not_deleted" x="3216" y="0"/>
-</item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="1671" y="0"/>
 </item>
-<item historyLabel="xparameters.h" index="6">
+<item historyLabel="xparameters.h" index="0">
 <position info="not_deleted" x="4669" y="31"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="2757" y="0"/>
 </item>
-<item historyLabel="score_display_2.h" index="8">
+<item historyLabel="score_display_2.h" index="2">
 <position info="not_deleted" x="4261" y="62"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="1741" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3852" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3943" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4204" y="0"/>
 </item>
-<item historyLabel="spaceInvadersRUN.c" index="9">
+<item historyLabel="spaceInvadersRUN.c" index="3">
 <position info="not_deleted" x="8234" y="23"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4172" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3900" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3935" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3934" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4083" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3969" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3968" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4008" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4007" y="0"/>
 </item>
-<item historyLabel="spaceInvadersRUN.c" index="10">
+<item historyLabel="spaceInvadersRUN.c" index="4">
 <position info="not_deleted" x="8234" y="23"/>
 </item>
-<item historyLabel="interface.c" index="11">
+<item historyLabel="interface.c" index="5">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="interface.h" index="12">
+<item historyLabel="interface.h" index="6">
 <position info="not_deleted" x="327" y="0"/>
 </item>
-<item historyLabel="interface.c" index="11">
+<item historyLabel="interface.c" index="5">
 <position info="not_deleted" x="8893" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="3854" y="0"/>
 </item>
-<item historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4047" y="0"/>
 </item>
-<item active="true" historyLabel="score_display_2_selftest.c" index="7">
+<item historyLabel="score_display_2_selftest.c" index="1">
 <position info="not_deleted" x="4046" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="interface.h" index="8">
+<position info="not_deleted" x="327" y="0"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="8927" y="0"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="9737" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="4253" y="1358"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="13588" y="0"/>
+</item>
+<item historyLabel="score_display_2_selftest.c" index="1">
+<position info="not_deleted" x="4085" y="31"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="13926" y="0"/>
+</item>
+<item historyLabel="interface.h" index="8">
+<position info="not_deleted" x="327" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="2831" y="55"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="1346" y="509"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="323" y="0"/>
+</item>
+<item historyLabel="sound.c" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="spaceInvadersRUN.c" index="11">
+<position info="not_deleted" x="2478" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="1346" y="509"/>
+</item>
+<item historyLabel="interface.h" index="8">
+<position info="not_deleted" x="327" y="0"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="12265" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="2831" y="55"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="10760" y="0"/>
+</item>
+<item historyLabel="interface.h" index="8">
+<position info="not_deleted" x="327" y="0"/>
+</item>
+<item historyLabel="score_display_2.h" index="7">
+<position info="not_deleted" x="2831" y="55"/>
+</item>
+<item historyLabel="score_display_2_selftest.c" index="1">
+<position info="not_deleted" x="4085" y="31"/>
+</item>
+<item historyLabel="interface.c" index="9">
+<position info="not_deleted" x="10760" y="0"/>
+</item>
+<item active="true" historyLabel="interface.c" index="9">
+<position info="not_deleted" x="10697" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -402,14 +406,17 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="sound.c" tooltip="Lab6/src/sound/sound.c">
+<persistable path="/Lab6/src/sound/sound.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2.h" tooltip="Lab6/src/score_display_2.h">
+<persistable path="/Lab6/src/score_display_2.h"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="interface.h" tooltip="Lab6/src/interface.h">
 <persistable path="/Lab6/src/interface.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="interface.c" tooltip="Lab6/src/interface.c">
 <persistable path="/Lab6/src/interface.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2.h" tooltip="Lab6/src/score_display_2.h">
-<persistable path="/Lab6/src/score_display_2.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="score_display_2_selftest.c" tooltip="Lab6/src/score_display_2_selftest.c">
 <persistable path="/Lab6/src/score_display_2_selftest.c"/>
@@ -443,9 +450,6 @@
 </file>
 <file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="wavKiller.c" tooltip="C:\Users\superman\Desktop\byu-ee-427-labs\sounds\wavKiller.c">
 <persistable uri="file:/C:/Users/superman/Desktop/byu-ee-427-labs/sounds/wavKiller.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="util.h" tooltip="spaceInvadersLab4/src/util.h">
-<persistable path="/spaceInvadersLab4/src/util.h"/>
 </file>
 </mruList>
 </workbench>

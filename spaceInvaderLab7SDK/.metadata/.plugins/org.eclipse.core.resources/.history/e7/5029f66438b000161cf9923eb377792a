@@ -1,0 +1,45 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../src/bunkers.c \
+../src/interface.c \
+../src/pit.c \
+../src/platform.c \
+../src/score_display_2.c \
+../src/spaceInvadersRUN.c \
+../src/util.c 
+
+LD_SRCS += \
+../src/lscript.ld 
+
+OBJS += \
+./src/bunkers.o \
+./src/interface.o \
+./src/pit.o \
+./src/platform.o \
+./src/score_display_2.o \
+./src/spaceInvadersRUN.o \
+./src/util.o 
+
+C_DEPS += \
+./src/bunkers.d \
+./src/interface.d \
+./src/pit.d \
+./src/platform.d \
+./src/score_display_2.d \
+./src/spaceInvadersRUN.d \
+./src/util.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+src/%.o: ../src/%.c
+	@echo Building file: $<
+	@echo Invoking: MicroBlaze gcc compiler
+	mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../lab6_bsp/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
+	@echo Finished building: $<
+	@echo ' '
+
+

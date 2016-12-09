@@ -1,0 +1,25 @@
+
+**** Build of configuration Debug for project hello_world_0 ****
+
+make all 
+Building file: ../src/dma.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/dma.d" -MT"src/dma.d" -o"src/dma.o" "../src/dma.c"
+Finished building: ../src/dma.c
+' '
+Building file: ../src/dma_selftest.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/dma_selftest.d" -MT"src/dma_selftest.d" -o"src/dma_selftest.o" "../src/dma_selftest.c"
+Finished building: ../src/dma_selftest.c
+' '
+Building file: ../src/helloworld.c
+Invoking: MicroBlaze gcc compiler
+mb-gcc -Wall -O0 -g3 -c -fmessage-length=0 -I../../hello_world_bsp_0/microblaze_0/include -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v8.20.b -mno-xl-soft-mul -MMD -MP -MF"src/helloworld.d" -MT"src/helloworld.d" -o"src/helloworld.o" "../src/helloworld.c"
+../src/helloworld.c: In function 'interrupt_handler_dispatcher':
+../src/helloworld.c:54: error: 'XPAR_DMA_0_DMA_INTERRUPT_MASK' undeclared (first use in this function)
+../src/helloworld.c:54: error: (Each undeclared identifier is reported only once
+../src/helloworld.c:54: error: for each function it appears in.)
+../src/helloworld.c:55: error: 'XPAR_DMA_0_DMA_COMPLETE_INTERRUPT_MASK' undeclared (first use in this function)
+../src/helloworld.c: In function 'main':
+../src/helloworld.c:75: error: 'XPAR_DMA_0_DMA_COMPLETE_INTERRUPT_MASK' undeclared (first use in this function)
+make: *** [src/helloworld.o] Error 1

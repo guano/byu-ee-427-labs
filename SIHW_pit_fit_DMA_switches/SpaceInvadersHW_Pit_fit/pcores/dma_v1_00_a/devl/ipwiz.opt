@@ -1,0 +1,9 @@
+-batch 
+-create dma 
+-ver 1.00.a 
+-dir "C:\Users\superman\Desktop\lab8\SpaceInvadersHW_Pit_fit" 
+-lang vhdl 
+-bus axi4lite ms 
+-reg 10 
+-xps 
+-driver 
